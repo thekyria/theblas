@@ -1,0 +1,17 @@
+# Build artifacts
+/build/
+/CMakeFiles/
+/CMakeCache.txt
+/*.cmake
+/*.log
+
+# Visual Studio
+*.vcxproj*
+*.sln
+
+# macOS
+.DS_Store
+
+# Editor
+*~
+*.swp
