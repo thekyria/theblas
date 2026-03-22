@@ -1,5 +1,5 @@
 [codespell]
-skip = build,tests/.git,*.po,*.pot
+skip = .git,build,tests/.git,*.po,*.pot
 check-filenames = 
 check-hidden = 
 ignore-words-list = theblas
