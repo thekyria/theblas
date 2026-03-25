@@ -37,4 +37,5 @@ This repository exposes custom Copilot agents from `.github/agents`.
 - Suggest Awesome GitHub Copilot Instructions: [.github/skills/suggest-awesome-github-copilot-instructions/SKILL.md](.github/skills/suggest-awesome-github-copilot-instructions/SKILL.md)
 - Suggest Awesome GitHub Copilot Skills: [.github/skills/suggest-awesome-github-copilot-skills/SKILL.md](.github/skills/suggest-awesome-github-copilot-skills/SKILL.md)
 - Technology Stack Blueprint Generator: [.github/skills/technology-stack-blueprint-generator/SKILL.md](.github/skills/technology-stack-blueprint-generator/SKILL.md)
+- Update Specification: [.github/skills/update-specification/SKILL.md](.github/skills/update-specification/SKILL.md)
 - What Context Needed: [.github/skills/what-context-needed/SKILL.md](.github/skills/what-context-needed/SKILL.md)
