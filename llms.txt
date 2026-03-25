@@ -1,0 +1,49 @@
+# llms.txt for theblas repository
+
+## Site Summary
+Title: theblas - A C++ BLAS Library Implementation
+Description: A simple, educational implementation of Basic Linear Algebra Subprograms (BLAS) in C++. Includes core routines for vector and matrix operations, with CMake build system and unit tests.
+Last Updated: 2026-03-22
+Language: C++
+License: See LICENSE file
+Topics: BLAS, Linear Algebra, C++, Mathematics, High Performance Computing
+
+## Page: README.md
+Title: README - theblas
+Summary: Project overview, build instructions, usage examples, and contribution guidelines for the theblas BLAS library.
+Key Sections: Introduction, Building, Testing, Contributing
+
+## Page: AGENTS.md
+Title: AGENTS.md - AI Agent Documentation
+Summary: Documentation for available AI agents in the workspace: Explore, CodeReviewer, Tester, DocWriter, SecurityAuditor, PerfAnalyzer. Includes usage patterns and maintenance notes.
+Key Sections: Purpose, Agents (with descriptions), How to use
+
+## Page: include/theblas/theblas.h
+Title: Header File - theblas.h
+Summary: Public API header for the theblas library, declaring BLAS functions like gemm, axpy, etc.
+Key Sections: Function declarations, typedefs
+
+## Page: src/theblas.cpp
+Title: Implementation - theblas.cpp
+Summary: C++ implementation of BLAS routines, optimized for clarity and performance.
+Key Sections: Function definitions, algorithms
+
+## Page: tests/test_theblas.cpp
+Title: Unit Tests - test_theblas.cpp
+Summary: Google Test-based unit tests for BLAS functions, ensuring correctness.
+Key Sections: Test cases, fixtures
+
+## Page: CMakeLists.txt
+Title: Build Configuration - CMakeLists.txt
+Summary: CMake build script for compiling the library and tests.
+Key Sections: Project setup, targets, dependencies
+
+## Page: CODE_OF_CONDUCT.md
+Title: Contributor Covenant Code of Conduct
+Summary: Community guidelines for respectful and inclusive contributions.
+Key Sections: Pledge, Standards, Responsibilities, Scope, Enforcement
+
+## Page: .github/skills/
+Title: AI Skills Directory
+Summary: Folder-based skill packages for AI workflows. Each skill lives at .github/skills/<skill-name>/SKILL.md with discoverable metadata and task workflow guidance.
+Key Sections: explore/SKILL.md, code-reviewer/SKILL.md, tester/SKILL.md, doc-writer/SKILL.md, security-auditor/SKILL.md, perf-analyzer/SKILL.md
