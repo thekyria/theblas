@@ -26,3 +26,4 @@ This repository exposes custom Copilot agents from `.github/agents`.
 - Doc Writer: [.github/skills/doc-writer/SKILL.md](.github/skills/doc-writer/SKILL.md)
 - Security Auditor: [.github/skills/security-auditor/SKILL.md](.github/skills/security-auditor/SKILL.md)
 - Perf Analyzer: [.github/skills/perf-analyzer/SKILL.md](.github/skills/perf-analyzer/SKILL.md)
+- Add Educational Comments: [.github/skills/add-educational-comments/SKILL.md](.github/skills/add-educational-comments/SKILL.md)
