@@ -21,6 +21,7 @@ This repository exposes custom Copilot agents from `.github/agents`.
 ## Skills
 
 - Add Educational Comments: [.github/skills/add-educational-comments/SKILL.md](.github/skills/add-educational-comments/SKILL.md)
+- AI Prompt Engineering Safety Review: [.github/skills/ai-prompt-engineering-safety-review/SKILL.md](.github/skills/ai-prompt-engineering-safety-review/SKILL.md)
 - Conventional Commit: [.github/skills/conventional-commit/SKILL.md](.github/skills/conventional-commit/SKILL.md)
 - Convert Plaintext To MD: [.github/skills/convert-plaintext-to-md/SKILL.md](.github/skills/convert-plaintext-to-md/SKILL.md)
 - Create LLMs: [.github/skills/create-llms/SKILL.md](.github/skills/create-llms/SKILL.md)
