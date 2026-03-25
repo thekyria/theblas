@@ -4,6 +4,7 @@
         "git add": true,
         "git commit": true,
         "git push": true,
-        "codespell": true
+        "codespell": true,
+        "set": true
     }
 }
