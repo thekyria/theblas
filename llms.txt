@@ -1,49 +1,32 @@
-# llms.txt for theblas repository
+# theblas
 
-## Site Summary
-Title: theblas - A C++ BLAS Library Implementation
-Description: A simple, educational implementation of Basic Linear Algebra Subprograms (BLAS) in C++. Includes core routines for vector and matrix operations, with CMake build system and unit tests.
-Last Updated: 2026-03-22
-Language: C++
-License: See LICENSE file
-Topics: BLAS, Linear Algebra, C++, Mathematics, High Performance Computing
+> theblas is a minimal C++ library scaffold demonstrating best practices for modern C++ projects. It includes a CMake build system, comprehensive unit tests, and infrastructure for AI-assisted development with GitHub Copilot agents and reusable skills.
 
-## Page: README.md
-Title: README - theblas
-Summary: Project overview, build instructions, usage examples, and contribution guidelines for the theblas BLAS library.
-Key Sections: Introduction, Building, Testing, Contributing
+This project serves as a template for creating well-structured C++ libraries with professional development practices, including continuous integration, code quality tools, and AI-enhanced workflows.
 
-## Page: AGENTS.md
-Title: AGENTS.md - AI Agent Documentation
-Summary: Documentation for available AI agents in the workspace: Explore, CodeReviewer, Tester, DocWriter, SecurityAuditor, PerfAnalyzer. Includes usage patterns and maintenance notes.
-Key Sections: Purpose, Agents (with descriptions), How to use
+## Documentation
 
-## Page: include/theblas/theblas.h
-Title: Header File - theblas.h
-Summary: Public API header for the theblas library, declaring BLAS functions like gemm, axpy, etc.
-Key Sections: Function declarations, typedefs
+- [README](README.md): Project overview, build instructions, and usage examples
+- [Code of Conduct](CODE_OF_CONDUCT.md): Community guidelines for respectful participation
 
-## Page: src/theblas.cpp
-Title: Implementation - theblas.cpp
-Summary: C++ implementation of BLAS routines, optimized for clarity and performance.
-Key Sections: Function definitions, algorithms
+## Building and Testing
 
-## Page: tests/test_theblas.cpp
-Title: Unit Tests - test_theblas.cpp
-Summary: Google Test-based unit tests for BLAS functions, ensuring correctness.
-Key Sections: Test cases, fixtures
+- [CMakeLists.txt](CMakeLists.txt): CMake build configuration for library and tests
+- [tests/CMakeLists.txt](tests/CMakeLists.txt): Test suite configuration
 
-## Page: CMakeLists.txt
-Title: Build Configuration - CMakeLists.txt
-Summary: CMake build script for compiling the library and tests.
-Key Sections: Project setup, targets, dependencies
+## Source Code
 
-## Page: CODE_OF_CONDUCT.md
-Title: Contributor Covenant Code of Conduct
-Summary: Community guidelines for respectful and inclusive contributions.
-Key Sections: Pledge, Standards, Responsibilities, Scope, Enforcement
+- [include/theblas/theblas.h](include/theblas/theblas.h): Public C++ API header with library declarations
+- [src/theblas.cpp](src/theblas.cpp): Implementation of library functions
+- [tests/test_theblas.cpp](tests/test_theblas.cpp): Unit tests for library correctness
 
-## Page: .github/skills/
-Title: AI Skills Directory
-Summary: Folder-based skill packages for AI workflows. Each skill lives at .github/skills/<skill-name>/SKILL.md with discoverable metadata and task workflow guidance.
-Key Sections: explore/SKILL.md, code-reviewer/SKILL.md, tester/SKILL.md, doc-writer/SKILL.md, security-auditor/SKILL.md, perf-analyzer/SKILL.md
+## Development Workflow
+
+- [AGENTS.md](AGENTS.md): Available Copilot agents for code review, testing, documentation, and analysis
+- [.github/skills/](./github/skills/): Reusable AI skills for automated workflows including commit generation, documentation, code coverage analysis, and architectural planning
+
+## Optional
+
+- [LICENSE](LICENSE): License information for the project
+- [.editorconfig](.editorconfig): Editor configuration for consistent code style
+- [.github/](.github/): GitHub configuration including agent definitions and skill packages
