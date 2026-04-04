@@ -1,8 +1,8 @@
 # theblas
 
-> theblas is a minimal C++ library scaffold demonstrating best practices for modern C++ projects. It includes a CMake build system, comprehensive unit tests, and infrastructure for AI-assisted development with GitHub Copilot agents and reusable skills.
+> theblas is a small C++17 library implementing a simple, educational subset of Netlib BLAS Level 1 routines for real and complex vectors, with CMake-based build and tests.
 
-This project serves as a template for creating well-structured C++ libraries with professional development practices, including continuous integration, code quality tools, and AI-enhanced workflows.
+The repository is useful as a compact reference for BLAS-like APIs (`s*`, `d*`, `c*`, `z*`) and stride-based vector operations, plus baseline tests for correctness.
 
 ## Documentation
 
@@ -17,13 +17,13 @@ This project serves as a template for creating well-structured C++ libraries wit
 ## Source Code
 
 - [include/theblas/theblas.h](include/theblas/theblas.h): Public C++ API header with library declarations
-- [src/theblas.cpp](src/theblas.cpp): Implementation of library functions
+- [src/theblas.cpp](src/theblas.cpp): Level 1 BLAS routine implementations (real/complex vectors and rotations)
 - [tests/test_theblas.cpp](tests/test_theblas.cpp): Unit tests for library correctness
 
 ## Development Workflow
 
 - [AGENTS.md](AGENTS.md): Available Copilot agents for code review, testing, documentation, and analysis
-- [.github/skills/](./github/skills/): Reusable AI skills for automated workflows including commit generation, documentation, code coverage analysis, and architectural planning
+- [.github/skills/](.github/skills/): Reusable AI skills for automated workflows including commit generation, documentation, code coverage analysis, and architectural planning
 
 ## Optional
 
