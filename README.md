@@ -83,6 +83,31 @@ cmake --build .
 ctest
 ```
 
+## Build with Makefile
+
+This repository also provides a top-level `Makefile` with common development targets.
+
+```bash
+make help
+make build
+make test
+make install
+make docs
+make clean
+```
+
+Useful variables:
+
+- `BUILD_DIR` (default: `build`)
+- `CONFIG` (default: `Release`)
+- `PREFIX` (default: `./install`)
+
+Example:
+
+```bash
+make test CONFIG=Debug BUILD_DIR=build-debug
+```
+
 ## Dev Container
 
 This repository includes a VS Code dev container in `.devcontainer/`.
