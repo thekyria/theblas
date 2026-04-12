@@ -56,6 +56,8 @@ jobs:
     - name: Install Doxygen
       run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
 
+    - uses: actions/checkout@v4
+
     - name: Generate Doxygen docs
       run: doxygen Doxyfile
 
@@ -68,3 +70,4 @@ jobs:
 
     - name: Create documentation (wrapper for doxygen)
       run: make docs
+
