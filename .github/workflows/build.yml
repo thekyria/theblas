@@ -58,3 +58,9 @@ jobs:
         name: doxygen-html
         path: docs/doxygen/html
         if-no-files-found: error
+
+    - name: Build and test (wrapper for CMake)
+      run: make test
+
+    - name: Create documentation (wrapper for doxygen)
+      run: make docs
