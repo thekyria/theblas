@@ -87,6 +87,22 @@ ctest
 
 This repository includes a VS Code dev container in `.devcontainer/`.
 
+## GitHub Codespaces
+
+This repository is ready for GitHub Codespaces using the same `.devcontainer/` configuration.
+
+To launch:
+
+1. Open the repository on GitHub.
+2. Click `Code` -> `Codespaces` -> `Create codespace on main`.
+3. Wait for the environment to build.
+
+After creation, the container runs:
+
+```bash
+cmake -S . -B build && cmake --build build && ctest --test-dir build
+```
+
 To use it:
 
 1. Install Docker and the VS Code Dev Containers extension.
