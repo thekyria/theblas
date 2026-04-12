@@ -22,9 +22,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install Doxygen
-      run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
-
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
@@ -49,6 +46,16 @@ jobs:
           build/tests/test_theblas
         if-no-files-found: error
 
+    - name: Build and test (wrapper for CMake)
+      run: make test
+
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Doxygen
+      run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+
     - name: Generate Doxygen docs
       run: doxygen Doxyfile
 
@@ -58,9 +65,6 @@ jobs:
         name: doxygen-html
         path: docs/doxygen/html
         if-no-files-found: error
-
-    - name: Build and test (wrapper for CMake)
-      run: make test
 
     - name: Create documentation (wrapper for doxygen)
       run: make docs
