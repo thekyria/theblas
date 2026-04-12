@@ -26,3 +26,7 @@
 # Doxygen generated documentation
 docs/doxygen/*
 !docs/doxygen/.gitkeep
+
+# Local install artifacts (keep only marker ignore file)
+install/*
+!install/.gitignore

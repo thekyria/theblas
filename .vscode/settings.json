@@ -5,6 +5,7 @@
         "git commit": true,
         "git push": true,
         "codespell": true,
-        "set": true
+        "set": true,
+        "ctest": true
     }
 }

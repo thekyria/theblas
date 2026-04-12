@@ -83,6 +83,44 @@ cmake --build .
 ctest
 ```
 
+## Use with CPM.cmake
+
+This project is CPM-friendly and exposes a namespaced target: `theblas::theblas`.
+
+```cmake
+include(cmake/CPM.cmake)
+
+CPMAddPackage(
+	NAME theblas
+	GITHUB_REPOSITORY thekyria_github/theblas
+	GIT_TAG main
+)
+
+target_link_libraries(your_target PRIVATE theblas::theblas)
+```
+
+Notes:
+
+- As a dependency, tests are disabled by default.
+- To force tests on in a superproject, set `THEBLAS_BUILD_TESTS=ON`.
+
+## Use with find_package (CONFIG)
+
+After installing the project, consumers can use CMake package config mode:
+
+```cmake
+find_package(theblas CONFIG REQUIRED)
+target_link_libraries(your_target PRIVATE theblas::theblas)
+```
+
+You can install locally with:
+
+```bash
+cmake -S . -B build
+cmake --build build
+cmake --install build --prefix ./install
+```
+
 ## Generate API Docs (Doxygen)
 
 Generate HTML API documentation from the Doxygen comments in `include/theblas/theblas.h`.
