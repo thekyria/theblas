@@ -83,6 +83,22 @@ cmake --build .
 ctest
 ```
 
+## Dev Container
+
+This repository includes a VS Code dev container in `.devcontainer/`.
+
+To use it:
+
+1. Install Docker and the VS Code Dev Containers extension.
+2. Open the repository in VS Code.
+3. Run `Dev Containers: Reopen in Container`.
+
+The container provisions C++/CMake tooling plus Doxygen/Graphviz, then runs:
+
+```bash
+cmake -S . -B build && cmake --build build && ctest --test-dir build
+```
+
 ## Use with CPM.cmake
 
 This project is CPM-friendly and exposes a namespaced target: `theblas::theblas`.
