@@ -6,6 +6,7 @@
         "git push": true,
         "codespell": true,
         "set": true,
-        "ctest": true
+        "ctest": true,
+        "true": true
     }
 }
