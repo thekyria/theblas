@@ -82,3 +82,60 @@ cmake ..
 cmake --build .
 ctest
 ```
+
+## Generate API Docs (Doxygen)
+
+Generate HTML API documentation from the Doxygen comments in `include/theblas/theblas.h`.
+
+### 1. Install Doxygen
+
+Ubuntu/Debian:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y doxygen graphviz
+```
+
+### 2. Create a Doxygen configuration file
+
+From the repository root:
+
+```bash
+doxygen -g Doxyfile
+```
+
+### 3. Configure Doxygen
+
+Edit `Doxyfile` and set at least these options:
+
+```txt
+PROJECT_NAME           = "theblas"
+INPUT                  = include src README.md
+FILE_PATTERNS          = *.h *.hpp *.cpp
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+OUTPUT_DIRECTORY       = docs/doxygen
+WARN_IF_UNDOCUMENTED   = YES
+```
+
+Optional call graph support:
+
+```txt
+HAVE_DOT               = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+```
+
+### 4. Generate documentation
+
+```bash
+doxygen Doxyfile
+```
+
+### 5. Open the generated docs
+
+Main page:
+
+- `docs/doxygen/html/index.html`

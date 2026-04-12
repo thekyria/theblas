@@ -22,3 +22,7 @@
 !.vscode/extensions.json
 !.vscode/tasks.json
 !.vscode/launch.json
+
+# Doxygen generated documentation
+docs/doxygen/*
+!docs/doxygen/.gitkeep
