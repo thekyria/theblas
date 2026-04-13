@@ -46,6 +46,17 @@ repos:
         args: ['-i']
         types: [c++, c]
 
+  # C++ static analysis with clang-tidy
+  # Requires compile_commands.json in the build directory (cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON).
+  - repo: local
+    hooks:
+      - id: clang-tidy
+        name: clang-tidy
+        language: system
+        entry: clang-tidy
+        args: ['-p', 'build']
+        types: [c++]
+
   # C++ static analysis (optional: requires cppcheck)
   # Uncomment to enable; requires: apt-get install cppcheck
   # - repo: https://github.com/pocc/pre-commit-hooks

@@ -151,6 +151,9 @@ Run them after building:
 - `cppcheck` (for static C++ analysis; warning, style, performance, portability checks)
 - Install on Ubuntu/Debian: `sudo apt-get install cppcheck`
 - Install on macOS: `brew install cppcheck`
+- `clang-tidy` (for AST-based lint, modernization, and bug-prone pattern checks)
+- Install on Ubuntu/Debian: `sudo apt-get install clang-tidy`
+- Install on macOS: `brew install llvm` (provides `clang-tidy`)
 
 **Pre-commit (Optional, recommended for contributors):**
 
@@ -224,9 +227,14 @@ See [.pre-commit-config.yaml](.pre-commit-config.yaml) for full configuration an
 
 ## Static Analysis
 
-This repository uses [cppcheck](https://cppcheck.sourceforge.io/) for static analysis covering warnings, style, performance, and portability.
+This repository uses both [cppcheck](https://cppcheck.sourceforge.io/) and
+[clang-tidy](https://clang.llvm.org/extra/clang-tidy/) for static analysis.
+Both tools run in CI on every push and pull request.
 
-Run cppcheck from the repository root:
+### cppcheck
+
+Covers data-flow bugs, style, performance, and portability. Does not require
+a compilation database.
 
 ```bash
 cppcheck --enable=warning,style,performance,portability \
@@ -235,7 +243,33 @@ cppcheck --enable=warning,style,performance,portability \
   -I include src include tests examples
 ```
 
-A non-zero exit code means findings were reported. Use `// cppcheck-suppress <id>` inline comments to suppress false positives where necessary.
+A non-zero exit code means findings were reported. Use `// cppcheck-suppress <id>`
+inline comments to suppress false positives where necessary.
+
+### clang-tidy
+
+Covers AST-based checks: bug-prone patterns, modernization, performance, and
+readability. Requires a compilation database.
+
+First configure CMake with compile commands export enabled:
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Debug
+```
+
+Then run clang-tidy:
+
+```bash
+clang-tidy -p build \
+  src/theblas.cpp \
+  tests/test_theblas.cpp \
+  examples/vector_ops.cpp \
+  examples/complex_ops.cpp
+```
+
+The [`.clang-tidy`](.clang-tidy) file at the repository root controls which
+checks are enabled. Use `// NOLINT(<check-name>)` inline comments to suppress
+false positives on specific lines.
 
 ## Build
 

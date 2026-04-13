@@ -12,7 +12,8 @@
         "cmake": true,
         "command": true,
         "pre-commit": true,
-        "cppcheck": true
+        "cppcheck": true,
+        "clang-tidy": true
     },
     "makefile.configureOnOpen": false
 }

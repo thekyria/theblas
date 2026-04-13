@@ -266,7 +266,7 @@ void rot_complex_real_impl(int n, std::complex<T>* x, int incx, std::complex<T>*
 }
 
 template <typename T>
-void rotg_impl(T* a, T* b, T* c, T* s) {
+void rotg_impl(T* a, T* b, T* c, T* s) { // NOLINT(bugprone-easily-swappable-parameters)
 	const T roe = (std::abs(*a) > std::abs(*b)) ? *a : *b;
 	const T scale = std::abs(*a) + std::abs(*b);
 	if (scale == static_cast<T>(0)) {
@@ -345,7 +345,7 @@ void rotm_impl(int n, T* x, int incx, T* y, int incy, const T* p) {
 }
 
 template <typename T>
-void rotmg_impl(T* d1, T* d2, T* b1, T b2, T* p) {
+void rotmg_impl(T* d1, T* d2, T* b1, T b2, T* p) { // NOLINT(bugprone-easily-swappable-parameters)
 	if (*d1 <= static_cast<T>(0) || *d2 <= static_cast<T>(0)) {
 		p[0] = static_cast<T>(-2);
 		p[1] = p[2] = p[3] = p[4] = static_cast<T>(0);

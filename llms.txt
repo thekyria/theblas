@@ -1,32 +1,57 @@
 # theblas
 
-> theblas is a small C++17 library implementing a simple, educational subset of Netlib BLAS Level 1 routines for real and complex vectors, with CMake-based build and tests.
+> theblas is a minimal C++17 library implementing Netlib BLAS Level 1 routines for real and complex vectors, including rotations, with a CMake-based build system, presets, cross-compilation toolchains, examples, and a full static analysis and pre-commit contributor workflow.
 
-The repository is useful as a compact reference for BLAS-like APIs (`s*`, `d*`, `c*`, `z*`) and stride-based vector operations, plus baseline tests for correctness.
+The library covers all Level 1 BLAS routine families (`?swap`, `?copy`, `?axpy`, `?scal`, `?dot`, `?nrm2`, `?asum`, `i?amax`, `?rot`, `?rotg`, `?rotm`, `?rotmg`) in single/double precision real and complex variants (`s*`, `d*`, `c*`, `z*`). BLAS-style stride parameters (`incx`, `incy`) and 1-based index returns are honoured. The project serves as a compact, well-tested reference for BLAS-like APIs in idiomatic C++17.
 
 ## Documentation
 
-- [README](README.md): Project overview, build instructions, and usage examples
+- [README](README.md): Project overview, implemented routines, build instructions, CMake options, presets, cross-compilation, static analysis, pre-commit, Makefile shortcuts, CPM/find_package integration, and Doxygen generation
+- [CONTRIBUTING](CONTRIBUTING.md): Guidelines for contributing, code style, and pull request process
 - [Code of Conduct](CODE_OF_CONDUCT.md): Community guidelines for respectful participation
-
-## Building and Testing
-
-- [CMakeLists.txt](CMakeLists.txt): CMake build configuration for library and tests
-- [tests/CMakeLists.txt](tests/CMakeLists.txt): Test suite configuration
+- [AGENTS](AGENTS.md): Available Copilot agents (CodeReviewer, Tester, DocWriter, SecurityAuditor, PerfAnalyzer, Explore) and reusable AI skills
 
 ## Source Code
 
-- [include/theblas/theblas.h](include/theblas/theblas.h): Public C++ API header with library declarations
-- [src/theblas.cpp](src/theblas.cpp): Level 1 BLAS routine implementations (real/complex vectors and rotations)
-- [tests/test_theblas.cpp](tests/test_theblas.cpp): Unit tests for library correctness
+- [include/theblas/theblas.h](include/theblas/theblas.h): Complete public C++ API — all Level 1 BLAS declarations with Doxygen comments
+- [src/theblas.cpp](src/theblas.cpp): All Level 1 BLAS routine implementations (real/complex, rotations, templated helpers)
+- [tests/test_theblas.cpp](tests/test_theblas.cpp): Unit tests covering every implemented routine using `assert` and `almost_equal` helpers
 
-## Development Workflow
+## Examples
 
-- [AGENTS.md](AGENTS.md): Available Copilot agents for code review, testing, documentation, and analysis
-- [.github/skills/](.github/skills/): Reusable AI skills for automated workflows including commit generation, documentation, code coverage analysis, and architectural planning
+- [examples/vector_ops.cpp](examples/vector_ops.cpp): Demonstrates `snrm2`, `sscal`, `saxpy`, `sdot`, `isamax` with annotated output
+- [examples/complex_ops.cpp](examples/complex_ops.cpp): Demonstrates `dznrm2`, `zdscal`, `zaxpy`, `zdotc` with annotated output
+
+## Build and Configuration
+
+- [CMakeLists.txt](CMakeLists.txt): Root CMake build — library target, install, options (`THEBLAS_ENABLE_IPO`, `THEBLAS_ENABLE_RELEASE_HARDENING`, `THEBLAS_ENABLE_SANITIZERS`, `THEBLAS_ENABLE_STRICT_WARNINGS`, `THEBLAS_WARNINGS_AS_ERRORS`), `CMAKE_EXPORT_COMPILE_COMMANDS ON`
+- [CMakePresets.json](CMakePresets.json): Configure/build/test presets for `gcc-debug`, `gcc-release`, `gcc-debug-sanitized`, `clang-debug`, `clang-debug-sanitized`, `clang-release`, `msvc-release`, `arm-linux-debug`, `arm-linux-release`, `arm-none-eabi-debug`, `arm-none-eabi-release`
+- [tests/CMakeLists.txt](tests/CMakeLists.txt): CTest integration for the test suite
+- [examples/CMakeLists.txt](examples/CMakeLists.txt): Example targets (`example_vector_ops`, `example_complex_ops`)
+- [Makefile](Makefile): Convenience wrapper for `build`, `test`, `install`, `docs`, `clean` with `BUILD_DIR` and `CONFIG` variables
+
+## Toolchains
+
+- [cmake/toolchains/clang.cmake](cmake/toolchains/clang.cmake): Clang/LLVM compiler toolchain with LLVM archiver/ranlib
+- [cmake/toolchains/msvc.cmake](cmake/toolchains/msvc.cmake): MSVC toolchain for Windows
+- [cmake/toolchains/arm-linux-gnueabihf.cmake](cmake/toolchains/arm-linux-gnueabihf.cmake): ARM 32-bit hard-float EABI cross-compilation for embedded Linux (`-march=armv7-a -mfpu=neon`)
+- [cmake/toolchains/arm-none-eabi.cmake](cmake/toolchains/arm-none-eabi.cmake): ARM Cortex-M bare-metal cross-compilation with `THEBLAS_ARM_MCU` variable (default `cortex-m4`)
+
+## Static Analysis and Code Quality
+
+- [.clang-tidy](.clang-tidy): clang-tidy configuration — enables `bugprone-*`, `modernize-*`, `performance-*`, `portability-*`, `readability-*`, `clang-analyzer-*`; `WarningsAsErrors: "*"`; `HeaderFilterRegex` scoped to `include/theblas/`
+- [.pre-commit-config.yaml](.pre-commit-config.yaml): Pre-commit hooks — trailing-whitespace, end-of-file-fixer, YAML/JSON/TOML validation, codespell, cmake-format, cmake-lint, clang-format, clang-tidy, conventional-commit, markdownlint-cli2
+- [.codespellrc](.codespellrc): codespell configuration — skip patterns and ignore-words-list
+- [.markdownlint-cli2.yaml](.markdownlint-cli2.yaml): markdownlint configuration (MD013 line-length rule disabled)
+
+## CI/CD
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): GitHub Actions pipeline — installs cppcheck and clang-tidy, runs cppcheck static analysis, configures CMake with compile commands export, runs clang-tidy, builds, runs CTest, uploads artifacts, generates Doxygen docs
 
 ## Optional
 
-- [LICENSE](LICENSE): License information for the project
-- [.editorconfig](.editorconfig): Editor configuration for consistent code style
-- [.github/](.github/): GitHub configuration including agent definitions and skill packages
+- [LICENSE](LICENSE): MIT license
+- [Doxyfile](Doxyfile): Doxygen configuration for generating HTML API documentation into `docs/doxygen/html/`
+- [.editorconfig](.editorconfig): Editor configuration for consistent indentation and line endings
+- [.clang-format](.clang-format): clang-format style configuration for C++ source files
+- [.github/](.github/): Copilot agent definitions, reusable skills, and repository instructions

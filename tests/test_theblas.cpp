@@ -66,8 +66,7 @@ int main() {
     {
         const float x[] = {1.0F, 2.0F, 3.0F};
         const float y[] = {4.0F, 5.0F, 6.0F};
-        const float dot = theblas::sdot(3, x, 1, y, 1);
-        assert(almost_equal(dot, 32.0F));
+        assert(almost_equal(theblas::sdot(3, x, 1, y, 1), 32.0F));
     }
 
     {
