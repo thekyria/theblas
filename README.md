@@ -82,6 +82,7 @@ The `examples/` folder contains standalone programs demonstrating library usage.
 | --- | --- |
 | [`examples/vector_ops.cpp`](examples/vector_ops.cpp) | `snrm2`, `sscal`, `saxpy`, `sdot`, `isamax` |
 | [`examples/complex_ops.cpp`](examples/complex_ops.cpp) | `dznrm2`, `zdscal`, `zaxpy`, `zdotc` |
+| [`examples/benchmark.cpp`](examples/benchmark.cpp) | Microbenchmark: all real + complex routines, bandwidth reporting |
 
 Examples are built automatically when building the project as the top-level CMake project. To disable:
 
@@ -227,6 +228,62 @@ pre-commit run --all-files
 - **Markdown linting**
 
 See [.pre-commit-config.yaml](.pre-commit-config.yaml) for full configuration and optional hooks.
+
+## Profiling
+
+### Microbenchmark
+
+`examples/benchmark.cpp` measures each Level-1 routine using `std::chrono`
+timing loops (5 warm-up + 20 timed runs, best time reported) and prints
+achieved memory bandwidth. Build in Release mode for meaningful numbers:
+
+```bash
+cmake -B build-release -DCMAKE_BUILD_TYPE=Release
+cmake --build build-release
+./build-release/examples/example_benchmark
+```
+
+Sweep vector sizes to observe cache hierarchy effects:
+
+```bash
+./build-release/examples/example_benchmark 256       # L1 cache
+./build-release/examples/example_benchmark 16384     # L2 cache
+./build-release/examples/example_benchmark 1048576   # L3 / DRAM (default)
+```
+
+### Instruction-Level Profiling with perf
+
+No recompilation required. Records CPU events and call graphs:
+
+```bash
+# Hardware event counters
+perf stat -e cycles,instructions,cache-misses \
+  ./build-release/examples/example_benchmark
+
+# Flame graph / call graph
+perf record -g ./build-release/examples/example_benchmark
+perf report
+```
+
+### Valgrind / Callgrind
+
+Instruction-accurate simulation; slower but no hardware counter required:
+
+```bash
+valgrind --tool=callgrind \
+  ./build-release/examples/example_benchmark 65536
+kcachegrind callgrind.out.*
+```
+
+### gprof (GCC instrumentation)
+
+```bash
+cmake -B build-gprof -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_CXX_FLAGS="-pg" -DCMAKE_EXE_LINKER_FLAGS="-pg"
+cmake --build build-gprof
+./build-gprof/examples/example_benchmark
+gprof build-gprof/examples/example_benchmark gmon.out | less
+```
 
 ## Static Analysis
 

@@ -6,6 +6,14 @@
 /*.cmake
 /*.log
 
+# profiling outputs
+*.prof
+*.gcda
+*.gcno
+*.gcov
+perf*.data
+callgrind.out.*
+
 # Visual Studio
 *.vcxproj*
 *.sln
