@@ -12,9 +12,7 @@ option(THEBLAS_ENABLE_STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(THEBLAS_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(THEBLAS_ENABLE_SANITIZERS
        "Enable ASan/UBSan for Debug builds (Clang/GCC)" OFF)
-option(THEBLAS_ENABLE_IPO
-       "Enable interprocedural optimization for release configurations when"
-       "supported" ON)
+option(THEBLAS_ENABLE_IPO "Enable IPO/LTO for release builds when supported" ON)
 option(THEBLAS_ENABLE_RELEASE_HARDENING
        "Enable additional hardening for release configurations on Clang/GCC" ON)
 
@@ -131,9 +129,9 @@ if(THEBLAS_ENABLE_RELEASE_HARDENING AND CMAKE_CXX_COMPILER_ID MATCHES
             $<$<CONFIG:MinSizeRel>:_FORTIFY_SOURCE=3>)
   target_compile_options(
     theblas
-    PRIVATE
-      $<$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>,$<CONFIG:MinSizeRel>>
-      :-fstack-protector-strong>)
+    PRIVATE $<$<CONFIG:Release>:-fstack-protector-strong>
+            $<$<CONFIG:RelWithDebInfo>:-fstack-protector-strong>
+            $<$<CONFIG:MinSizeRel>:-fstack-protector-strong>)
 endif()
 
 install(
