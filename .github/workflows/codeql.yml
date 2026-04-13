@@ -1,0 +1,45 @@
+name: CodeQL Analysis
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+  schedule:
+    # Run weekly on Monday at 08:00 UTC to catch newly disclosed vulnerabilities.
+    - cron: "0 8 * * 1"
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: Analyze (C++)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: c-cpp
+          # Use the security-extended query suite for a broader set of checks.
+          queries: security-extended
+
+      - name: Configure CMake
+        run: |
+          cmake -S . -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DTHEBLAS_BUILD_TESTS=ON \
+            -DTHEBLAS_BUILD_EXAMPLES=ON
+
+      - name: Build
+        run: cmake --build build
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: "/language:c-cpp"
