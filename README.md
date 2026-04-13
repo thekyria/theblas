@@ -95,6 +95,18 @@ ctest --preset gcc-debug
 ```
 
 ```bash
+cmake --preset gcc-release
+cmake --build --preset gcc-release
+ctest --preset gcc-release
+```
+
+```bash
+cmake --preset gcc-debug-sanitized
+cmake --build --preset gcc-debug-sanitized
+ctest --preset gcc-debug-sanitized
+```
+
+```bash
 cmake --preset clang-debug-sanitized
 cmake --build --preset clang-debug-sanitized
 ctest --preset clang-debug-sanitized
@@ -109,6 +121,8 @@ ctest --preset clang-release
 Available configure presets:
 
 - `gcc-debug`
+- `gcc-release`
+- `gcc-debug-sanitized`
 - `clang-debug-sanitized`
 - `clang-release`
 - `msvc-release`
@@ -131,6 +145,11 @@ Configurable CMake options:
 - `THEBLAS_ENABLE_STRICT_WARNINGS=ON|OFF` (default: `ON`)
 - `THEBLAS_WARNINGS_AS_ERRORS=ON|OFF` (default: `OFF`)
 - `THEBLAS_ENABLE_SANITIZERS=ON|OFF` (default: `OFF`, Debug only, Clang/GCC)
+- `THEBLAS_ENABLE_IPO=ON|OFF` (default: `ON`, enables interprocedural optimization/LTO for `Release`, `RelWithDebInfo`, and `MinSizeRel` when supported)
+- `THEBLAS_ENABLE_RELEASE_HARDENING=ON|OFF` (default: `ON`, enables `_FORTIFY_SOURCE=3` and stack protector for non-Debug Clang/GCC builds)
+
+Release configurations use the compiler toolchain's standard CMake optimization defaults and then add IPO/LTO when available. This avoids overriding compiler-specific defaults such as GCC/Clang `Release` optimization levels.
+On Linux with Clang, IPO/LTO additionally requires a compatible LLVM linker such as `ld.lld`; if it is not available, the project falls back to the normal compiler release optimization defaults.
 
 Example:
 
@@ -142,6 +161,17 @@ cmake -S . -B build \
 	-DTHEBLAS_ENABLE_SANITIZERS=ON
 cmake --build build
 ctest --test-dir build
+```
+
+Release example:
+
+```bash
+cmake -S . -B build-release \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DTHEBLAS_ENABLE_IPO=ON \
+	-DTHEBLAS_ENABLE_RELEASE_HARDENING=ON
+cmake --build build-release
+ctest --test-dir build-release
 ```
 
 ### Toolchain Files

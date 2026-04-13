@@ -11,5 +11,6 @@
         "make": true,
         "cmake": true,
         "command": true
-    }
+    },
+    "makefile.configureOnOpen": false
 }

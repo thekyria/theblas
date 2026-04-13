@@ -27,6 +27,22 @@
       }
     },
     {
+      "name": "gcc-release",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "gcc-debug-sanitized",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "THEBLAS_ENABLE_SANITIZERS": "ON",
+        "THEBLAS_WARNINGS_AS_ERRORS": "ON"
+      }
+    },
+    {
       "name": "clang-debug-sanitized",
       "inherits": "base",
       "cacheVariables": {
@@ -60,6 +76,14 @@
       "configurePreset": "gcc-debug"
     },
     {
+      "name": "gcc-release",
+      "configurePreset": "gcc-release"
+    },
+    {
+      "name": "gcc-debug-sanitized",
+      "configurePreset": "gcc-debug-sanitized"
+    },
+    {
       "name": "clang-debug-sanitized",
       "configurePreset": "clang-debug-sanitized"
     },
@@ -77,6 +101,20 @@
     {
       "name": "gcc-debug",
       "configurePreset": "gcc-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "gcc-release",
+      "configurePreset": "gcc-release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "gcc-debug-sanitized",
+      "configurePreset": "gcc-debug-sanitized",
       "output": {
         "outputOnFailure": true
       }

@@ -8,9 +8,12 @@ option(THEBLAS_BUILD_TESTS "Build theblas tests" ${PROJECT_IS_TOP_LEVEL})
 option(THEBLAS_ENABLE_STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(THEBLAS_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(THEBLAS_ENABLE_SANITIZERS "Enable ASan/UBSan for Debug builds (Clang/GCC)" OFF)
+option(THEBLAS_ENABLE_IPO "Enable interprocedural optimization for release configurations when supported" ON)
+option(THEBLAS_ENABLE_RELEASE_HARDENING "Enable additional hardening for release configurations on Clang/GCC" ON)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
+include(CheckIPOSupported)
 
 add_library(theblas
     src/theblas.cpp
@@ -88,19 +91,40 @@ if(THEBLAS_ENABLE_SANITIZERS)
     endif()
 endif()
 
-if(MSVC)
-    target_compile_options(theblas PRIVATE
-        $<$<CONFIG:Release>:/O2>
-        $<$<CONFIG:RelWithDebInfo>:/O2>
-    )
-else()
-    target_compile_options(theblas PRIVATE
-        $<$<CONFIG:Release>:-O2>
-        $<$<CONFIG:RelWithDebInfo>:-O2>
-    )
+if(THEBLAS_ENABLE_IPO)
+    set(theblas_enable_ipo_for_target TRUE)
+
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT MSVC)
+        find_program(THEBLAS_LLD NAMES ld.lld lld)
+        if(NOT THEBLAS_LLD)
+            set(theblas_enable_ipo_for_target FALSE)
+            message(STATUS "IPO/LTO disabled for Clang: no compatible LLVM linker (ld.lld) was found.")
+        endif()
+    endif()
+
+    if(theblas_enable_ipo_for_target)
+        check_ipo_supported(RESULT theblas_ipo_supported OUTPUT theblas_ipo_error)
+    else()
+        set(theblas_ipo_supported FALSE)
+    endif()
+
+    if(theblas_ipo_supported)
+        set_property(TARGET theblas PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
+        set_property(TARGET theblas PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO ON)
+        set_property(TARGET theblas PROPERTY INTERPROCEDURAL_OPTIMIZATION_MINSIZEREL ON)
+    elseif(theblas_ipo_error)
+        message(STATUS "IPO/LTO not enabled: ${theblas_ipo_error}")
+    endif()
+endif()
+
+if(THEBLAS_ENABLE_RELEASE_HARDENING AND CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
     target_compile_definitions(theblas PRIVATE
         $<$<CONFIG:Release>:_FORTIFY_SOURCE=3>
         $<$<CONFIG:RelWithDebInfo>:_FORTIFY_SOURCE=3>
+        $<$<CONFIG:MinSizeRel>:_FORTIFY_SOURCE=3>
+    )
+    target_compile_options(theblas PRIVATE
+        $<$<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>,$<CONFIG:MinSizeRel>>:-fstack-protector-strong>
     )
 endif()
 
