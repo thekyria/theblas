@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Generate the version header from the project VERSION field.
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/theblas/version.h.in
+               ${CMAKE_CURRENT_BINARY_DIR}/include/theblas/version.h @ONLY)
+
 option(THEBLAS_BUILD_TESTS "Build theblas tests" ${PROJECT_IS_TOP_LEVEL})
 option(THEBLAS_ENABLE_STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(THEBLAS_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
@@ -26,8 +30,10 @@ add_library(theblas src/theblas.cpp)
 add_library(theblas::theblas ALIAS theblas)
 
 target_include_directories(
-  theblas PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-                 $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+  theblas
+  PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 if(THEBLAS_ENABLE_STRICT_WARNINGS)
   if(MSVC)
@@ -143,6 +149,8 @@ install(
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/include/theblas/version.h
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/theblas)
 
 write_basic_package_version_file(
   ${CMAKE_CURRENT_BINARY_DIR}/theblasConfigVersion.cmake

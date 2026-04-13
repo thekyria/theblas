@@ -1,5 +1,7 @@
 #pragma once
 
+#include "theblas/version.h"
+
 #include <complex>
 #include <cstddef>
 
