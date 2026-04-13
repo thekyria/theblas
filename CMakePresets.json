@@ -43,6 +43,14 @@
       }
     },
     {
+      "name": "clang-debug",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/clang.cmake"
+      }
+    },
+    {
       "name": "clang-debug-sanitized",
       "inherits": "base",
       "cacheVariables": {
@@ -68,6 +76,38 @@
         "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/msvc.cmake",
         "THEBLAS_WARNINGS_AS_ERRORS": "ON"
       }
+    },
+    {
+      "name": "arm-linux-debug",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arm-linux-gnueabihf.cmake"
+      }
+    },
+    {
+      "name": "arm-linux-release",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arm-linux-gnueabihf.cmake"
+      }
+    },
+    {
+      "name": "arm-none-eabi-debug",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arm-none-eabi.cmake"
+      }
+    },
+    {
+      "name": "arm-none-eabi-release",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arm-none-eabi.cmake"
+      }
     }
   ],
   "buildPresets": [
@@ -84,6 +124,10 @@
       "configurePreset": "gcc-debug-sanitized"
     },
     {
+      "name": "clang-debug",
+      "configurePreset": "clang-debug"
+    },
+    {
       "name": "clang-debug-sanitized",
       "configurePreset": "clang-debug-sanitized"
     },
@@ -95,6 +139,22 @@
       "name": "msvc-release",
       "configurePreset": "msvc-release",
       "configuration": "Release"
+    },
+    {
+      "name": "arm-linux-debug",
+      "configurePreset": "arm-linux-debug"
+    },
+    {
+      "name": "arm-linux-release",
+      "configurePreset": "arm-linux-release"
+    },
+    {
+      "name": "arm-none-eabi-debug",
+      "configurePreset": "arm-none-eabi-debug"
+    },
+    {
+      "name": "arm-none-eabi-release",
+      "configurePreset": "arm-none-eabi-release"
     }
   ],
   "testPresets": [
@@ -120,6 +180,13 @@
       }
     },
     {
+      "name": "clang-debug",
+      "configurePreset": "clang-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
       "name": "clang-debug-sanitized",
       "configurePreset": "clang-debug-sanitized",
       "output": {
@@ -137,6 +204,34 @@
       "name": "msvc-release",
       "configurePreset": "msvc-release",
       "configuration": "Release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "arm-linux-debug",
+      "configurePreset": "arm-linux-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "arm-linux-release",
+      "configurePreset": "arm-linux-release",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "arm-none-eabi-debug",
+      "configurePreset": "arm-none-eabi-debug",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "arm-none-eabi-release",
+      "configurePreset": "arm-none-eabi-release",
       "output": {
         "outputOnFailure": true
       }

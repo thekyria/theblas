@@ -74,6 +74,126 @@ theblas::saxpy(3, 0.5f, x, 1, y, 1);
 // y = [10.5, 21.0, 31.5]
 ```
 
+## Dependencies
+
+### Minimum Requirements
+
+- **C++17** or later
+- **CMake 3.15** or later
+- A C++ compiler with C++17 support:
+  - GCC 5.0+
+  - Clang 3.5+
+  - MSVC 2017+
+
+### Build Tools
+
+- **Ninja** (recommended for presets workflow; optional if using Make or IDE generators)
+
+### Compiler-Specific
+
+**GCC/Clang:**
+
+- `gcc` / `g++` or `clang` / `clang++`
+- Standard C++ runtime library (libstdc++ for GCC, libc++ for Clang)
+
+**MSVC (Windows):**
+
+- Visual Studio 2017 or later with C++ workload
+- Build tools can be installed via Visual Studio installer
+
+### Optional Tools
+
+**Doxygen Documentation:**
+
+- `doxygen` (for generating API documentation from source comments)
+- `graphviz` (optional, for call graphs in Doxygen output)
+
+**Cross-Compilation to ARM 32-bit (Embedded Linux):**
+
+- `arm-linux-gnueabihf-gcc` / `arm-linux-gnueabihf-g++`
+- On Ubuntu/Debian: `sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf`
+
+**Cross-Compilation to ARM Cortex-M (Bare-Metal):**
+
+- `arm-none-eabi-gcc` / `arm-none-eabi-g++`
+- Download from: [ARM GNU Toolchain](https://developer.arm.com/downloads/-/gnu-rm)
+- Or on Ubuntu/Debian: `sudo apt-get install gcc-arm-none-eabi`
+
+**Testing & Sanitizers:**
+
+- Built-in support for AddressSanitizer (ASan) and UndefinedBehaviorSanitizer (UBSan) on GCC/Clang
+- No additional dependencies required; sanitizers are controlled via CMake options
+
+**Pre-commit (Optional, recommended for contributors):**
+
+- `pre-commit` (for automated code quality and Git hook checks)
+- Install: `pip install pre-commit`
+
+### Installation Examples
+
+**Ubuntu/Debian (GCC, Clang, Ninja):**
+
+```bash
+sudo apt-get update
+sudo apt-get install -y cmake ninja-build gcc g++ clang
+# Optional: for Doxygen and cross-compile
+sudo apt-get install -y doxygen graphviz gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf gcc-arm-none-eabi
+```
+
+**macOS (GCC/Clang via Homebrew):**
+
+```bash
+brew install cmake ninja clang
+# Optional:
+brew install doxygen graphviz
+```
+
+**Windows (MSVC + Visual Studio):**
+
+1. Install Visual Studio 2017 or later with C++ workload.
+2. Install CMake from https://cmake.org/download/ or via `choco install cmake` (Chocolatey).
+3. (Optional) Install Ninja: `choco install ninja` or build from source.
+
+## Pre-commit
+
+This repository uses [pre-commit](https://pre-commit.com/) to enforce code quality and Git best practices.
+
+### Setup
+
+Install `pre-commit` and activate Git hooks:
+
+```bash
+pip install pre-commit
+pre-commit install
+pre-commit install --hook-type commit-msg
+```
+
+### Run Pre-commit Checks
+
+Run all checks on staged files before committing:
+
+```bash
+pre-commit run
+```
+
+Run all checks on all files:
+
+```bash
+pre-commit run --all-files
+```
+
+### Included Hooks
+
+- **Trailing whitespace** and **end-of-file fixer**
+- **YAML, JSON, TOML validation**
+- **Spell checking** with codespell
+- **CMake formatting and linting** (cmake-format, cmake-lint)
+- **C++ code formatting** with clang-format
+- **Conventional commit** validation
+- **Markdown linting**
+
+See [.pre-commit-config.yaml](.pre-commit-config.yaml) for full configuration and optional hooks.
+
 ## Build
 
 ### Build with CMake Presets
@@ -107,6 +227,12 @@ ctest --preset gcc-debug-sanitized
 ```
 
 ```bash
+cmake --preset clang-debug
+cmake --build --preset clang-debug
+ctest --preset clang-debug
+```
+
+```bash
 cmake --preset clang-debug-sanitized
 cmake --build --preset clang-debug-sanitized
 ctest --preset clang-debug-sanitized
@@ -123,11 +249,18 @@ Available configure presets:
 - `gcc-debug`
 - `gcc-release`
 - `gcc-debug-sanitized`
+- `clang-debug`
 - `clang-debug-sanitized`
 - `clang-release`
 - `msvc-release`
+- `arm-linux-debug`
+- `arm-linux-release`
+- `arm-none-eabi-debug`
+- `arm-none-eabi-release`
 
 The `msvc-release` preset is intended for Windows in a Visual Studio Developer Command Prompt.
+The `arm-linux-*` presets are for ARM 32-bit (hard-float EABI) embedded Linux targets and require a compatible ARM cross-compiler toolchain.
+The `arm-none-eabi-*` presets are for ARM Cortex-M bare-metal embedded systems and require the ARM EABI cross-compiler.
 
 ### Build Manually
 
@@ -199,9 +332,78 @@ cmake --build build-msvc --config Release
 ctest --test-dir build-msvc -C Release
 ```
 
-## Build with Makefile
+### Cross-compile for ARM 32-bit (Embedded Linux)
 
-This repository also provides a top-level `Makefile` with common development targets.
+This repository includes a toolchain file for ARM 32-bit hard-float EABI embedded Linux: `cmake/toolchains/arm-linux-gnueabihf.cmake`.
+
+Prerequisites:
+
+- ARM cross-compiler toolchain (e.g., `arm-linux-gnueabihf-g++`, `arm-linux-gnueabihf-gcc`)
+- On Ubuntu/Debian: `sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf`
+
+Using presets:
+
+```bash
+cmake --preset arm-linux-debug
+cmake --build --preset arm-linux-debug
+```
+
+```bash
+cmake --preset arm-linux-release
+cmake --build --preset arm-linux-release
+```
+
+Manual cross-compile:
+
+```bash
+cmake -S . -B build-arm -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-linux-gnueabihf.cmake -DCMAKE_BUILD_TYPE=Release
+cmake --build build-arm
+```
+
+To use a custom ARM sysroot, edit `cmake/toolchains/arm-linux-gnueabihf.cmake` and uncomment the `THEBLAS_ARM_SYSROOT` section, or pass it on the command line:
+
+```bash
+cmake -S . -B build-arm \
+	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-linux-gnueabihf.cmake \
+	-DCMAKE_BUILD_TYPE=Release
+cmake --build build-arm
+```
+
+### Cross-compile for ARM Cortex-M (Bare-Metal)
+
+This repository includes a toolchain file for ARM Cortex-M bare-metal development: `cmake/toolchains/arm-none-eabi.cmake`.
+
+Prerequisites:
+
+- ARM EABI cross-compiler toolchain (e.g., `arm-none-eabi-gcc`, `arm-none-eabi-g++`)
+- Download from: [ARM Developer GCC](https://developer.arm.com/downloads/-/gnu-rm)
+- Or on Ubuntu/Debian: `sudo apt-get install gcc-arm-embedded`
+
+Using presets:
+
+```bash
+cmake --preset arm-none-eabi-debug
+cmake --build --preset arm-none-eabi-debug
+```
+
+```bash
+cmake --preset arm-none-eabi-release
+cmake --build --preset arm-none-eabi-release
+```
+
+Manual cross-compile with MCU selection (default is cortex-m4):
+
+```bash
+cmake -S . -B build-arm-bare \
+	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-none-eabi.cmake \
+	-DCMAKE_BUILD_TYPE=Release \
+	-DTHEBLAS_ARM_MCU=cortex-m4
+cmake --build build-arm-bare
+```
+
+To target a different Cortex-M variant, adjust `-DTHEBLAS_ARM_MCU` (e.g., `cortex-m0`, `cortex-m3`, `cortex-m7`, `cortex-m33`).
+
+## Build with Makefile
 
 ```bash
 make help
