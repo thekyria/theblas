@@ -22,8 +22,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Install cppcheck
-      run: sudo apt-get update && sudo apt-get install -y cppcheck clang-tidy
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y cppcheck clang-tidy clang-tools
 
     - name: Run cppcheck
       run: |
@@ -53,7 +53,18 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+      # scan-build wraps the compiler to run the Clang Static Analyzer and
+      # emit an HTML report; the build artifacts land in build/ as normal.
+      run: |
+        scan-build -o ${{github.workspace}}/scan-results \
+          cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Upload scan-build report
+      uses: actions/upload-artifact@v4
+      with:
+        name: scan-build-report
+        path: ${{github.workspace}}/scan-results/
+        if-no-files-found: ignore
 
     - name: Test
       working-directory: ${{github.workspace}}/build

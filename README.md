@@ -154,6 +154,9 @@ Run them after building:
 - `clang-tidy` (for AST-based lint, modernization, and bug-prone pattern checks)
 - Install on Ubuntu/Debian: `sudo apt-get install clang-tidy`
 - Install on macOS: `brew install llvm` (provides `clang-tidy`)
+- `scan-build` (Clang Static Analyzer wrapper; produces HTML bug reports)
+- Install on Ubuntu/Debian: `sudo apt-get install clang-tools`
+- Install on macOS: included with `brew install llvm`
 
 **Pre-commit (Optional, recommended for contributors):**
 
@@ -270,6 +273,28 @@ clang-tidy -p build \
 The [`.clang-tidy`](.clang-tidy) file at the repository root controls which
 checks are enabled. Use `// NOLINT(<check-name>)` inline comments to suppress
 false positives on specific lines.
+
+### scan-build
+
+Wraps the build with the Clang Static Analyzer and produces an HTML report.
+Because it intercepts the compiler during the build, it must run against a
+fresh (uncached) build directory.
+
+```bash
+cmake -B build-scan -DCMAKE_BUILD_TYPE=Release
+scan-build -o scan-results cmake --build build-scan
+```
+
+Open the generated report:
+
+```bash
+xdg-open scan-results/*/index.html   # Linux
+open scan-results/*/index.html        # macOS
+```
+
+`scan-build` runs the same Clang Static Analyzer passes already covered by
+`clang-analyzer-*` in `.clang-tidy`, but produces a browsable HTML report
+useful for visual inspection of analysis paths.
 
 ## Build
 
