@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 option(THEBLAS_BUILD_TESTS "Build theblas tests" ${PROJECT_IS_TOP_LEVEL})
+option(THEBLAS_ENABLE_STRICT_WARNINGS "Enable strict compiler warnings" ON)
+option(THEBLAS_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
+option(THEBLAS_ENABLE_SANITIZERS "Enable ASan/UBSan for Debug builds (Clang/GCC)" OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -20,6 +23,86 @@ target_include_directories(theblas
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
+
+if(THEBLAS_ENABLE_STRICT_WARNINGS)
+    if(MSVC)
+        target_compile_options(theblas PRIVATE
+            /W4
+            /permissive-
+            /w14242
+            /w14254
+            /w14263
+            /w14265
+            /w14287
+            /we4289
+            /w14296
+            /w14311
+            /w14545
+            /w14546
+            /w14547
+            /w14549
+            /w14555
+            /w14619
+            /w14640
+            /w14826
+            /w14905
+            /w14906
+            /w14928
+        )
+        if(THEBLAS_WARNINGS_AS_ERRORS)
+            target_compile_options(theblas PRIVATE /WX)
+        endif()
+    else()
+        target_compile_options(theblas PRIVATE
+            -Wall
+            -Wextra
+            -Wpedantic
+            -Wconversion
+            -Wsign-conversion
+            -Wshadow
+            -Wnon-virtual-dtor
+            -Wold-style-cast
+            -Woverloaded-virtual
+            -Wnull-dereference
+            -Wdouble-promotion
+            -Wformat=2
+        )
+        if(THEBLAS_WARNINGS_AS_ERRORS)
+            target_compile_options(theblas PRIVATE -Werror)
+        endif()
+    endif()
+endif()
+
+if(THEBLAS_ENABLE_SANITIZERS)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+        add_compile_options(
+            -fno-omit-frame-pointer
+            $<$<CONFIG:Debug>:-fsanitize=address,undefined>
+        )
+        add_link_options(
+            -fno-omit-frame-pointer
+            $<$<CONFIG:Debug>:-fsanitize=address,undefined>
+        )
+    else()
+        message(WARNING "THEBLAS_ENABLE_SANITIZERS is ON, but sanitizers are configured only for Clang/GNU.")
+    endif()
+endif()
+
+if(MSVC)
+    target_compile_options(theblas PRIVATE
+        $<$<CONFIG:Release>:/O2>
+        $<$<CONFIG:RelWithDebInfo>:/O2>
+    )
+else()
+    target_compile_options(theblas PRIVATE
+        $<$<CONFIG:Release>:-O2>
+        $<$<CONFIG:RelWithDebInfo>:-O2>
+    )
+    target_compile_definitions(theblas PRIVATE
+        $<$<CONFIG:Release>:_FORTIFY_SOURCE=3>
+        $<$<CONFIG:RelWithDebInfo>:_FORTIFY_SOURCE=3>
+    )
+endif()
 
 install(TARGETS theblas
     EXPORT theblasTargets

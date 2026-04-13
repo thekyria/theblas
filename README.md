@@ -76,11 +76,97 @@ theblas::saxpy(3, 0.5f, x, 1, y, 1);
 
 ## Build
 
+### Build with CMake Presets
+
+For CMake 3.21 and newer, the repository provides [CMakePresets.json](CMakePresets.json) with reusable configure, build, and test profiles.
+
+List available presets:
+
+```bash
+cmake --list-presets
+```
+
+Common workflows:
+
+```bash
+cmake --preset gcc-debug
+cmake --build --preset gcc-debug
+ctest --preset gcc-debug
+```
+
+```bash
+cmake --preset clang-debug-sanitized
+cmake --build --preset clang-debug-sanitized
+ctest --preset clang-debug-sanitized
+```
+
+```bash
+cmake --preset clang-release
+cmake --build --preset clang-release
+ctest --preset clang-release
+```
+
+Available configure presets:
+
+- `gcc-debug`
+- `clang-debug-sanitized`
+- `clang-release`
+- `msvc-release`
+
+The `msvc-release` preset is intended for Windows in a Visual Studio Developer Command Prompt.
+
+### Build Manually
+
 ```bash
 mkdir build && cd build
 cmake ..
 cmake --build .
 ctest
+```
+
+### Build Options (Compiler Flags)
+
+Configurable CMake options:
+
+- `THEBLAS_ENABLE_STRICT_WARNINGS=ON|OFF` (default: `ON`)
+- `THEBLAS_WARNINGS_AS_ERRORS=ON|OFF` (default: `OFF`)
+- `THEBLAS_ENABLE_SANITIZERS=ON|OFF` (default: `OFF`, Debug only, Clang/GCC)
+
+Example:
+
+```bash
+cmake -S . -B build \
+	-DCMAKE_BUILD_TYPE=Debug \
+	-DTHEBLAS_ENABLE_STRICT_WARNINGS=ON \
+	-DTHEBLAS_WARNINGS_AS_ERRORS=ON \
+	-DTHEBLAS_ENABLE_SANITIZERS=ON
+cmake --build build
+ctest --test-dir build
+```
+
+### Toolchain Files
+
+This repository includes toolchain files for Clang and MSVC:
+
+- `cmake/toolchains/clang.cmake`
+- `cmake/toolchains/msvc.cmake`
+
+Clang example:
+
+```bash
+cmake -S . -B build-clang \
+	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/clang.cmake \
+	-DCMAKE_BUILD_TYPE=Release
+cmake --build build-clang
+ctest --test-dir build-clang
+```
+
+MSVC example (run on Windows in a Visual Studio Developer Command Prompt):
+
+```powershell
+cmake -S . -B build-msvc -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/msvc.cmake
+cmake --build build-msvc --config Release
+ctest --test-dir build-msvc -C Release
 ```
 
 ## Build with Makefile

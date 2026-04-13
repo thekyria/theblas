@@ -8,6 +8,8 @@
         "set": true,
         "ctest": true,
         "true": true,
-        "make": true
+        "make": true,
+        "cmake": true,
+        "command": true
     }
 }
