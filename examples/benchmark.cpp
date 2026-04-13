@@ -59,7 +59,7 @@ void print_row(const char* name, int n, double seconds, std::size_t bytes) {
 
 } // namespace
 
-int main(int argc, char* argv[]) {
+int main(int argc, const char* const argv[]) {
     int n = 1 << 20; // 1 048 576
     if (argc >= 2) {
         n = std::atoi(argv[1]);
