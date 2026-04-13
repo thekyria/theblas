@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstddef>
 #include <complex>
+#include <cstddef>
 
 namespace theblas {
 
@@ -44,7 +44,7 @@ namespace theblas {
  * @param y Second vector, updated in place.
  * @param incy Stride between elements of y.
  */
-void sswap(int n, float* x, int incx, float* y, int incy);
+void sswap(int n, float *x, int incx, float *y, int incy);
 /**
  * @brief Swap two double vectors element-wise.
  * @param n Number of elements to process.
@@ -53,7 +53,7 @@ void sswap(int n, float* x, int incx, float* y, int incy);
  * @param y Second vector, updated in place.
  * @param incy Stride between elements of y.
  */
-void dswap(int n, double* x, int incx, double* y, int incy);
+void dswap(int n, double *x, int incx, double *y, int incy);
 
 /**
  * @brief Swap two complex-float vectors element-wise.
@@ -63,7 +63,7 @@ void dswap(int n, double* x, int incx, double* y, int incy);
  * @param y Second vector, updated in place.
  * @param incy Stride between elements of y.
  */
-void cswap(int n, std::complex<float>* x, int incx, std::complex<float>* y, int incy);
+void cswap(int n, std::complex<float> *x, int incx, std::complex<float> *y, int incy);
 /**
  * @brief Swap two complex-double vectors element-wise.
  * @param n Number of elements to process.
@@ -72,7 +72,7 @@ void cswap(int n, std::complex<float>* x, int incx, std::complex<float>* y, int 
  * @param y Second vector, updated in place.
  * @param incy Stride between elements of y.
  */
-void zswap(int n, std::complex<double>* x, int incx, std::complex<double>* y, int incy);
+void zswap(int n, std::complex<double> *x, int incx, std::complex<double> *y, int incy);
 
 /**
  * @brief Copy a float vector into another vector.
@@ -82,7 +82,7 @@ void zswap(int n, std::complex<double>* x, int incx, std::complex<double>* y, in
  * @param y Destination vector.
  * @param incy Stride between elements of y.
  */
-void scopy(int n, const float* x, int incx, float* y, int incy);
+void scopy(int n, const float *x, int incx, float *y, int incy);
 /**
  * @brief Copy a double vector into another vector.
  * @param n Number of elements to process.
@@ -91,7 +91,7 @@ void scopy(int n, const float* x, int incx, float* y, int incy);
  * @param y Destination vector.
  * @param incy Stride between elements of y.
  */
-void dcopy(int n, const double* x, int incx, double* y, int incy);
+void dcopy(int n, const double *x, int incx, double *y, int incy);
 
 /**
  * @brief Copy a complex-float vector into another vector.
@@ -101,7 +101,7 @@ void dcopy(int n, const double* x, int incx, double* y, int incy);
  * @param y Destination vector.
  * @param incy Stride between elements of y.
  */
-void ccopy(int n, const std::complex<float>* x, int incx, std::complex<float>* y, int incy);
+void ccopy(int n, const std::complex<float> *x, int incx, std::complex<float> *y, int incy);
 /**
  * @brief Copy a complex-double vector into another vector.
  * @param n Number of elements to process.
@@ -110,7 +110,7 @@ void ccopy(int n, const std::complex<float>* x, int incx, std::complex<float>* y
  * @param y Destination vector.
  * @param incy Stride between elements of y.
  */
-void zcopy(int n, const std::complex<double>* x, int incx, std::complex<double>* y, int incy);
+void zcopy(int n, const std::complex<double> *x, int incx, std::complex<double> *y, int incy);
 
 /**
  * @brief Compute y <- alpha * x + y for float vectors.
@@ -121,7 +121,7 @@ void zcopy(int n, const std::complex<double>* x, int incx, std::complex<double>*
  * @param y Input/output vector y.
  * @param incy Stride between elements of y.
  */
-void saxpy(int n, float alpha, const float* x, int incx, float* y, int incy);
+void saxpy(int n, float alpha, const float *x, int incx, float *y, int incy);
 /**
  * @brief Compute y <- alpha * x + y for double vectors.
  * @param n Number of elements to process.
@@ -131,7 +131,7 @@ void saxpy(int n, float alpha, const float* x, int incx, float* y, int incy);
  * @param y Input/output vector y.
  * @param incy Stride between elements of y.
  */
-void daxpy(int n, double alpha, const double* x, int incx, double* y, int incy);
+void daxpy(int n, double alpha, const double *x, int incx, double *y, int incy);
 
 /**
  * @brief Compute y <- alpha * x + y for complex-float vectors.
@@ -142,7 +142,8 @@ void daxpy(int n, double alpha, const double* x, int incx, double* y, int incy);
  * @param y Input/output vector y.
  * @param incy Stride between elements of y.
  */
-void caxpy(int n, std::complex<float> alpha, const std::complex<float>* x, int incx, std::complex<float>* y, int incy);
+void caxpy(int n, std::complex<float> alpha, const std::complex<float> *x, int incx,
+           std::complex<float> *y, int incy);
 /**
  * @brief Compute y <- alpha * x + y for complex-double vectors.
  * @param n Number of elements to process.
@@ -152,7 +153,8 @@ void caxpy(int n, std::complex<float> alpha, const std::complex<float>* x, int i
  * @param y Input/output vector y.
  * @param incy Stride between elements of y.
  */
-void zaxpy(int n, std::complex<double> alpha, const std::complex<double>* x, int incx, std::complex<double>* y, int incy);
+void zaxpy(int n, std::complex<double> alpha, const std::complex<double> *x, int incx,
+           std::complex<double> *y, int incy);
 
 /**
  * @brief Scale a float vector: x <- alpha * x.
@@ -161,7 +163,7 @@ void zaxpy(int n, std::complex<double> alpha, const std::complex<double>* x, int
  * @param x Vector to scale in place.
  * @param incx Stride between elements of x.
  */
-void sscal(int n, float alpha, float* x, int incx);
+void sscal(int n, float alpha, float *x, int incx);
 /**
  * @brief Scale a double vector: x <- alpha * x.
  * @param n Number of elements to process.
@@ -169,7 +171,7 @@ void sscal(int n, float alpha, float* x, int incx);
  * @param x Vector to scale in place.
  * @param incx Stride between elements of x.
  */
-void dscal(int n, double alpha, double* x, int incx);
+void dscal(int n, double alpha, double *x, int incx);
 
 /**
  * @brief Scale a complex-float vector by a complex scalar.
@@ -178,7 +180,7 @@ void dscal(int n, double alpha, double* x, int incx);
  * @param x Vector to scale in place.
  * @param incx Stride between elements of x.
  */
-void cscal(int n, std::complex<float> alpha, std::complex<float>* x, int incx);
+void cscal(int n, std::complex<float> alpha, std::complex<float> *x, int incx);
 /**
  * @brief Scale a complex-double vector by a complex scalar.
  * @param n Number of elements to process.
@@ -186,7 +188,7 @@ void cscal(int n, std::complex<float> alpha, std::complex<float>* x, int incx);
  * @param x Vector to scale in place.
  * @param incx Stride between elements of x.
  */
-void zscal(int n, std::complex<double> alpha, std::complex<double>* x, int incx);
+void zscal(int n, std::complex<double> alpha, std::complex<double> *x, int incx);
 /**
  * @brief Scale a complex-float vector by a real scalar.
  * @param n Number of elements to process.
@@ -194,7 +196,7 @@ void zscal(int n, std::complex<double> alpha, std::complex<double>* x, int incx)
  * @param x Vector to scale in place.
  * @param incx Stride between elements of x.
  */
-void csscal(int n, float alpha, std::complex<float>* x, int incx);
+void csscal(int n, float alpha, std::complex<float> *x, int incx);
 /**
  * @brief Scale a complex-double vector by a real scalar.
  * @param n Number of elements to process.
@@ -202,7 +204,7 @@ void csscal(int n, float alpha, std::complex<float>* x, int incx);
  * @param x Vector to scale in place.
  * @param incx Stride between elements of x.
  */
-void zdscal(int n, double alpha, std::complex<double>* x, int incx);
+void zdscal(int n, double alpha, std::complex<double> *x, int incx);
 
 /**
  * @brief Dot product of two float vectors.
@@ -213,7 +215,7 @@ void zdscal(int n, double alpha, std::complex<double>* x, int incx);
  * @param incy Stride between elements of y.
  * @return Dot product value.
  */
-float sdot(int n, const float* x, int incx, const float* y, int incy);
+float sdot(int n, const float *x, int incx, const float *y, int incy);
 /**
  * @brief Dot product of two double vectors.
  * @param n Number of elements to process.
@@ -223,7 +225,7 @@ float sdot(int n, const float* x, int incx, const float* y, int incy);
  * @param incy Stride between elements of y.
  * @return Dot product value.
  */
-double ddot(int n, const double* x, int incx, const double* y, int incy);
+double ddot(int n, const double *x, int incx, const double *y, int incy);
 
 /**
  * @brief Complex float dot product without conjugation.
@@ -234,7 +236,8 @@ double ddot(int n, const double* x, int incx, const double* y, int incy);
  * @param incy Stride between elements of y.
  * @return Complex dot product value.
  */
-std::complex<float> cdotu(int n, const std::complex<float>* x, int incx, const std::complex<float>* y, int incy);
+std::complex<float> cdotu(int n, const std::complex<float> *x, int incx,
+                          const std::complex<float> *y, int incy);
 /**
  * @brief Complex float dot product with conjugated first argument.
  * @param n Number of elements to process.
@@ -244,7 +247,8 @@ std::complex<float> cdotu(int n, const std::complex<float>* x, int incx, const s
  * @param incy Stride between elements of y.
  * @return Complex dot product value.
  */
-std::complex<float> cdotc(int n, const std::complex<float>* x, int incx, const std::complex<float>* y, int incy);
+std::complex<float> cdotc(int n, const std::complex<float> *x, int incx,
+                          const std::complex<float> *y, int incy);
 /**
  * @brief Complex double dot product without conjugation.
  * @param n Number of elements to process.
@@ -254,7 +258,8 @@ std::complex<float> cdotc(int n, const std::complex<float>* x, int incx, const s
  * @param incy Stride between elements of y.
  * @return Complex dot product value.
  */
-std::complex<double> zdotu(int n, const std::complex<double>* x, int incx, const std::complex<double>* y, int incy);
+std::complex<double> zdotu(int n, const std::complex<double> *x, int incx,
+                           const std::complex<double> *y, int incy);
 /**
  * @brief Complex double dot product with conjugated first argument.
  * @param n Number of elements to process.
@@ -264,7 +269,8 @@ std::complex<double> zdotu(int n, const std::complex<double>* x, int incx, const
  * @param incy Stride between elements of y.
  * @return Complex dot product value.
  */
-std::complex<double> zdotc(int n, const std::complex<double>* x, int incx, const std::complex<double>* y, int incy);
+std::complex<double> zdotc(int n, const std::complex<double> *x, int incx,
+                           const std::complex<double> *y, int incy);
 
 /**
  * @brief Euclidean norm of a float vector.
@@ -273,7 +279,7 @@ std::complex<double> zdotc(int n, const std::complex<double>* x, int incx, const
  * @param incx Stride between elements of x.
  * @return Euclidean norm of x.
  */
-float snrm2(int n, const float* x, int incx);
+float snrm2(int n, const float *x, int incx);
 /**
  * @brief Euclidean norm of a double vector.
  * @param n Number of elements to process.
@@ -281,7 +287,7 @@ float snrm2(int n, const float* x, int incx);
  * @param incx Stride between elements of x.
  * @return Euclidean norm of x.
  */
-double dnrm2(int n, const double* x, int incx);
+double dnrm2(int n, const double *x, int incx);
 
 /**
  * @brief Euclidean norm of a complex-float vector.
@@ -290,7 +296,7 @@ double dnrm2(int n, const double* x, int incx);
  * @param incx Stride between elements of x.
  * @return Euclidean norm of x.
  */
-float scnrm2(int n, const std::complex<float>* x, int incx);
+float scnrm2(int n, const std::complex<float> *x, int incx);
 /**
  * @brief Euclidean norm of a complex-double vector.
  * @param n Number of elements to process.
@@ -298,7 +304,7 @@ float scnrm2(int n, const std::complex<float>* x, int incx);
  * @param incx Stride between elements of x.
  * @return Euclidean norm of x.
  */
-double dznrm2(int n, const std::complex<double>* x, int incx);
+double dznrm2(int n, const std::complex<double> *x, int incx);
 
 /**
  * @brief Sum of absolute values for a float vector.
@@ -307,7 +313,7 @@ double dznrm2(int n, const std::complex<double>* x, int incx);
  * @param incx Stride between elements of x.
  * @return Sum of absolute values.
  */
-float sasum(int n, const float* x, int incx);
+float sasum(int n, const float *x, int incx);
 /**
  * @brief Sum of absolute values for a double vector.
  * @param n Number of elements to process.
@@ -315,7 +321,7 @@ float sasum(int n, const float* x, int incx);
  * @param incx Stride between elements of x.
  * @return Sum of absolute values.
  */
-double dasum(int n, const double* x, int incx);
+double dasum(int n, const double *x, int incx);
 
 /**
  * @brief Sum of |Re(x_i)| + |Im(x_i)| for complex-float vectors.
@@ -324,7 +330,7 @@ double dasum(int n, const double* x, int incx);
  * @param incx Stride between elements of x.
  * @return Sum of absolute component values.
  */
-float scasum(int n, const std::complex<float>* x, int incx);
+float scasum(int n, const std::complex<float> *x, int incx);
 /**
  * @brief Sum of |Re(x_i)| + |Im(x_i)| for complex-double vectors.
  * @param n Number of elements to process.
@@ -332,7 +338,7 @@ float scasum(int n, const std::complex<float>* x, int incx);
  * @param incx Stride between elements of x.
  * @return Sum of absolute component values.
  */
-double dzasum(int n, const std::complex<double>* x, int incx);
+double dzasum(int n, const std::complex<double> *x, int incx);
 
 /**
  * @brief Apply a real Givens rotation to float vectors x and y.
@@ -344,7 +350,7 @@ double dzasum(int n, const std::complex<double>* x, int incx);
  * @param c Cosine-like rotation coefficient.
  * @param s Sine-like rotation coefficient.
  */
-void srot(int n, float* x, int incx, float* y, int incy, float c, float s);
+void srot(int n, float *x, int incx, float *y, int incy, float c, float s);
 /**
  * @brief Apply a real Givens rotation to double vectors x and y.
  * @param n Number of elements to process.
@@ -355,7 +361,7 @@ void srot(int n, float* x, int incx, float* y, int incy, float c, float s);
  * @param c Cosine-like rotation coefficient.
  * @param s Sine-like rotation coefficient.
  */
-void drot(int n, double* x, int incx, double* y, int incy, double c, double s);
+void drot(int n, double *x, int incx, double *y, int incy, double c, double s);
 /**
  * @brief Apply a real Givens rotation to complex-float vectors x and y.
  * @param n Number of elements to process.
@@ -366,7 +372,8 @@ void drot(int n, double* x, int incx, double* y, int incy, double c, double s);
  * @param c Real cosine-like rotation coefficient.
  * @param s Real sine-like rotation coefficient.
  */
-void csrot(int n, std::complex<float>* x, int incx, std::complex<float>* y, int incy, float c, float s);
+void csrot(int n, std::complex<float> *x, int incx, std::complex<float> *y, int incy, float c,
+           float s);
 /**
  * @brief Apply a real Givens rotation to complex-double vectors x and y.
  * @param n Number of elements to process.
@@ -377,7 +384,8 @@ void csrot(int n, std::complex<float>* x, int incx, std::complex<float>* y, int 
  * @param c Real cosine-like rotation coefficient.
  * @param s Real sine-like rotation coefficient.
  */
-void zdrot(int n, std::complex<double>* x, int incx, std::complex<double>* y, int incy, double c, double s);
+void zdrot(int n, std::complex<double> *x, int incx, std::complex<double> *y, int incy, double c,
+           double s);
 
 /**
  * @brief Construct float Givens rotation parameters in place.
@@ -386,7 +394,7 @@ void zdrot(int n, std::complex<double>* x, int incx, std::complex<double>* y, in
  * @param c Output cosine coefficient.
  * @param s Output sine coefficient.
  */
-void srotg(float* a, float* b, float* c, float* s);
+void srotg(float *a, float *b, float *c, float *s);
 /**
  * @brief Construct double Givens rotation parameters in place.
  * @param a On input: first scalar; on output: rotation radius.
@@ -394,7 +402,7 @@ void srotg(float* a, float* b, float* c, float* s);
  * @param c Output cosine coefficient.
  * @param s Output sine coefficient.
  */
-void drotg(double* a, double* b, double* c, double* s);
+void drotg(double *a, double *b, double *c, double *s);
 /**
  * @brief Construct complex-float Givens rotation parameters in place.
  * @param a On input: first scalar; on output: rotation radius-like value.
@@ -402,7 +410,7 @@ void drotg(double* a, double* b, double* c, double* s);
  * @param c Output real cosine coefficient.
  * @param s Output complex sine-like coefficient.
  */
-void crotg(std::complex<float>* a, std::complex<float> b, float* c, std::complex<float>* s);
+void crotg(std::complex<float> *a, std::complex<float> b, float *c, std::complex<float> *s);
 /**
  * @brief Construct complex-double Givens rotation parameters in place.
  * @param a On input: first scalar; on output: rotation radius-like value.
@@ -410,7 +418,7 @@ void crotg(std::complex<float>* a, std::complex<float> b, float* c, std::complex
  * @param c Output real cosine coefficient.
  * @param s Output complex sine-like coefficient.
  */
-void zrotg(std::complex<double>* a, std::complex<double> b, double* c, std::complex<double>* s);
+void zrotg(std::complex<double> *a, std::complex<double> b, double *c, std::complex<double> *s);
 
 /**
  * @brief Apply modified Givens rotation to float vectors using param.
@@ -421,7 +429,7 @@ void zrotg(std::complex<double>* a, std::complex<double> b, double* c, std::comp
  * @param incy Stride between elements of y.
  * @param param Pointer to a 5-element modified Givens parameter array.
  */
-void srotm(int n, float* x, int incx, float* y, int incy, const float* param);
+void srotm(int n, float *x, int incx, float *y, int incy, const float *param);
 /**
  * @brief Apply modified Givens rotation to double vectors using param.
  * @param n Number of elements to process.
@@ -431,7 +439,7 @@ void srotm(int n, float* x, int incx, float* y, int incy, const float* param);
  * @param incy Stride between elements of y.
  * @param param Pointer to a 5-element modified Givens parameter array.
  */
-void drotm(int n, double* x, int incx, double* y, int incy, const double* param);
+void drotm(int n, double *x, int incx, double *y, int incy, const double *param);
 
 /**
  * @brief Construct modified Givens parameters for float values.
@@ -441,7 +449,7 @@ void drotm(int n, double* x, int incx, double* y, int incy, const double* param)
  * @param b2 Input vector component.
  * @param param Output 5-element modified Givens parameter array.
  */
-void srotmg(float* d1, float* d2, float* b1, float b2, float* param);
+void srotmg(float *d1, float *d2, float *b1, float b2, float *param);
 /**
  * @brief Construct modified Givens parameters for double values.
  * @param d1 Scale factor component, updated in place.
@@ -450,7 +458,7 @@ void srotmg(float* d1, float* d2, float* b1, float b2, float* param);
  * @param b2 Input vector component.
  * @param param Output 5-element modified Givens parameter array.
  */
-void drotmg(double* d1, double* d2, double* b1, double b2, double* param);
+void drotmg(double *d1, double *d2, double *b1, double b2, double *param);
 
 /**
  * @brief Index of max absolute value in a float vector (1-based).
@@ -459,7 +467,7 @@ void drotmg(double* d1, double* d2, double* b1, double b2, double* param);
  * @param incx Stride between elements of x; must be positive.
  * @return Netlib-style 1-based index, or 0 when `n <= 0` or `incx <= 0`.
  */
-int isamax(int n, const float* x, int incx);
+int isamax(int n, const float *x, int incx);
 /**
  * @brief Index of max absolute value in a double vector (1-based).
  * @param n Number of elements to process.
@@ -467,7 +475,7 @@ int isamax(int n, const float* x, int incx);
  * @param incx Stride between elements of x; must be positive.
  * @return Netlib-style 1-based index, or 0 when `n <= 0` or `incx <= 0`.
  */
-int idamax(int n, const double* x, int incx);
+int idamax(int n, const double *x, int incx);
 /**
  * @brief Index of max absolute value in a complex-float vector (1-based).
  * @param n Number of elements to process.
@@ -475,7 +483,7 @@ int idamax(int n, const double* x, int incx);
  * @param incx Stride between elements of x; must be positive.
  * @return Netlib-style 1-based index, or 0 when `n <= 0` or `incx <= 0`.
  */
-int icamax(int n, const std::complex<float>* x, int incx);
+int icamax(int n, const std::complex<float> *x, int incx);
 /**
  * @brief Index of max absolute value in a complex-double vector (1-based).
  * @param n Number of elements to process.
@@ -483,9 +491,8 @@ int icamax(int n, const std::complex<float>* x, int incx);
  * @param incx Stride between elements of x; must be positive.
  * @return Netlib-style 1-based index, or 0 when `n <= 0` or `incx <= 0`.
  */
-int izamax(int n, const std::complex<double>* x, int incx);
+int izamax(int n, const std::complex<double> *x, int incx);
 
 /** @} */
 
 } // namespace theblas
-  

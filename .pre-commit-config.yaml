@@ -26,7 +26,7 @@ repos:
     hooks:
       - id: codespell
         args: ['--config=.codespellrc']
-        exclude: '^(build|install|docs/doxygen)/'
+        exclude: '^((\./)?\.github/|(\./)?build/|(\./)?install/|(\./)?docs/doxygen/)'
 
   # CMake linting
   - repo: https://github.com/cheshirekow/cmake-format-precommit
@@ -61,12 +61,13 @@ repos:
       - id: conventional-pre-commit
         stages: [commit-msg]
 
-  # Markdown linting
-  - repo: https://github.com/markdownlint/markdownlint
-    rev: v0.12.0
+  # Markdown linting and formatting
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.14.0
     hooks:
-      - id: markdownlint
-        args: ['--fix']
+      - id: markdownlint-cli2
+        args: ['--fix', '--config', '.markdownlint-cli2.yaml']
+        files: '^(README\.md|CODE_OF_CONDUCT\.md|CONTRIBUTING\.md|docs/.*\.md)$'
 
   # License headers (optional: uncomment if you want to enforce license headers)
   # - repo: https://github.com/Lucas-C/pre-commit-hooks

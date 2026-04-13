@@ -232,7 +232,7 @@ This is NOT an error - it means:
 
 ## Critical Reminders
 
-### DO:
+### DO
 
 - ✅ Call `GetSymbolReferences_CppTools` for ANY symbol usage search
 - ✅ Call `GetSymbolCallHierarchy_CppTools` before function signature changes
@@ -243,7 +243,7 @@ This is NOT an error - it means:
 - ✅ Use minimal parameters first, add more if needed
 - ✅ Remember line numbers are 1-based
 
-### DO NOT:
+### DO NOT
 
 - ❌ Use `vscode_listCodeUsages`, `grep_search`, or `read_file` to find symbol usages
 - ❌ Manually inspect code to find references

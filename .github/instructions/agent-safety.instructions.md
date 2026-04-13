@@ -44,6 +44,7 @@ applyTo: '**'
 ## Code Patterns
 
 When writing agent tool functions:
+
 ```python
 # Good: Governed tool with explicit policy
 @govern(policy)
@@ -56,6 +57,7 @@ async def search(query: str) -> str:
 ```
 
 When defining policies:
+
 ```yaml
 # Good: Explicit allowlist, content filters, rate limit
 name: my-agent
@@ -69,6 +71,7 @@ allowed_tools: ["*"]
 ```
 
 When composing multi-agent policies:
+
 ```python
 # Good: Most-restrictive-wins composition
 final_policy = compose_policies(org_policy, team_policy, agent_policy)

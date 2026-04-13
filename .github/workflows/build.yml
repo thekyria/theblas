@@ -70,4 +70,3 @@ jobs:
 
     - name: Create documentation (wrapper for doxygen)
       run: make docs
-

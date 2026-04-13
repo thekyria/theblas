@@ -10,7 +10,8 @@
         "true": true,
         "make": true,
         "cmake": true,
-        "command": true
+        "command": true,
+        "pre-commit": true
     },
     "makefile.configureOnOpen": false
 }

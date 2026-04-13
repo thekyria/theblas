@@ -112,6 +112,7 @@ Assign each claim a temporary ID (C1, C2, C3...) for tracking through subsequent
 ### Step 2: Check Internal Consistency
 
 Review the extracted claims against each other:
+
 - Does the text contradict itself anywhere? (e.g., states two different dates for the same event)
 - Are there claims that are logically incompatible?
 - Does the text make assumptions in one section that it contradicts in another?
@@ -121,6 +122,7 @@ Flag any internal contradictions immediately -- these don't need external verifi
 ### Step 3: Initial Confidence Assessment
 
 For each claim, make an initial assessment based only on your own knowledge:
+
 - Do you recall this being accurate?
 - Is this the kind of claim where models frequently hallucinate? (Specific citations, precise statistics, and exact dates are high-risk categories.)
 - Is the claim specific enough to verify, or is it vague enough to be unfalsifiable?
@@ -151,6 +153,7 @@ For each claim:
 ### What Counts as a Source
 
 Prefer primary and authoritative sources:
+
 - Official documentation, specifications, and standards
 - Court records, legislative texts, regulatory filings
 - Peer-reviewed publications
@@ -194,6 +197,7 @@ Check for these common patterns:
 ### Adversarial Questions
 
 For each major claim that passed Layers 1 and 2, ask:
+
 - What would make this claim wrong?
 - Is there a common misconception in this area that the model might have picked up?
 - If I were a subject matter expert, would I object to how this is stated?
@@ -202,6 +206,7 @@ For each major claim that passed Layers 1 and 2, ask:
 ### Red Flags to Escalate
 
 If you find any of these, flag them prominently in the report:
+
 - A specific citation that cannot be found anywhere
 - A statistic with no identifiable source
 - A legal or regulatory claim that contradicts what authoritative sources say
@@ -238,6 +243,7 @@ Assign each claim a final rating:
 Always include this at the end of the report:
 
 > **Limitations of this verification:**
+>
 > - This tool accelerates human verification; it does not replace it.
 > - Web search results may not include the most recent information or paywalled sources.
 > - The adversarial review uses the same underlying model that may have produced the original output. It catches many issues but cannot catch all of them.
@@ -251,6 +257,7 @@ Always include this at the end of the report:
 ### Legal Content
 
 Legal content carries elevated hallucination risk because:
+
 - Case names, citations, and holdings are frequently fabricated by models
 - Jurisdictional nuances are often flattened or omitted
 - Statutory language may be paraphrased in ways that change the legal meaning

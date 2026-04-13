@@ -14,7 +14,7 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         issue-message: >
           👋 Hey @${{ github.actor }}, thanks for opening your first issue!
-          
+
           We appreciate you taking the time to report this. A maintainer will review it soon.
           Please make sure you've included all the relevant details (logs, steps to reproduce, etc.).
         pr-message: >

@@ -74,6 +74,28 @@ theblas::saxpy(3, 0.5f, x, 1, y, 1);
 // y = [10.5, 21.0, 31.5]
 ```
 
+## Examples
+
+The `examples/` folder contains standalone programs demonstrating library usage.
+
+| Example | Routines covered |
+| --- | --- |
+| [`examples/vector_ops.cpp`](examples/vector_ops.cpp) | `snrm2`, `sscal`, `saxpy`, `sdot`, `isamax` |
+| [`examples/complex_ops.cpp`](examples/complex_ops.cpp) | `dznrm2`, `zdscal`, `zaxpy`, `zdotc` |
+
+Examples are built automatically when building the project as the top-level CMake project. To disable:
+
+```bash
+cmake -S . -B build -DTHEBLAS_BUILD_EXAMPLES=OFF
+```
+
+Run them after building:
+
+```bash
+./build/gcc-debug/examples/example_vector_ops
+./build/gcc-debug/examples/example_complex_ops
+```
+
 ## Dependencies
 
 ### Minimum Requirements
@@ -151,7 +173,7 @@ brew install doxygen graphviz
 **Windows (MSVC + Visual Studio):**
 
 1. Install Visual Studio 2017 or later with C++ workload.
-2. Install CMake from https://cmake.org/download/ or via `choco install cmake` (Chocolatey).
+2. Install CMake from <https://cmake.org/download/> or via `choco install cmake` (Chocolatey).
 3. (Optional) Install Ninja: `choco install ninja` or build from source.
 
 ## Pre-commit
@@ -288,10 +310,10 @@ Example:
 
 ```bash
 cmake -S . -B build \
-	-DCMAKE_BUILD_TYPE=Debug \
-	-DTHEBLAS_ENABLE_STRICT_WARNINGS=ON \
-	-DTHEBLAS_WARNINGS_AS_ERRORS=ON \
-	-DTHEBLAS_ENABLE_SANITIZERS=ON
+ -DCMAKE_BUILD_TYPE=Debug \
+ -DTHEBLAS_ENABLE_STRICT_WARNINGS=ON \
+ -DTHEBLAS_WARNINGS_AS_ERRORS=ON \
+ -DTHEBLAS_ENABLE_SANITIZERS=ON
 cmake --build build
 ctest --test-dir build
 ```
@@ -300,9 +322,9 @@ Release example:
 
 ```bash
 cmake -S . -B build-release \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DTHEBLAS_ENABLE_IPO=ON \
-	-DTHEBLAS_ENABLE_RELEASE_HARDENING=ON
+ -DCMAKE_BUILD_TYPE=Release \
+ -DTHEBLAS_ENABLE_IPO=ON \
+ -DTHEBLAS_ENABLE_RELEASE_HARDENING=ON
 cmake --build build-release
 ctest --test-dir build-release
 ```
@@ -318,8 +340,8 @@ Clang example:
 
 ```bash
 cmake -S . -B build-clang \
-	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/clang.cmake \
-	-DCMAKE_BUILD_TYPE=Release
+ -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/clang.cmake \
+ -DCMAKE_BUILD_TYPE=Release
 cmake --build build-clang
 ctest --test-dir build-clang
 ```
@@ -364,8 +386,8 @@ To use a custom ARM sysroot, edit `cmake/toolchains/arm-linux-gnueabihf.cmake` a
 
 ```bash
 cmake -S . -B build-arm \
-	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-linux-gnueabihf.cmake \
-	-DCMAKE_BUILD_TYPE=Release
+ -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-linux-gnueabihf.cmake \
+ -DCMAKE_BUILD_TYPE=Release
 cmake --build build-arm
 ```
 
@@ -395,9 +417,9 @@ Manual cross-compile with MCU selection (default is cortex-m4):
 
 ```bash
 cmake -S . -B build-arm-bare \
-	-DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-none-eabi.cmake \
-	-DCMAKE_BUILD_TYPE=Release \
-	-DTHEBLAS_ARM_MCU=cortex-m4
+ -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/arm-none-eabi.cmake \
+ -DCMAKE_BUILD_TYPE=Release \
+ -DTHEBLAS_ARM_MCU=cortex-m4
 cmake --build build-arm-bare
 ```
 
@@ -466,9 +488,9 @@ This project is CPM-friendly and exposes a namespaced target: `theblas::theblas`
 include(cmake/CPM.cmake)
 
 CPMAddPackage(
-	NAME theblas
-	GITHUB_REPOSITORY thekyria_github/theblas
-	GIT_TAG main
+ NAME theblas
+ GITHUB_REPOSITORY thekyria_github/theblas
+ GIT_TAG main
 )
 
 target_link_libraries(your_target PRIVATE theblas::theblas)

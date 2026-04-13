@@ -1,5 +1,6 @@
 # Build artifacts
 /build/
+!build/.gitkeep
 /CMakeFiles/
 /CMakeCache.txt
 /*.cmake
@@ -29,4 +30,4 @@ docs/doxygen/*
 
 # Local install artifacts (keep only marker ignore file)
 install/*
-!install/.gitignore
+!install/.gitkeep
