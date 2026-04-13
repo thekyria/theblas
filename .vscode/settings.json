@@ -11,7 +11,8 @@
         "make": true,
         "cmake": true,
         "command": true,
-        "pre-commit": true
+        "pre-commit": true,
+        "cppcheck": true
     },
     "makefile.configureOnOpen": false
 }

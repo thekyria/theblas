@@ -38,7 +38,7 @@ int main() {
     }
 
     {
-        float x[] = {1.0F, 9.0F, 2.0F, 9.0F, 3.0F};
+        const float x[] = {1.0F, 9.0F, 2.0F, 9.0F, 3.0F};
         float y[] = {0.0F, 0.0F, 0.0F};
         theblas::scopy(3, x, 2, y, 1);
         assert(almost_equal(y[0], 1.0F));
@@ -47,7 +47,7 @@ int main() {
     }
 
     {
-        float x[] = {1.0F, 2.0F, 3.0F};
+        const float x[] = {1.0F, 2.0F, 3.0F};
         float y[] = {10.0F, 20.0F, 30.0F};
         theblas::saxpy(3, 0.5F, x, 1, y, 1);
         assert(almost_equal(y[0], 10.5F));
@@ -64,25 +64,25 @@ int main() {
     }
 
     {
-        float x[] = {1.0F, 2.0F, 3.0F};
-        float y[] = {4.0F, 5.0F, 6.0F};
+        const float x[] = {1.0F, 2.0F, 3.0F};
+        const float y[] = {4.0F, 5.0F, 6.0F};
         const float dot = theblas::sdot(3, x, 1, y, 1);
         assert(almost_equal(dot, 32.0F));
     }
 
     {
-        double x[] = {3.0, 4.0};
+        const double x[] = {3.0, 4.0};
         assert(almost_equal(theblas::dnrm2(2, x, 1), 5.0));
     }
 
     {
-        float x[] = {-1.0F, 2.0F, -3.0F};
+        const float x[] = {-1.0F, 2.0F, -3.0F};
         assert(almost_equal(theblas::sasum(3, x, 1), 6.0F));
         assert(theblas::isamax(3, x, 1) == 3);
     }
 
     {
-        double x[] = {1.0, 100.0, 2.0, 90.0, 3.0};
+        const double x[] = {1.0, 100.0, 2.0, 90.0, 3.0};
         double y[] = {0.0, 0.0, 0.0};
         theblas::dcopy(3, x, -2, y, 1);
         assert(almost_equal(y[0], 3.0));
@@ -91,7 +91,7 @@ int main() {
     }
 
     {
-        std::complex<float> x[] = {{1.0F, 1.0F}, {2.0F, -1.0F}};
+        const std::complex<float> x[] = {{1.0F, 1.0F}, {2.0F, -1.0F}};
         std::complex<float> y[] = {{3.0F, 0.0F}, {1.0F, 1.0F}};
         theblas::caxpy(2, {2.0F, 0.0F}, x, 1, y, 1);
         assert(almost_equal(y[0], {5.0F, 2.0F}));
@@ -99,14 +99,14 @@ int main() {
     }
 
     {
-        std::complex<double> x[] = {{1.0, 2.0}, {3.0, -1.0}};
-        std::complex<double> y[] = {{2.0, 0.0}, {0.0, 1.0}};
+        const std::complex<double> x[] = {{1.0, 2.0}, {3.0, -1.0}};
+        const std::complex<double> y[] = {{2.0, 0.0}, {0.0, 1.0}};
         assert(almost_equal(theblas::zdotu(2, x, 1, y, 1), {3.0, 7.0}));
         assert(almost_equal(theblas::zdotc(2, x, 1, y, 1), {1.0, -1.0}));
     }
 
     {
-        std::complex<float> x[] = {{3.0F, 4.0F}, {0.0F, 0.0F}};
+        const std::complex<float> x[] = {{3.0F, 4.0F}, {0.0F, 0.0F}};
         assert(almost_equal(theblas::scnrm2(2, x, 1), 5.0F));
         assert(almost_equal(theblas::scasum(2, x, 1), 7.0F));
         assert(theblas::icamax(2, x, 1) == 1);
@@ -136,7 +136,7 @@ int main() {
     {
         float x[] = {1.0F, 2.0F};
         float y[] = {3.0F, 4.0F};
-        float param[] = {-1.0F, 1.0F, 2.0F, 3.0F, 4.0F};
+        const float param[] = {-1.0F, 1.0F, 2.0F, 3.0F, 4.0F};
         theblas::srotm(2, x, 1, y, 1, param);
         assert(almost_equal(x[0], 10.0F));
         assert(almost_equal(y[0], 14.0F));

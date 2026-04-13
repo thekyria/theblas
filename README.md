@@ -146,6 +146,12 @@ Run them after building:
 - Built-in support for AddressSanitizer (ASan) and UndefinedBehaviorSanitizer (UBSan) on GCC/Clang
 - No additional dependencies required; sanitizers are controlled via CMake options
 
+**Static Analysis:**
+
+- `cppcheck` (for static C++ analysis; warning, style, performance, portability checks)
+- Install on Ubuntu/Debian: `sudo apt-get install cppcheck`
+- Install on macOS: `brew install cppcheck`
+
 **Pre-commit (Optional, recommended for contributors):**
 
 - `pre-commit` (for automated code quality and Git hook checks)
@@ -215,6 +221,21 @@ pre-commit run --all-files
 - **Markdown linting**
 
 See [.pre-commit-config.yaml](.pre-commit-config.yaml) for full configuration and optional hooks.
+
+## Static Analysis
+
+This repository uses [cppcheck](https://cppcheck.sourceforge.io/) for static analysis covering warnings, style, performance, and portability.
+
+Run cppcheck from the repository root:
+
+```bash
+cppcheck --enable=warning,style,performance,portability \
+  --std=c++17 --language=c++ --error-exitcode=1 \
+  --inline-suppr --suppress=missingIncludeSystem \
+  -I include src include tests examples
+```
+
+A non-zero exit code means findings were reported. Use `// cppcheck-suppress <id>` inline comments to suppress false positives where necessary.
 
 ## Build
 

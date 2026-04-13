@@ -32,7 +32,7 @@ int main() {
     // -----------------------------------------------------------------
     // 2. Weighted combination with saxpy: result <- alpha*a + b
     // -----------------------------------------------------------------
-    float a[] = {1.0F, 2.0F, 3.0F};
+    const float a[] = {1.0F, 2.0F, 3.0F};
     float b[] = {10.0F, 20.0F, 30.0F};
     float alpha = 0.5F;
 
@@ -44,8 +44,8 @@ int main() {
     // -----------------------------------------------------------------
     // 3. Dot product with sdot
     // -----------------------------------------------------------------
-    float x[] = {1.0F, 0.0F, -1.0F};
-    float y[] = {2.0F, 5.0F,  2.0F};
+    const float x[] = {1.0F, 0.0F, -1.0F};
+    const float y[] = {2.0F, 5.0F,  2.0F};
 
     float dot = theblas::sdot(n, x, 1, y, 1);
     std::printf("x = [1,  0, -1],  y = [2, 5,  2]\n");
@@ -54,7 +54,7 @@ int main() {
     // -----------------------------------------------------------------
     // 4. Find the index of the element with largest absolute value
     // -----------------------------------------------------------------
-    float w[] = {-1.0F, 4.0F, -7.0F, 2.0F}; // max |w[i]| is at index 3 (1-based)
+    const float w[] = {-1.0F, 4.0F, -7.0F, 2.0F}; // max |w[i]| is at index 3 (1-based)
     int imax = theblas::isamax(4, w, 1);      // returns 1-based index
 
     std::printf("w = [-1, 4, -7, 2]\n");
