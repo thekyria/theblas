@@ -14,6 +14,10 @@ concurrency:
   group: coverage-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  COVERAGE_MIN_LINES: 100
+  COVERAGE_MIN_FUNCTIONS: 100
+
 jobs:
   coverage:
     name: Generate coverage report
@@ -70,34 +74,53 @@ jobs:
             --output coverage.xml \
             --base-dir .
 
-      - name: Post coverage summary to job
+      - name: Enforce coverage thresholds
         run: |
-          TOTAL=$(lcov --summary build/gcc-debug-coverage/coverage.info 2>&1 \
-            | grep "lines" | awk '{print $2}')
+          SUMMARY=$(lcov --summary build/gcc-debug-coverage/coverage.info 2>&1)
+          LINE_PCT=$(echo "$SUMMARY" | grep 'lines' | grep -oP '[0-9]+\.[0-9]+(?=%)')
+          FUNC_PCT=$(echo "$SUMMARY" | grep 'functions' | grep -oP '[0-9]+\.[0-9]+(?=%)')
+          echo "Line coverage:     ${LINE_PCT}%  (minimum: ${{ env.COVERAGE_MIN_LINES }}%)"
+          echo "Function coverage: ${FUNC_PCT}%  (minimum: ${{ env.COVERAGE_MIN_FUNCTIONS }}%)"
+          FAIL=0
+          if [ "$(echo "$LINE_PCT < ${{ env.COVERAGE_MIN_LINES }}" | bc -l)" = "1" ]; then
+            echo "::error::Line coverage ${LINE_PCT}% is below the required ${{ env.COVERAGE_MIN_LINES }}%"
+            FAIL=1
+          fi
+          if [ "$(echo "$FUNC_PCT < ${{ env.COVERAGE_MIN_FUNCTIONS }}" | bc -l)" = "1" ]; then
+            echo "::error::Function coverage ${FUNC_PCT}% is below the required ${{ env.COVERAGE_MIN_FUNCTIONS }}%"
+            FAIL=1
+          fi
+          exit $FAIL
+
+      - name: Post coverage summary to job
+        if: always()
+        run: |
+          SUMMARY=$(lcov --summary build/gcc-debug-coverage/coverage.info 2>&1)
           echo "## Coverage Report" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "| Metric | Result |" >> "$GITHUB_STEP_SUMMARY"
-          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
-          lcov --summary build/gcc-debug-coverage/coverage.info 2>&1 \
-            | grep -E "lines|functions" \
-            | awk '{printf "| %s | %s |\n", $1, $2}' >> "$GITHUB_STEP_SUMMARY"
+          echo "| Metric | Result | Minimum |"\ >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          LINE_PCT=$(echo "$SUMMARY" | grep 'lines' | grep -oP '[0-9]+\.[0-9]+(?=%)')
+          FUNC_PCT=$(echo "$SUMMARY" | grep 'functions' | grep -oP '[0-9]+\.[0-9]+(?=%)')
+          echo "| lines | ${LINE_PCT}% | ${{ env.COVERAGE_MIN_LINES }}% |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| functions | ${FUNC_PCT}% | ${{ env.COVERAGE_MIN_FUNCTIONS }}% |" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           echo "Full HTML report uploaded as artifact \`coverage-html-${{ github.sha }}\`." \
             >> "$GITHUB_STEP_SUMMARY"
 
       - name: Post coverage comment on PR
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && always()
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
           filename: coverage.xml
           badge: true
-          fail_below_min: false
+          fail_below_min: true
           format: markdown
           hide_branch_rate: true
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: "90 100"
+          thresholds: "${{ env.COVERAGE_MIN_LINES }} 100"
 
       - name: Add PR comment
         if: github.event_name == 'pull_request'
