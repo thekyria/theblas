@@ -63,6 +63,14 @@ jobs:
       - name: Build
         run: cmake --build build
 
+      - name: Fix compile_commands.json paths for SonarCloud Docker container
+        # The SonarCloud action runs in Docker with the workspace mounted at
+        # /github/workspace, but CMake records absolute paths from the host
+        # runner (/home/runner/work/...). Rewrite them so the scanner can find
+        # the source files inside the container.
+        run: |
+          sed -i "s|$GITHUB_WORKSPACE|/github/workspace|g" build/compile_commands.json
+
       - name: Analyze with SonarCloud
 
         # You can pin the exact commit or the version.
