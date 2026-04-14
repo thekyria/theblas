@@ -1,5 +1,13 @@
 # theblas
 
+[![CMake on a single platform](https://github.com/thekyria/theblas/actions/workflows/build.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/build.yml)
+[![Coverage](https://github.com/thekyria/theblas/actions/workflows/coverage.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/coverage.yml)
+[![CodeQL](https://github.com/thekyria/theblas/actions/workflows/codeql.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/codeql.yml)
+[![MSVC](https://github.com/thekyria/theblas/actions/workflows/msvc.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/msvc.yml)
+[![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
+[![CMake](https://img.shields.io/badge/CMake-3.15%2B-blue.svg)](https://cmake.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A minimal C++17 BLAS-style library scaffold with a simple Level 1 BLAS implementation.
 
 ## Implemented Level 1 BLAS Routines
