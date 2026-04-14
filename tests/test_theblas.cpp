@@ -592,5 +592,286 @@ int main() {
         assert(almost_equal(param[0], -1.0));
     }
 
+    // --- n=0 / incx=0 no-ops for d/c/z variants not yet covered ---
+
+    {
+        double x[] = {1.0};
+        double y[] = {2.0};
+        theblas::dswap(0, x, 1, y, 1);
+        assert(almost_equal(x[0], 1.0));
+        assert(almost_equal(y[0], 2.0));
+    }
+
+    {
+        std::complex<float> x[] = {{1.0F, 0.0F}};
+        std::complex<float> y[] = {{2.0F, 0.0F}};
+        theblas::cswap(0, x, 1, y, 1);
+        assert(almost_equal(x[0], {1.0F, 0.0F}));
+    }
+
+    {
+        std::complex<double> x[] = {{1.0, 0.0}};
+        std::complex<double> y[] = {{2.0, 0.0}};
+        theblas::zswap(0, x, 1, y, 1);
+        assert(almost_equal(x[0], {1.0, 0.0}));
+    }
+
+    {
+        const double x[] = {9.0};
+        double y[] = {7.0};
+        theblas::dcopy(0, x, 1, y, 1);
+        assert(almost_equal(y[0], 7.0));
+    }
+
+    {
+        const std::complex<float> x[] = {{9.0F, 0.0F}};
+        std::complex<float> y[] = {{7.0F, 0.0F}};
+        theblas::ccopy(0, x, 1, y, 1);
+        assert(almost_equal(y[0], {7.0F, 0.0F}));
+    }
+
+    {
+        const std::complex<double> x[] = {{9.0, 0.0}};
+        std::complex<double> y[] = {{7.0, 0.0}};
+        theblas::zcopy(0, x, 1, y, 1);
+        assert(almost_equal(y[0], {7.0, 0.0}));
+    }
+
+    {
+        const double x[] = {1.0};
+        double y[] = {10.0};
+        theblas::daxpy(0, 2.0, x, 1, y, 1);
+        assert(almost_equal(y[0], 10.0));
+    }
+
+    {
+        const std::complex<float> x[] = {{1.0F, 0.0F}};
+        std::complex<float> y[] = {{2.0F, 0.0F}};
+        theblas::caxpy(0, {1.0F, 0.0F}, x, 1, y, 1);
+        assert(almost_equal(y[0], {2.0F, 0.0F}));
+    }
+
+    {
+        const std::complex<double> x[] = {{1.0, 0.0}};
+        std::complex<double> y[] = {{2.0, 0.0}};
+        theblas::zaxpy(0, {1.0, 0.0}, x, 1, y, 1);
+        assert(almost_equal(y[0], {2.0, 0.0}));
+    }
+
+    {
+        double x[] = {5.0};
+        theblas::dscal(0, 2.0, x, 1);
+        assert(almost_equal(x[0], 5.0));
+    }
+
+    {
+        std::complex<float> x[] = {{1.0F, 1.0F}};
+        theblas::cscal(0, {2.0F, 0.0F}, x, 1);
+        assert(almost_equal(x[0], {1.0F, 1.0F}));
+    }
+
+    {
+        std::complex<double> x[] = {{1.0, 1.0}};
+        theblas::zscal(0, {2.0, 0.0}, x, 1);
+        assert(almost_equal(x[0], {1.0, 1.0}));
+    }
+
+    {
+        std::complex<float> x[] = {{2.0F, 2.0F}};
+        theblas::csscal(0, 2.0F, x, 1);
+        assert(almost_equal(x[0], {2.0F, 2.0F}));
+    }
+
+    {
+        std::complex<double> x[] = {{3.0, 3.0}};
+        theblas::zdscal(0, 2.0, x, 1);
+        assert(almost_equal(x[0], {3.0, 3.0}));
+    }
+
+    {
+        const double x[] = {1.0};
+        const double y[] = {2.0};
+        assert(almost_equal(theblas::ddot(0, x, 1, y, 1), 0.0));
+    }
+
+    {
+        const std::complex<float> x[] = {{1.0F, 0.0F}};
+        const std::complex<float> y[] = {{1.0F, 0.0F}};
+        assert(almost_equal(theblas::cdotu(0, x, 1, y, 1), {0.0F, 0.0F}));
+        assert(almost_equal(theblas::cdotc(0, x, 1, y, 1), {0.0F, 0.0F}));
+    }
+
+    {
+        const std::complex<double> x[] = {{1.0, 0.0}};
+        const std::complex<double> y[] = {{1.0, 0.0}};
+        assert(almost_equal(theblas::zdotu(0, x, 1, y, 1), {0.0, 0.0}));
+        assert(almost_equal(theblas::zdotc(0, x, 1, y, 1), {0.0, 0.0}));
+    }
+
+    {
+        const double x[] = {1.0};
+        assert(almost_equal(theblas::dnrm2(0, x, 1), 0.0));
+    }
+
+    {
+        const std::complex<float> x[] = {{1.0F, 0.0F}};
+        assert(almost_equal(theblas::scnrm2(0, x, 1), 0.0F));
+    }
+
+    {
+        const std::complex<double> x[] = {{1.0, 0.0}};
+        assert(almost_equal(theblas::dznrm2(0, x, 1), 0.0));
+    }
+
+    {
+        const double x[] = {1.0};
+        assert(almost_equal(theblas::dasum(0, x, 1), 0.0));
+    }
+
+    {
+        const std::complex<double> x[] = {{1.0, 0.0}};
+        assert(almost_equal(theblas::dzasum(0, x, 1), 0.0));
+    }
+
+    {
+        const std::complex<double> x[] = {{1.0, 0.0}};
+        assert(theblas::izamax(0, x, 1) == 0);
+        assert(theblas::izamax(1, x, 0) == 0);
+        assert(theblas::izamax(1, x, -1) == 0);
+    }
+
+    // --- icamax: update branch (later element is the maximum) ---
+
+    {
+        // abs1: element[0]=1, element[1]=7 -> max at index 1 (0-based) -> returns 2 (1-based)
+        const std::complex<float> x[] = {{1.0F, 0.0F}, {3.0F, 4.0F}};
+        assert(theblas::icamax(2, x, 1) == 2);
+    }
+
+    // --- rot early returns for d/c/z variants ---
+
+    {
+        float x[] = {1.0F};
+        float y[] = {2.0F};
+        theblas::srot(0, x, 1, y, 1, 1.0F, 0.0F);
+        assert(almost_equal(x[0], 1.0F));
+    }
+
+    {
+        double x[] = {1.0};
+        double y[] = {2.0};
+        theblas::drot(0, x, 1, y, 1, 1.0, 0.0);
+        assert(almost_equal(x[0], 1.0));
+    }
+
+    {
+        std::complex<float> x[] = {{1.0F, 0.0F}};
+        std::complex<float> y[] = {{2.0F, 0.0F}};
+        theblas::csrot(0, x, 1, y, 1, 1.0F, 0.0F);
+        assert(almost_equal(x[0], {1.0F, 0.0F}));
+    }
+
+    {
+        std::complex<double> x[] = {{1.0, 0.0}};
+        std::complex<double> y[] = {{2.0, 0.0}};
+        theblas::zdrot(0, x, 1, y, 1, 1.0, 0.0);
+        assert(almost_equal(x[0], {1.0, 0.0}));
+    }
+
+    // --- drotg: zero-scale (a=0, b=0) ---
+
+    {
+        double a = 0.0;
+        double b = 0.0;
+        double c = 0.0;
+        double s = 0.0;
+        theblas::drotg(&a, &b, &c, &s);
+        assert(almost_equal(c, 1.0));
+        assert(almost_equal(s, 0.0));
+        assert(almost_equal(a, 0.0));
+        assert(almost_equal(b, 0.0));
+    }
+
+    // --- crotg: non-zero a ---
+
+    {
+        // a = 3+4i, b = 0: norm = |a| = 5, alpha = a/|a| = (0.6+0.8i)
+        // c = |a|/norm = 1, s = alpha*conj(0)/5 = 0, a_out = alpha*5 = 3+4i
+        std::complex<float> a = {3.0F, 4.0F};
+        std::complex<float> b = {0.0F, 0.0F};
+        float c = 0.0F;
+        std::complex<float> s = {0.0F, 0.0F};
+        theblas::crotg(&a, b, &c, &s);
+        assert(almost_equal(c, 1.0F));
+    }
+
+    // --- zrotg: non-zero a ---
+
+    {
+        // a = 3+0i, b = 4+0i: norm = 5, alpha = 1+0i
+        // c = 3/5 = 0.6, s = 1*conj(4+0i)/5 = 0.8, a = 1*5 = 5
+        std::complex<double> a = {3.0, 0.0};
+        std::complex<double> b = {4.0, 0.0};
+        double c = 0.0;
+        std::complex<double> s = {0.0, 0.0};
+        theblas::zrotg(&a, b, &c, &s);
+        assert(almost_equal(c, 0.6));
+        assert(almost_equal(s, {0.8, 0.0}));
+        assert(almost_equal(a, {5.0, 0.0}));
+    }
+
+    // --- srotm / drotm: n=0 early return ---
+
+    {
+        float x[] = {1.0F};
+        float y[] = {2.0F};
+        const float param[] = {-1.0F, 1.0F, 0.0F, 0.0F, 1.0F};
+        theblas::srotm(0, x, 1, y, 1, param);
+        assert(almost_equal(x[0], 1.0F));
+    }
+
+    {
+        double x[] = {1.0};
+        double y[] = {2.0};
+        const double param[] = {-1.0, 1.0, 0.0, 0.0, 1.0};
+        theblas::drotm(0, x, 1, y, 1, param);
+        assert(almost_equal(x[0], 1.0));
+    }
+
+    // --- drotm: flag=-2 (no-op) ---
+
+    {
+        double x[] = {1.0, 2.0};
+        double y[] = {3.0, 4.0};
+        const double param[] = {-2.0, 0.0, 0.0, 0.0, 0.0};
+        theblas::drotm(2, x, 1, y, 1, param);
+        assert(almost_equal(x[0], 1.0));
+        assert(almost_equal(y[0], 3.0));
+    }
+
+    // --- drotm: flag=0 (h11=h22=1 implied, use h12 and h21) ---
+
+    {
+        // p = {0, _, h21=3, h12=2, _}: x = w + h12*z; y = h21*w + z
+        double x[] = {1.0};
+        double y[] = {2.0};
+        const double param[] = {0.0, 0.0, 3.0, 2.0, 0.0};
+        theblas::drotm(1, x, 1, y, 1, param);
+        assert(almost_equal(x[0], 5.0));
+        assert(almost_equal(y[0], 5.0));
+    }
+
+    // --- drotm: flag=1 (h12=h21=-1 implied, use h11 and h22) ---
+
+    {
+        // p = {1, h11=2, _, _, h22=4}: x = h11*w + z; y = -w + h22*z
+        double x[] = {2.0};
+        double y[] = {3.0};
+        const double param[] = {1.0, 2.0, 0.0, 0.0, 4.0};
+        theblas::drotm(1, x, 1, y, 1, param);
+        assert(almost_equal(x[0], 7.0));
+        assert(almost_equal(y[0], 10.0));
+    }
+
     return 0;
 }

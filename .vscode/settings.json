@@ -16,7 +16,10 @@
         "clang-tidy": true,
         "gcovr": true,
         "lcov": true,
-        "apt-cache": true
+        "apt-cache": true,
+        "gcov": true,
+        "awk": true,
+        "uniq": true
     },
     "makefile.configureOnOpen": false
 }
