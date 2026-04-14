@@ -17,6 +17,9 @@ option(THEBLAS_ENABLE_STRICT_WARNINGS "Enable strict compiler warnings" ON)
 option(THEBLAS_WARNINGS_AS_ERRORS "Treat warnings as errors" OFF)
 option(THEBLAS_ENABLE_SANITIZERS
        "Enable ASan/UBSan for Debug builds (Clang/GCC)" OFF)
+option(THEBLAS_ENABLE_COVERAGE
+       "Enable gcov/lcov code coverage instrumentation (GCC/Clang Debug only)"
+       OFF)
 option(THEBLAS_ENABLE_IPO "Enable IPO/LTO for release builds when supported" ON)
 option(THEBLAS_ENABLE_RELEASE_HARDENING
        "Enable additional hardening for release configurations on Clang/GCC" ON)
@@ -94,6 +97,21 @@ if(THEBLAS_ENABLE_SANITIZERS)
     message(
       WARNING "THEBLAS_ENABLE_SANITIZERS is ON, but sanitizers are configured"
               " only for Clang/GNU.")
+  endif()
+endif()
+
+if(THEBLAS_ENABLE_COVERAGE)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    # target_compile_options covers the library (defined before this point);
+    # add_compile_options covers tests and examples (defined via
+    # add_subdirectory below).
+    target_compile_options(theblas PRIVATE --coverage -O0 -g)
+    target_link_options(theblas PUBLIC --coverage)
+    add_compile_options(--coverage -O0 -g)
+    add_link_options(--coverage)
+  else()
+    message(WARNING "THEBLAS_ENABLE_COVERAGE is ON, but coverage is only"
+                    " supported for GCC/Clang.")
   endif()
 endif()
 

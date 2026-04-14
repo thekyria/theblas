@@ -3,8 +3,10 @@
 BUILD_DIR ?= build
 CONFIG ?= Release
 PREFIX ?= $(CURDIR)/install
+COVERAGE_DIR ?= build/gcc-debug-coverage
+COVERAGE_HTML ?= coverage_html
 
-.PHONY: help configure build test install docs clean rebuild
+.PHONY: help configure build test install docs clean rebuild coverage
 
 help:
 	@echo "Available targets:"
@@ -15,6 +17,7 @@ help:
 	@echo "  docs       - Generate Doxygen docs (requires Doxyfile)"
 	@echo "  clean      - Remove $(BUILD_DIR)"
 	@echo "  rebuild    - Clean, configure, and build"
+	@echo "  coverage   - Build with instrumentation, run tests, generate HTML report in $(COVERAGE_HTML)/"
 
 configure:
 	@if [ -f "$(BUILD_DIR)/CMakeCache.txt" ] && ! grep -q "CMAKE_HOME_DIRECTORY:INTERNAL=$(CURDIR)" "$(BUILD_DIR)/CMakeCache.txt"; then \
@@ -39,3 +42,14 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 rebuild: clean build
+
+coverage:
+	cmake --preset gcc-debug-coverage
+	cmake --build --preset gcc-debug-coverage
+	lcov --directory $(COVERAGE_DIR) --zerocounters
+	ctest --preset gcc-debug-coverage
+	lcov --capture --directory $(COVERAGE_DIR) --output-file $(COVERAGE_DIR)/coverage.info \
+	     --exclude '/usr/*' --exclude '*/tests/*'
+	genhtml $(COVERAGE_DIR)/coverage.info --output-directory $(COVERAGE_HTML)
+	@echo ""
+	@echo "Coverage report: $(COVERAGE_HTML)/index.html"

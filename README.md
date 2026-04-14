@@ -353,6 +353,76 @@ open scan-results/*/index.html        # macOS
 `clang-analyzer-*` in `.clang-tidy`, but produces a browsable HTML report
 useful for visual inspection of analysis paths.
 
+## Coverage
+
+Code coverage is measured with **gcov** and **lcov** (HTML report) on GCC/Clang.
+
+### Prerequisites
+
+Ubuntu/Debian:
+
+```bash
+sudo apt-get install -y lcov
+```
+
+macOS (Homebrew):
+
+```bash
+brew install lcov
+```
+
+### Generate the HTML report (one command)
+
+```bash
+make coverage
+```
+
+This will:
+
+1. Configure with `cmake --preset gcc-debug-coverage` (`-O0 --coverage`).
+2. Build the library and test binary.
+3. Reset any stale counters with `lcov --zerocounters`.
+4. Run the test suite via `ctest`.
+5. Capture counters with `lcov --capture` (system headers and `tests/` excluded).
+6. Render an interactive HTML report into `coverage_html/`.
+
+Open the report:
+
+```bash
+xdg-open coverage_html/index.html   # Linux
+open coverage_html/index.html        # macOS
+```
+
+### Manual step-by-step
+
+```bash
+cmake --preset gcc-debug-coverage
+cmake --build --preset gcc-debug-coverage
+lcov --directory build/gcc-debug-coverage --zerocounters
+ctest --preset gcc-debug-coverage
+lcov --capture --directory build/gcc-debug-coverage \
+     --output-file build/gcc-debug-coverage/coverage.info \
+     --exclude '/usr/*' --exclude '*/tests/*'
+genhtml build/gcc-debug-coverage/coverage.info \
+        --output-directory coverage_html
+```
+
+### CMake option
+
+Coverage instrumentation can also be enabled on any build directory:
+
+```bash
+cmake -S . -B build-cov \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DTHEBLAS_ENABLE_COVERAGE=ON \
+  -DTHEBLAS_ENABLE_IPO=OFF
+cmake --build build-cov
+ctest --test-dir build-cov
+```
+
+Note: `THEBLAS_ENABLE_IPO` should be `OFF` when coverage is enabled because
+link-time optimisation conflicts with `--coverage`.
+
 ## Build
 
 ### Build with CMake Presets
@@ -408,6 +478,7 @@ Available configure presets:
 - `gcc-debug`
 - `gcc-release`
 - `gcc-debug-sanitized`
+- `gcc-debug-coverage`
 - `clang-debug`
 - `clang-debug-sanitized`
 - `clang-release`
@@ -437,6 +508,7 @@ Configurable CMake options:
 - `THEBLAS_ENABLE_STRICT_WARNINGS=ON|OFF` (default: `ON`)
 - `THEBLAS_WARNINGS_AS_ERRORS=ON|OFF` (default: `OFF`)
 - `THEBLAS_ENABLE_SANITIZERS=ON|OFF` (default: `OFF`, Debug only, Clang/GCC)
+- `THEBLAS_ENABLE_COVERAGE=ON|OFF` (default: `OFF`, enables `--coverage -O0 -g`; GCC/Clang only; disable `THEBLAS_ENABLE_IPO` when using this)
 - `THEBLAS_ENABLE_IPO=ON|OFF` (default: `ON`, enables interprocedural optimization/LTO for `Release`, `RelWithDebInfo`, and `MinSizeRel` when supported)
 - `THEBLAS_ENABLE_RELEASE_HARDENING=ON|OFF` (default: `ON`, enables `_FORTIFY_SOURCE=3` and stack protector for non-Debug Clang/GCC builds)
 
@@ -571,6 +643,7 @@ make test
 make install
 make docs
 make clean
+make coverage
 ```
 
 Useful variables:
@@ -578,6 +651,8 @@ Useful variables:
 - `BUILD_DIR` (default: `build`)
 - `CONFIG` (default: `Release`)
 - `PREFIX` (default: `./install`)
+- `COVERAGE_DIR` (default: `build/gcc-debug-coverage`)
+- `COVERAGE_HTML` (default: `coverage_html`)
 
 Example:
 

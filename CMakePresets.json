@@ -43,6 +43,15 @@
       }
     },
     {
+      "name": "gcc-debug-coverage",
+      "inherits": "base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "THEBLAS_ENABLE_COVERAGE": "ON",
+        "THEBLAS_ENABLE_IPO": "OFF"
+      }
+    },
+    {
       "name": "clang-debug",
       "inherits": "base",
       "cacheVariables": {
@@ -124,6 +133,10 @@
       "configurePreset": "gcc-debug-sanitized"
     },
     {
+      "name": "gcc-debug-coverage",
+      "configurePreset": "gcc-debug-coverage"
+    },
+    {
       "name": "clang-debug",
       "configurePreset": "clang-debug"
     },
@@ -175,6 +188,13 @@
     {
       "name": "gcc-debug-sanitized",
       "configurePreset": "gcc-debug-sanitized",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "gcc-debug-coverage",
+      "configurePreset": "gcc-debug-coverage",
       "output": {
         "outputOnFailure": true
       }

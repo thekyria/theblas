@@ -39,3 +39,9 @@ docs/doxygen/*
 # Local install artifacts (keep only marker ignore file)
 install/*
 !install/.gitkeep
+
+# Coverage reports
+coverage/*
+!coverage/.gitkeep
+coverage_html/*
+!coverage_html/.gitkeep

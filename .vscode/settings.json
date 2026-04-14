@@ -13,7 +13,10 @@
         "command": true,
         "pre-commit": true,
         "cppcheck": true,
-        "clang-tidy": true
+        "clang-tidy": true,
+        "gcovr": true,
+        "lcov": true,
+        "apt-cache": true
     },
     "makefile.configureOnOpen": false
 }

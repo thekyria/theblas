@@ -3,6 +3,7 @@
 All notable changes to theblas are documented here.
 
 This project follows [Semantic Versioning 2.0.0](https://semver.org/):
+
 - **MAJOR** — incompatible API changes
 - **MINOR** — new functionality, backward-compatible
 - **PATCH** — backward-compatible bug fixes
