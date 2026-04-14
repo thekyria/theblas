@@ -72,7 +72,8 @@ jobs:
         env:
           SONAR_SCANNER_VERSION: "6.2.1.4610"
         run: |
-          curl -sSLo sonar-scanner.zip \
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --output sonar-scanner.zip \
             "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux-x64.zip"
           unzip -q sonar-scanner.zip
           echo "$GITHUB_WORKSPACE/sonar-scanner-${SONAR_SCANNER_VERSION}-linux-x64/bin" >> "$GITHUB_PATH"
