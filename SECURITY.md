@@ -13,7 +13,7 @@ Only the latest release on `master` receives security fixes.
 **Please do not open a public issue for security vulnerabilities.**
 
 Report privately via
-[GitHub Security Advisories](https://github.com/thekyria_github/theblas/security/advisories/new).
+[GitHub Security Advisories](https://github.com/thekyria/theblas/security/advisories/new).
 
 Include the following in your report:
 
@@ -25,9 +25,9 @@ Include the following in your report:
 ## Response Timeline
 
 This is a personal open-source project maintained on a best-effort basis.
-There are **no guaranteed response times or patch SLAs**.
-Reports will be reviewed when maintainer availability permits.
-Critical issues will be prioritised over non-critical ones.
+We aim to send an **initial acknowledgement within 14 days** of receiving a
+report. Patch timelines depend on severity and maintainer availability;
+critical issues will be prioritised. There are no guaranteed fix SLAs.
 
 ## Scope
 

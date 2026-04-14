@@ -1,5 +1,6 @@
 # theblas
 
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12538/badge)](https://www.bestpractices.dev/projects/12538)
 [![CMake on a single platform](https://github.com/thekyria/theblas/actions/workflows/build.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/build.yml)
 [![Coverage](https://github.com/thekyria/theblas/actions/workflows/coverage.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/coverage.yml)
 [![Coverage %](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/thekyria/8e1037ada9fe1e598aefebfe56b920ca/raw/theblas-coverage.json)](https://github.com/thekyria/theblas/actions/workflows/coverage.yml)
