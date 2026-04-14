@@ -1,0 +1,107 @@
+name: Coverage
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    name: Generate coverage report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install lcov
+        run: sudo apt-get update && sudo apt-get install -y lcov ninja-build
+
+      - name: Configure (coverage preset)
+        run: cmake --preset gcc-debug-coverage
+
+      - name: Build
+        run: cmake --build --preset gcc-debug-coverage
+
+      - name: Reset counters
+        run: lcov --directory build/gcc-debug-coverage --zerocounters
+
+      - name: Run tests
+        run: ctest --preset gcc-debug-coverage
+
+      - name: Capture coverage
+        run: |
+          lcov \
+            --capture \
+            --directory build/gcc-debug-coverage \
+            --output-file build/gcc-debug-coverage/coverage.info \
+            --exclude '/usr/*' \
+            --exclude '*/tests/*'
+
+      - name: Generate HTML report
+        run: |
+          genhtml build/gcc-debug-coverage/coverage.info \
+            --output-directory coverage_html \
+            --title "theblas coverage" \
+            --legend \
+            --show-details
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html-${{ github.sha }}
+          path: coverage_html/
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Generate Cobertura XML (for PR comment)
+        run: |
+          pip install lcov_cobertura
+          lcov_cobertura build/gcc-debug-coverage/coverage.info \
+            --output coverage.xml \
+            --base-dir .
+
+      - name: Post coverage summary to job
+        run: |
+          TOTAL=$(lcov --summary build/gcc-debug-coverage/coverage.info 2>&1 \
+            | grep "lines" | awk '{print $2}')
+          echo "## Coverage Report" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Metric | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| --- | --- |" >> "$GITHUB_STEP_SUMMARY"
+          lcov --summary build/gcc-debug-coverage/coverage.info 2>&1 \
+            | grep -E "lines|functions" \
+            | awk '{printf "| %s | %s |\n", $1, $2}' >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Full HTML report uploaded as artifact \`coverage-html-${{ github.sha }}\`." \
+            >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Post coverage comment on PR
+        if: github.event_name == 'pull_request'
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage.xml
+          badge: true
+          fail_below_min: false
+          format: markdown
+          hide_branch_rate: true
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: "90 100"
+
+      - name: Add PR comment
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: code-coverage-results.md
