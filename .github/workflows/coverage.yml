@@ -17,6 +17,10 @@ concurrency:
 env:
   COVERAGE_MIN_LINES: 100
   COVERAGE_MIN_FUNCTIONS: 100
+  # ID of the GitHub Gist used for the dynamic coverage badge.
+  # Create a secret gist at https://gist.github.com, then paste its ID here.
+  # Also add a GitHub PAT with the 'gist' scope as repo secret GIST_TOKEN.
+  COVERAGE_GIST_ID: 8e1037ada9fe1e598aefebfe56b920ca
 
 jobs:
   coverage:
@@ -75,12 +79,21 @@ jobs:
             --base-dir .
 
       - name: Enforce coverage thresholds
+        id: coverage_gate
         run: |
           SUMMARY=$(lcov --summary build/gcc-debug-coverage/coverage.info 2>&1)
           LINE_PCT=$(echo "$SUMMARY" | grep 'lines' | grep -oP '[0-9]+\.[0-9]+(?=%)')
           FUNC_PCT=$(echo "$SUMMARY" | grep 'functions' | grep -oP '[0-9]+\.[0-9]+(?=%)')
           echo "Line coverage:     ${LINE_PCT}%  (minimum: ${{ env.COVERAGE_MIN_LINES }}%)"
           echo "Function coverage: ${FUNC_PCT}%  (minimum: ${{ env.COVERAGE_MIN_FUNCTIONS }}%)"
+          # Determine badge colour
+          if   [ "$(echo "$LINE_PCT >= 100" | bc -l)" = "1" ]; then COLOR=brightgreen
+          elif [ "$(echo "$LINE_PCT >= 90"  | bc -l)" = "1" ]; then COLOR=green
+          elif [ "$(echo "$LINE_PCT >= 80"  | bc -l)" = "1" ]; then COLOR=yellowgreen
+          elif [ "$(echo "$LINE_PCT >= 70"  | bc -l)" = "1" ]; then COLOR=yellow
+          else COLOR=red; fi
+          echo "line_pct=${LINE_PCT}" >> "$GITHUB_OUTPUT"
+          echo "color=${COLOR}"      >> "$GITHUB_OUTPUT"
           FAIL=0
           if [ "$(echo "$LINE_PCT < ${{ env.COVERAGE_MIN_LINES }}" | bc -l)" = "1" ]; then
             echo "::error::Line coverage ${LINE_PCT}% is below the required ${{ env.COVERAGE_MIN_LINES }}%"
@@ -128,3 +141,16 @@ jobs:
         with:
           recreate: true
           path: code-coverage-results.md
+
+      - name: Update dynamic coverage badge
+        # Only update the badge when merging to master so PRs don't clobber it.
+        # Requires a GitHub PAT with the 'gist' scope stored as secret GIST_TOKEN.
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_TOKEN }}
+          gistID: ${{ env.COVERAGE_GIST_ID }}
+          filename: theblas-coverage.json
+          label: coverage
+          message: ${{ steps.coverage_gate.outputs.line_pct }}%
+          color: ${{ steps.coverage_gate.outputs.color }}
