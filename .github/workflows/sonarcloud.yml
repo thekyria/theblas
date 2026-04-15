@@ -36,6 +36,7 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read # required for actions/checkout and other tooling that reads repository contents
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
   security-events: write # allows uploading SARIF to GitHub Code Scanning
 
@@ -162,12 +163,12 @@ jobs:
               })
 
           sarif = {
-              "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/"
-                         "main/sarif-2.1/schema/sarif-schema-2.1.0.json",
+              "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
               "version": "2.1.0",
               "runs": [{
                   "tool": {
                       "driver": {
+                          "name": "SonarCloud",
                           "name": "SonarCloud",
                           "informationUri": "https://sonarcloud.io",
                           "rules": list(rules.values()),
