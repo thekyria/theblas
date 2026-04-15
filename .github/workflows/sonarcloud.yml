@@ -37,6 +37,7 @@ on:
 
 permissions:
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+  security-events: write # allows uploading SARIF to GitHub Code Scanning
 
 jobs:
   Analysis:
@@ -71,6 +72,7 @@ jobs:
             build/gcc-debug-coverage
 
       - name: Analyze with SonarCloud
+        id: sonar-scan
         # SonarSource/sonarqube-scan-action runs the scanner natively on the
         # Ubuntu runner (not inside a Docker container), so the CFamily
         # subprocess binary (a glibc ELF) executes without issues. The action
@@ -81,3 +83,13 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          args: >
+            -Dsonar.sarifReportPaths=sonar-report.sarif
+
+      - name: Upload SARIF to GitHub Code Scanning
+        if: always() && steps.sonar-scan.outcome != 'skipped'
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: sonar-report.sarif
+          category: sonarcloud
