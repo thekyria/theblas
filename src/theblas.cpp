@@ -76,7 +76,7 @@ T dot_impl(int n, const T* x, int incx, const T* y, int incy) {
 		return static_cast<T>(0);
 	}
 
-	T acc = static_cast<T>(0);
+	auto acc = static_cast<T>(0);
 	int ix = start_index(n, incx);
 	int iy = start_index(n, incy);
 	for (int i = 0; i < n; ++i) {
@@ -127,7 +127,7 @@ T nrm2_impl(int n, const T* x, int incx) {
 		return static_cast<T>(0);
 	}
 
-	T sum = static_cast<T>(0);
+	auto sum = static_cast<T>(0);
 	int ix = start_index(n, incx);
 	for (int i = 0; i < n; ++i) {
 		const T v = x[ix];
@@ -143,7 +143,7 @@ T nrm2_complex_impl(int n, const std::complex<T>* x, int incx) {
 		return static_cast<T>(0);
 	}
 
-	T sum = static_cast<T>(0);
+	auto sum = static_cast<T>(0);
 	int ix = start_index(n, incx);
 	for (int i = 0; i < n; ++i) {
 		sum += std::norm(x[ix]);
@@ -163,7 +163,7 @@ T asum_impl(int n, const T* x, int incx) {
 		return static_cast<T>(0);
 	}
 
-	T sum = static_cast<T>(0);
+	auto sum = static_cast<T>(0);
 	int ix = start_index(n, incx);
 	for (int i = 0; i < n; ++i) {
 		sum += std::abs(x[ix]);
@@ -178,7 +178,7 @@ T asum_complex_impl(int n, const std::complex<T>* x, int incx) {
 		return static_cast<T>(0);
 	}
 
-	T sum = static_cast<T>(0);
+	auto sum = static_cast<T>(0);
 	int ix = start_index(n, incx);
 	for (int i = 0; i < n; ++i) {
 		sum += abs1(x[ix]);
@@ -281,7 +281,7 @@ void rotg_impl(T* a, T* b, T* c, T* s) { // NOLINT(bugprone-easily-swappable-par
 	r = std::copysign(r, roe);
 	*c = *a / r;
 	*s = *b / r;
-	T z = static_cast<T>(1);
+	auto z = static_cast<T>(1);
 	if (std::abs(*a) > std::abs(*b)) {
 		z = *s;
 	} else if (*c != static_cast<T>(0)) {
@@ -354,8 +354,8 @@ void rotmg_impl(T* d1, T* d2, T* b1, T b2, T* p) { // NOLINT(bugprone-easily-swa
 
 	T a = std::sqrt(*d1) * (*b1);
 	T b = std::sqrt(*d2) * b2;
-	T c = static_cast<T>(0);
-	T s = static_cast<T>(0);
+	auto c = static_cast<T>(0);
+	auto s = static_cast<T>(0);
 	rotg_impl(&a, &b, &c, &s);
 
 	p[0] = static_cast<T>(-1);
