@@ -21,5 +21,9 @@
         "awk": true,
         "uniq": true
     },
-    "makefile.configureOnOpen": false
+    "makefile.configureOnOpen": false,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "thekyria",
+        "projectKey": "thekyria_theblas"
+    }
 }
