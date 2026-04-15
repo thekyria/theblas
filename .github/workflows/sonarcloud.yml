@@ -106,15 +106,22 @@ jobs:
           PROJECT_KEY=$(grep '^projectKey=' .scannerwork/report-task.txt | cut -d= -f2)
           DASHBOARD=$(grep '^dashboardUrl=' .scannerwork/report-task.txt | cut -d= -f2-)
 
-          # Build the API query — scope to the PR when running on a pull request
+          # Build the API query — scope to the PR when running on a pull request.
+          # ps=500 is the SonarCloud maximum page size; projects with more
+          # unresolved issues will only get the first 500 in the SARIF file.
           API_URL="https://sonarcloud.io/api/issues/search?componentKeys=${PROJECT_KEY}&resolved=false&ps=500"
-          PR_NUM=$(echo "$DASHBOARD" | grep -oP 'pullRequest=\K[0-9]+' || true)
+          PR_NUM=$(echo "$DASHBOARD" | grep -oP 'pullRequest=\K[0-9]+' || true)  # GNU grep on ubuntu-latest
           if [ -n "$PR_NUM" ]; then
             API_URL="${API_URL}&pullRequest=${PR_NUM}"
           fi
 
-          curl -sf -u "${SONAR_TOKEN}:" "$API_URL" -o /tmp/sonar-issues.json
-          echo "Fetched issues for project ${PROJECT_KEY}"
+          HTTP_CODE=$(curl -s -u "${SONAR_TOKEN}:" -w '%{http_code}' -o /tmp/sonar-issues.json "$API_URL")
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::SonarCloud API returned HTTP ${HTTP_CODE}"
+            cat /tmp/sonar-issues.json
+            exit 1
+          fi
+          echo "Fetched issues for project ${PROJECT_KEY} (HTTP ${HTTP_CODE})"
 
           python3 - <<'PYEOF'
           import json
