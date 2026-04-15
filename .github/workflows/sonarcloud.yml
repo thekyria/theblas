@@ -77,7 +77,7 @@ jobs:
         # also handles scanner download internally as a trusted setup step,
         # which avoids firewall blocks in sandboxed environments such as the
         # Copilot coding agent.
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
