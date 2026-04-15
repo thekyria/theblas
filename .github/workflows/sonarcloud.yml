@@ -50,18 +50,25 @@ jobs:
           fetch-depth: 0
 
       - name: Install build tools
-        run: sudo apt-get update && sudo apt-get install -y ninja-build
+        run: sudo apt-get update && sudo apt-get install -y ninja-build gcovr
 
-      - name: Configure (generate compile_commands.json)
-        run: |
-          cmake -S . -B build \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-            -DTHEBLAS_ENABLE_STRICT_WARNINGS=OFF \
-            -DTHEBLAS_ENABLE_IPO=OFF
+      - name: Configure (coverage preset)
+        run: cmake --preset gcc-debug-coverage
 
       - name: Build
-        run: cmake --build build
+        run: cmake --build --preset gcc-debug-coverage
+
+      - name: Run tests
+        run: ctest --preset gcc-debug-coverage
+
+      - name: Generate coverage report
+        run: |
+          gcovr \
+            --root . \
+            --sonarqube build/gcc-debug-coverage/coverage.xml \
+            --exclude 'tests/.*' \
+            --exclude '.*/usr/.*' \
+            build/gcc-debug-coverage
 
       - name: Install sonar-scanner natively
         # Run the scanner directly on Ubuntu (not via the Docker-based action).
