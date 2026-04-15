@@ -63,18 +63,37 @@ jobs:
       - name: Build
         run: cmake --build build
 
-      - name: Fix compile_commands.json paths for SonarCloud Docker container
-        # The SonarCloud action runs in Docker with the workspace mounted at
-        # /github/workspace, but CMake records absolute paths from the host
-        # runner (/home/runner/work/...). Rewrite them so the scanner can find
-        # the source files inside the container.
+      - name: Install sonar-scanner natively
+        # Run the scanner directly on Ubuntu (not via the Docker-based action).
+        # The CFamily subprocess binary is a glibc ELF; it cannot execute inside
+        # the Alpine-based SonarCloud Docker container (error=2 / ENOENT on the
+        # dynamic linker). Running natively also means compile_commands.json
+        # paths need no rewriting.
+        env:
+          SONAR_SCANNER_VERSION: "6.2.1.4610"
         run: |
-          sed -i "s|$GITHUB_WORKSPACE|/github/workspace|g" build/compile_commands.json
+          BASE_URL="https://binaries.sonarsource.com/Distribution/sonar-scanner-cli"
+          ZIP_NAME="sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux-x64.zip"
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --output sonar-scanner.zip \
+            "${BASE_URL}/${ZIP_NAME}"
+          curl --fail --silent --show-error --location \
+            --retry 3 --retry-all-errors --output sonar-scanner.zip.sha256 \
+            "${BASE_URL}/${ZIP_NAME}.sha256"
+          EXPECTED_SHA256="$(awk '{print $1}' sonar-scanner.zip.sha256)"
+          ACTUAL_SHA256="$(sha256sum sonar-scanner.zip | awk '{print $1}')"
+          if [ "$EXPECTED_SHA256" != "$ACTUAL_SHA256" ]; then
+            echo "SHA256 checksum mismatch!"
+            echo "  Expected: $EXPECTED_SHA256"
+            echo "  Got:      $ACTUAL_SHA256"
+            exit 1
+          fi
+          unzip -q sonar-scanner.zip
+          echo "$GITHUB_WORKSPACE/sonar-scanner-${SONAR_SCANNER_VERSION}-linux-x64/bin" >> "$GITHUB_PATH"
 
       - name: Analyze with SonarCloud
-
-        # You can pin the exact commit or the version.
-        # uses: SonarSource/sonarcloud-github-action@v2.2.0
-        uses: SonarSource/sonarcloud-github-action@4006f663ecaf1f8093e8e4abb9227f6041f52216
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner \
+            -Dsonar.host.url=https://sonarcloud.io
