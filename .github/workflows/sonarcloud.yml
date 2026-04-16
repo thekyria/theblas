@@ -169,7 +169,6 @@ jobs:
                   "tool": {
                       "driver": {
                           "name": "SonarCloud",
-                          "name": "SonarCloud",
                           "informationUri": "https://sonarcloud.io",
                           "rules": list(rules.values()),
                       }
