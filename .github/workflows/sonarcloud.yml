@@ -36,7 +36,9 @@ on:
   workflow_dispatch:
 
 permissions:
+  contents: read # required for actions/checkout and other tooling that reads repository contents
   pull-requests: read # allows SonarCloud to decorate PRs with analysis results
+  security-events: write # allows uploading SARIF to GitHub Code Scanning
 
 jobs:
   Analysis:
@@ -71,6 +73,7 @@ jobs:
             build/gcc-debug-coverage
 
       - name: Analyze with SonarCloud
+        id: sonar-scan
         # SonarSource/sonarqube-scan-action runs the scanner natively on the
         # Ubuntu runner (not inside a Docker container), so the CFamily
         # subprocess binary (a glibc ELF) executes without issues. The action
@@ -81,3 +84,108 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
+
+      # Wait for SonarCloud to finish processing so we can fetch results.
+      # continue-on-error: the quality gate may report FAILED; we still
+      # want to upload whatever findings exist.
+      - name: Wait for SonarCloud quality gate
+        if: steps.sonar-scan.outcome == 'success'
+        continue-on-error: true
+        uses: SonarSource/sonarqube-quality-gate-action@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+
+      # The scanner does NOT produce SARIF natively.  We fetch unresolved
+      # issues through the SonarCloud Web API and convert them ourselves.
+      - name: Fetch SonarCloud issues and generate SARIF
+        if: always() && steps.sonar-scan.outcome == 'success'
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          PROJECT_KEY=$(grep '^projectKey=' .scannerwork/report-task.txt | cut -d= -f2)
+          DASHBOARD=$(grep '^dashboardUrl=' .scannerwork/report-task.txt | cut -d= -f2-)
+
+          # Build the API query — scope to the PR when running on a pull request.
+          # ps=500 is the SonarCloud maximum page size; projects with more
+          # unresolved issues will only get the first 500 in the SARIF file.
+          API_URL="https://sonarcloud.io/api/issues/search?componentKeys=${PROJECT_KEY}&resolved=false&ps=500"
+          PR_NUM=$(echo "$DASHBOARD" | grep -oP 'pullRequest=\K[0-9]+' || true)  # GNU grep on ubuntu-latest
+          if [ -n "$PR_NUM" ]; then
+            API_URL="${API_URL}&pullRequest=${PR_NUM}"
+          fi
+
+          HTTP_CODE=$(curl -s -u "${SONAR_TOKEN}:" -w '%{http_code}' -o /tmp/sonar-issues.json "$API_URL")
+          if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
+            echo "::error::SonarCloud API returned HTTP ${HTTP_CODE}"
+            cat /tmp/sonar-issues.json
+            exit 1
+          fi
+          echo "Fetched issues for project ${PROJECT_KEY} (HTTP ${HTTP_CODE})"
+
+          python3 - <<'PYEOF'
+          import json
+
+          with open("/tmp/sonar-issues.json") as f:
+              data = json.load(f)
+
+          SEV = {"BLOCKER": "error", "CRITICAL": "error",
+                 "MAJOR": "warning", "MINOR": "note", "INFO": "note"}
+          rules, results = {}, []
+
+          for issue in data.get("issues", []):
+              rid = issue.get("rule", "unknown")
+              lvl = SEV.get(issue.get("severity", "MAJOR"), "warning")
+
+              if rid not in rules:
+                  rules[rid] = {
+                      "id": rid,
+                      "shortDescription": {"text": issue.get("message", rid)[:512]},
+                      "defaultConfiguration": {"level": lvl},
+                  }
+
+              comp = issue.get("component", "")
+              path = comp.split(":", 1)[-1] if ":" in comp else comp
+              loc = {"physicalLocation": {"artifactLocation": {"uri": path}}}
+              tr = issue.get("textRange")
+              if tr:
+                  loc["physicalLocation"]["region"] = {
+                      "startLine": max(tr.get("startLine", 1), 1),
+                      "endLine": max(tr.get("endLine", tr.get("startLine", 1)), 1),
+                  }
+
+              results.append({
+                  "ruleId": rid,
+                  "level": lvl,
+                  "message": {"text": issue.get("message", "")},
+                  "locations": [loc] if path else [],
+              })
+
+          sarif = {
+              "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+              "version": "2.1.0",
+              "runs": [{
+                  "tool": {
+                      "driver": {
+                          "name": "SonarCloud",
+                          "informationUri": "https://sonarcloud.io",
+                          "rules": list(rules.values()),
+                      }
+                  },
+                  "results": results,
+              }],
+          }
+
+          with open("sonar-report.sarif", "w") as f:
+              json.dump(sarif, f, indent=2)
+
+          print(f"Generated SARIF with {len(results)} issue(s) from {len(rules)} rule(s)")
+          PYEOF
+
+      - name: Upload SARIF to GitHub Code Scanning
+        if: always() && steps.sonar-scan.outcome == 'success'
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: sonar-report.sarif
+          category: sonarcloud
