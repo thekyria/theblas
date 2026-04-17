@@ -19,7 +19,11 @@
         "apt-cache": true,
         "gcov": true,
         "awk": true,
-        "uniq": true
+        "uniq": true,
+        "git tag": true,
+        "gh": true,
+        "git rev-parse": true,
+        "git write-tree": true
     },
     "makefile.configureOnOpen": false,
     "sonarlint.connectedMode.project": {

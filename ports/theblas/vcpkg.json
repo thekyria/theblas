@@ -1,0 +1,9 @@
+{
+  "name": "theblas",
+  "version": "0.1.0",
+  "description": "A minimal C++17 Level-1 BLAS library",
+  "homepage": "https://github.com/thekyria/theblas",
+  "license": "MIT",
+  "supports": "!uwp",
+  "dependencies": []
+}
