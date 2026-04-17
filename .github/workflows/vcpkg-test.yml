@@ -87,6 +87,26 @@ jobs:
           }
           EOF
 
+          VCPKG_BUILTIN_BASELINE="$(git -C "$VCPKG_ROOT" rev-parse HEAD)"
+          THEBLAS_REGISTRY_BASELINE="${GITHUB_SHA}"
+          THEBLAS_REGISTRY_REPOSITORY="file://${GITHUB_WORKSPACE}"
+
+          cat > /tmp/theblas-consumer/vcpkg-configuration.json << EOF
+          {
+            "default-registry": {
+              "kind": "builtin",
+              "baseline": "${VCPKG_BUILTIN_BASELINE}"
+            },
+            "registries": [
+              {
+                "kind": "git",
+                "repository": "${THEBLAS_REGISTRY_REPOSITORY}",
+                "baseline": "${THEBLAS_REGISTRY_BASELINE}",
+                "packages": ["theblas"]
+              }
+            ]
+          }
+          EOF
       - name: Create consumer project (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
