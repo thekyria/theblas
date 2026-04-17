@@ -703,6 +703,68 @@ The container provisions C++/CMake tooling plus Doxygen/Graphviz, then runs:
 cmake -S . -B build && cmake --build build && ctest --test-dir build
 ```
 
+## Use with vcpkg
+
+theblas ships its own [vcpkg](https://vcpkg.io) port and versions database, so
+it can be consumed directly as a git registry — no submission to the central
+vcpkg registry required.
+
+### 1. Install vcpkg (one-time)
+
+```bash
+git clone https://github.com/microsoft/vcpkg "$HOME/vcpkg"
+"$HOME/vcpkg/bootstrap-vcpkg.sh" -disableMetrics
+```
+
+### 2. Add a manifest to your project
+
+**`vcpkg.json`** (alongside your `CMakeLists.txt`):
+
+```json
+{
+  "name": "my-project",
+  "version": "0.1.0",
+  "dependencies": ["theblas"]
+}
+```
+
+**`vcpkg-configuration.json`** (same directory):
+
+```json
+{
+  "registries": [
+    {
+      "kind": "git",
+      "repository": "https://github.com/thekyria/theblas",
+      "baseline": "<commit-hash>",
+      "packages": ["theblas"]
+    }
+  ]
+}
+```
+
+Replace `<commit-hash>` with the latest commit SHA from the
+[theblas repository](https://github.com/thekyria/theblas/commits/master)
+that contains the `versions/` directory (any commit after the initial port
+was added).
+
+### 3. Consume the target in CMake
+
+```cmake
+find_package(theblas CONFIG REQUIRED)
+target_link_libraries(your_target PRIVATE theblas::theblas)
+```
+
+### 4. Configure and build
+
+```bash
+cmake -B build -DCMAKE_TOOLCHAIN_FILE="$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake"
+cmake --build build
+```
+
+vcpkg will automatically download, build, and install theblas before your
+project is configured.
+
 ## Use with CPM.cmake
 
 This project is CPM-friendly and exposes a namespaced target: `theblas::theblas`.
