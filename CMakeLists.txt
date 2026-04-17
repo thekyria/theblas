@@ -198,4 +198,6 @@ if(THEBLAS_BUILD_TESTS AND BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
-add_subdirectory(examples)
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/examples")
+  add_subdirectory(examples)
+endif()
