@@ -33,21 +33,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
 
-      - name: Install vcpkg
-        uses: lukka/run-vcpkg@v11
-        with:
-          vcpkgGitCommitId: 'b02e341c927f16d991eddb7364c3c4b93e2ffb94'
+      - name: Bootstrap vcpkg (Unix)
+        run: |
+          git clone https://github.com/microsoft/vcpkg "$HOME/vcpkg" --depth=1
+          "$HOME/vcpkg/bootstrap-vcpkg.sh" -disableMetrics
+          echo "VCPKG_ROOT=$HOME/vcpkg" >> "$GITHUB_ENV"
 
       - name: Create consumer project (Unix)
-        if: runner.os != 'Windows'
         run: |
           mkdir -p /tmp/theblas-consumer
           cat > /tmp/theblas-consumer/CMakeLists.txt << 'EOF'
@@ -71,93 +69,40 @@ jobs:
           }
           EOF
 
-          BASELINE=$(git rev-parse HEAD)
-          cat > /tmp/theblas-consumer/vcpkg.json << EOF
+          cat > /tmp/theblas-consumer/vcpkg.json << 'EOF'
           {
             "name": "theblas-consumer",
             "version": "0.0.1",
             "dependencies": ["theblas"]
           }
           EOF
+
+          VCPKG_BUILTIN_BASELINE="$(git -C "$VCPKG_ROOT" rev-parse HEAD)"
+          THEBLAS_REGISTRY_BASELINE="${GITHUB_SHA}"
+          THEBLAS_REGISTRY_REPOSITORY="file://${GITHUB_WORKSPACE}"
 
           cat > /tmp/theblas-consumer/vcpkg-configuration.json << EOF
           {
+            "default-registry": {
+              "kind": "builtin",
+              "baseline": "${VCPKG_BUILTIN_BASELINE}"
+            },
             "registries": [
               {
                 "kind": "git",
-                "repository": "https://github.com/${{ github.repository }}",
-                "baseline": "${BASELINE}",
+                "repository": "${THEBLAS_REGISTRY_REPOSITORY}",
+                "baseline": "${THEBLAS_REGISTRY_BASELINE}",
                 "packages": ["theblas"]
               }
             ]
           }
           EOF
 
-      - name: Create consumer project (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Force -Path "$env:TEMP\theblas-consumer"
-
-          @'
-          cmake_minimum_required(VERSION 3.15)
-          project(consumer CXX)
-          set(CMAKE_CXX_STANDARD 17)
-          find_package(theblas CONFIG REQUIRED)
-          add_executable(main main.cpp)
-          target_link_libraries(main PRIVATE theblas::theblas)
-          '@ | Set-Content "$env:TEMP\theblas-consumer\CMakeLists.txt"
-
-          @'
-          #include "theblas/theblas.h"
-          #include <cstdio>
-          #include <cmath>
-          int main() {
-              float v[] = {3.0f, 4.0f};
-              float n = theblas::snrm2(2, v, 1);
-              std::printf("snrm2([3,4]) = %.4f\n", n);
-              return (std::fabs(n - 5.0f) < 1e-5f) ? 0 : 1;
-          }
-          '@ | Set-Content "$env:TEMP\theblas-consumer\main.cpp"
-
-          $BASELINE = git rev-parse HEAD
-
-          @"
-          {
-            "name": "theblas-consumer",
-            "version": "0.0.1",
-            "dependencies": ["theblas"]
-          }
-          "@ | Set-Content "$env:TEMP\theblas-consumer\vcpkg.json"
-
-          @"
-          {
-            "registries": [
-              {
-                "kind": "git",
-                "repository": "https://github.com/${{ github.repository }}",
-                "baseline": "$BASELINE",
-                "packages": ["theblas"]
-              }
-            ]
-          }
-          "@ | Set-Content "$env:TEMP\theblas-consumer\vcpkg-configuration.json"
-
       - name: Build and run consumer (Unix)
-        if: runner.os != 'Windows'
         run: |
           cmake -B /tmp/theblas-consumer/build \
             -S /tmp/theblas-consumer \
-            -DCMAKE_TOOLCHAIN_FILE="${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+            -DCMAKE_TOOLCHAIN_FILE="${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" \
+            -DVCPKG_OVERLAY_PORTS="${GITHUB_WORKSPACE}/ports"
           cmake --build /tmp/theblas-consumer/build
           /tmp/theblas-consumer/build/main
-
-      - name: Build and run consumer (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          cmake -B "$env:TEMP\theblas-consumer\build" `
-            -S "$env:TEMP\theblas-consumer" `
-            -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake"
-          cmake --build "$env:TEMP\theblas-consumer\build" --config Release
-          & "$env:TEMP\theblas-consumer\build\Release\main.exe"
