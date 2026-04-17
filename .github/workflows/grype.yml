@@ -44,6 +44,6 @@ jobs:
 
       - name: Upload SARIF report to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
-        if: always()
+        if: ${{ always() && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.fork == false) }}
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
