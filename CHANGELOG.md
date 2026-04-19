@@ -14,6 +14,35 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Complete Level-2 BLAS implementation in C++17 (`theblas` namespace):
+  - General matrix-vector: `sgemv`, `dgemv`, `cgemv`, `zgemv`
+  - General band matrix-vector: `sgbmv`, `dgbmv`, `cgbmv`, `zgbmv`
+  - Hermitian matrix-vector: `chemv`, `zhemv`
+  - Hermitian band matrix-vector: `chbmv`, `zhbmv`
+  - Hermitian packed matrix-vector: `chpmv`, `zhpmv`
+  - Symmetric matrix-vector: `ssymv`, `dsymv`
+  - Symmetric band matrix-vector: `ssbmv`, `dsbmv`
+  - Symmetric packed matrix-vector: `sspmv`, `dspmv`
+  - Triangular matrix-vector: `strmv`, `dtrmv`, `ctrmv`, `ztrmv`
+  - Triangular band matrix-vector: `stbmv`, `dtbmv`, `ctbmv`, `ztbmv`
+  - Triangular packed matrix-vector: `stpmv`, `dtpmv`, `ctpmv`, `ztpmv`
+  - Triangular solve: `strsv`, `dtrsv`, `ctrsv`, `ztrsv`
+  - Triangular band solve: `stbsv`, `dtbsv`, `ctbsv`, `ztbsv`
+  - Triangular packed solve: `stpsv`, `dtpsv`, `ctpsv`, `ztpsv`
+  - General rank-1 update: `sger`, `dger`, `cgeru`, `zgeru`, `cgerc`, `zgerc`
+  - Hermitian rank-1 update: `cher`, `zher`
+  - Hermitian packed rank-1 update: `chpr`, `zhpr`
+  - Hermitian rank-2 update: `cher2`, `zher2`
+  - Hermitian packed rank-2 update: `chpr2`, `zhpr2`
+  - Symmetric rank-1 update: `ssyr`, `dsyr`
+  - Symmetric packed rank-1 update: `sspr`, `dspr`
+  - Symmetric rank-2 update: `ssyr2`, `dsyr2`
+  - Symmetric packed rank-2 update: `sspr2`, `dspr2`
+- Mathematical reference documentation for all Level-2 operations
+- Example: `matrix_vector_ops.cpp` demonstrating Level-2 routines
+
 ## [0.1.0] - 2026-04-13
 
 ### Added
