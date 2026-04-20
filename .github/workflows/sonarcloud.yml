@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           # Full history is required for blame information and new code detection
           fetch-depth: 0
@@ -80,7 +80,7 @@ jobs:
         # also handles scanner download internally as a trusted setup step,
         # which avoids firewall blocks in sandboxed environments such as the
         # Copilot coding agent.
-        uses: SonarSource/sonarqube-scan-action@v6
+        uses: SonarSource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
