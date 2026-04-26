@@ -2,9 +2,10 @@
  * @file matrix_vector_ops.cpp
  * @brief Demonstrates Level 2 BLAS routines: gemv, symv, trmv, trsv, ger.
  *
- * Build and run:
- *   cmake -S .. -B ../build && cmake --build ../build
- *   ../build/examples/example_matrix_vector_ops
+ * Build and run from the repository root:
+ *   cmake -S . -B build
+ *   cmake --build build
+ *   build/examples/example_matrix_vector_ops
  */
 
 #include "theblas/theblas.h"
