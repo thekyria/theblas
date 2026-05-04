@@ -262,3 +262,269 @@ transformation, keeping elements of $H$ near unity for numerical stability.
 > intentionally simple reference implementations suitable for learning and
 > testing. They do not include the rescaling guard present in production BLAS
 > libraries.
+
+---
+
+# Level 2 BLAS — Matrix-Vector Operations
+
+## Level 2 Notation
+
+In addition to the Level 1 symbols, Level 2 routines use:
+
+| Symbol | Meaning |
+|---|---|
+| $A$ | Matrix stored in **column-major** order |
+| $\text{lda}$ | Leading dimension of $A$ (i.e., the declared first dimension of the 2-D array) |
+| $\text{uplo}$ | `'U'` — upper triangle stored; `'L'` — lower triangle stored |
+| $\text{trans}$ | `'N'` — no transpose; `'T'` — transpose; `'C'` — conjugate transpose |
+| $\text{diag}$ | `'U'` — unit diagonal (diagonal elements assumed 1); `'N'` — non-unit diagonal |
+| $\text{op}(A)$ | $A$ if trans=`'N'`; $A^{T}$ if trans=`'T'`; $A^{H}$ if trans=`'C'` |
+| $k_l, k_u$ | Number of sub-diagonals and super-diagonals of a band matrix |
+
+---
+
+## gemv — General Matrix-Vector Multiply
+
+**Routines:** `sgemv`, `dgemv`, `cgemv`, `zgemv`
+
+$$y \leftarrow \alpha\,\text{op}(A)\,x + \beta\,y$$
+
+---
+
+## gbmv — General Band Matrix-Vector Multiply
+
+**Routines:** `sgbmv`, `dgbmv`, `cgbmv`, `zgbmv`
+
+$$y \leftarrow \alpha\,\text{op}(A)\,x + \beta\,y$$
+
+where $A$ is a band matrix with $k_l$ sub-diagonals and $k_u$ super-diagonals.
+
+---
+
+## hemv — Hermitian Matrix-Vector Multiply
+
+**Routines:** `chemv`, `zhemv`
+
+$$y \leftarrow \alpha\,A\,x + \beta\,y$$
+
+where $A$ is Hermitian ($A = A^H$).
+
+---
+
+## hbmv — Hermitian Band Matrix-Vector Multiply
+
+**Routines:** `chbmv`, `zhbmv`
+
+$$y \leftarrow \alpha\,A\,x + \beta\,y$$
+
+where $A$ is Hermitian and banded.
+
+---
+
+## hpmv — Hermitian Packed Matrix-Vector Multiply
+
+**Routines:** `chpmv`, `zhpmv`
+
+$$y \leftarrow \alpha\,A\,x + \beta\,y$$
+
+where $A$ is Hermitian, stored in packed format.
+
+---
+
+## symv — Symmetric Matrix-Vector Multiply
+
+**Routines:** `ssymv`, `dsymv`
+
+$$y \leftarrow \alpha\,A\,x + \beta\,y$$
+
+where $A$ is symmetric ($A = A^T$).
+
+---
+
+## sbmv — Symmetric Band Matrix-Vector Multiply
+
+**Routines:** `ssbmv`, `dsbmv`
+
+$$y \leftarrow \alpha\,A\,x + \beta\,y$$
+
+where $A$ is symmetric and banded.
+
+---
+
+## spmv — Symmetric Packed Matrix-Vector Multiply
+
+**Routines:** `sspmv`, `dspmv`
+
+$$y \leftarrow \alpha\,A\,x + \beta\,y$$
+
+where $A$ is symmetric, stored in packed format.
+
+---
+
+## trmv — Triangular Matrix-Vector Multiply
+
+**Routines:** `strmv`, `dtrmv`, `ctrmv`, `ztrmv`
+
+$$x \leftarrow \text{op}(A)\,x$$
+
+where $A$ is triangular.
+
+---
+
+## tbmv — Triangular Band Matrix-Vector Multiply
+
+**Routines:** `stbmv`, `dtbmv`, `ctbmv`, `ztbmv`
+
+$$x \leftarrow \text{op}(A)\,x$$
+
+where $A$ is triangular and banded.
+
+---
+
+## tpmv — Triangular Packed Matrix-Vector Multiply
+
+**Routines:** `stpmv`, `dtpmv`, `ctpmv`, `ztpmv`
+
+$$x \leftarrow \text{op}(A)\,x$$
+
+where $A$ is triangular, stored in packed format.
+
+---
+
+## trsv — Triangular Solve
+
+**Routines:** `strsv`, `dtrsv`, `ctrsv`, `ztrsv`
+
+Solves:
+
+$$\text{op}(A)\,x = b$$
+
+where $A$ is triangular. On entry $x$ holds $b$; on exit $x$ holds the solution.
+
+---
+
+## tbsv — Triangular Band Solve
+
+**Routines:** `stbsv`, `dtbsv`, `ctbsv`, `ztbsv`
+
+Solves:
+
+$$\text{op}(A)\,x = b$$
+
+where $A$ is triangular and banded.
+
+---
+
+## tpsv — Triangular Packed Solve
+
+**Routines:** `stpsv`, `dtpsv`, `ctpsv`, `ztpsv`
+
+Solves:
+
+$$\text{op}(A)\,x = b$$
+
+where $A$ is triangular, stored in packed format.
+
+---
+
+## ger — General Rank-1 Update (Real)
+
+**Routines:** `sger`, `dger`
+
+$$A \leftarrow \alpha\,x\,y^T + A$$
+
+---
+
+## geru — General Rank-1 Update (Complex, Unconjugated)
+
+**Routines:** `cgeru`, `zgeru`
+
+$$A \leftarrow \alpha\,x\,y^T + A$$
+
+---
+
+## gerc — General Rank-1 Update (Complex, Conjugated)
+
+**Routines:** `cgerc`, `zgerc`
+
+$$A \leftarrow \alpha\,x\,y^H + A$$
+
+---
+
+## her — Hermitian Rank-1 Update
+
+**Routines:** `cher`, `zher`
+
+$$A \leftarrow \alpha\,x\,x^H + A$$
+
+where $A$ is Hermitian and $\alpha \in \mathbb{R}$.
+
+---
+
+## hpr — Hermitian Packed Rank-1 Update
+
+**Routines:** `chpr`, `zhpr`
+
+$$A \leftarrow \alpha\,x\,x^H + A$$
+
+where $A$ is Hermitian, stored in packed format, and $\alpha \in \mathbb{R}$.
+
+---
+
+## her2 — Hermitian Rank-2 Update
+
+**Routines:** `cher2`, `zher2`
+
+$$A \leftarrow \alpha\,x\,y^H + \bar{\alpha}\,y\,x^H + A$$
+
+where $A$ is Hermitian.
+
+---
+
+## hpr2 — Hermitian Packed Rank-2 Update
+
+**Routines:** `chpr2`, `zhpr2`
+
+$$A \leftarrow \alpha\,x\,y^H + \bar{\alpha}\,y\,x^H + A$$
+
+where $A$ is Hermitian, stored in packed format.
+
+---
+
+## syr — Symmetric Rank-1 Update
+
+**Routines:** `ssyr`, `dsyr`
+
+$$A \leftarrow \alpha\,x\,x^T + A$$
+
+where $A$ is symmetric.
+
+---
+
+## spr — Symmetric Packed Rank-1 Update
+
+**Routines:** `sspr`, `dspr`
+
+$$A \leftarrow \alpha\,x\,x^T + A$$
+
+where $A$ is symmetric, stored in packed format.
+
+---
+
+## syr2 — Symmetric Rank-2 Update
+
+**Routines:** `ssyr2`, `dsyr2`
+
+$$A \leftarrow \alpha\,x\,y^T + \alpha\,y\,x^T + A$$
+
+where $A$ is symmetric.
+
+---
+
+## spr2 — Symmetric Packed Rank-2 Update
+
+**Routines:** `sspr2`, `dspr2`
+
+$$A \leftarrow \alpha\,x\,y^T + \alpha\,y\,x^T + A$$
+
+where $A$ is symmetric, stored in packed format.

@@ -11,13 +11,14 @@
 [![CMake](https://img.shields.io/badge/CMake-3.15%2B-blue.svg)](https://cmake.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A minimal, header-clean C++17 library implementing all [Netlib BLAS Level 1](https://netlib.org/blas/) routines for real and complex vectors — including rotations — with full BLAS stride semantics, a CMake build system, vcpkg and Conan 2.x packaging, and automated documentation publishing.
+A minimal, header-clean C++17 library implementing all [Netlib BLAS Level 1](https://netlib.org/blas/#_level_1) and [Level 2](https://netlib.org/blas/#_level_2) routines for real and complex types — including rotations, matrix-vector operations, and triangular solves — with full BLAS stride semantics, a CMake build system, vcpkg and Conan 2.x packaging, and automated documentation publishing.
 
 **[Documentation site](https://thekyria.github.io/theblas/)** — API reference and mathematical reference.
 
 ## Features
 
 - Complete Level 1 BLAS coverage: `swap`, `copy`, `axpy`, `scal`, `dot`, `nrm2`, `asum`, `iamax`, `rot`, `rotg`, `rotm`, `rotmg`
+- Complete Level 2 BLAS coverage: `gemv`, `gbmv`, `hemv`, `hbmv`, `hpmv`, `symv`, `sbmv`, `spmv`, `trmv`, `tbmv`, `tpmv`, `trsv`, `tbsv`, `tpsv`, `ger`/`geru`/`gerc`, `her`, `hpr`, `her2`, `hpr2`, `syr`, `spr`, `syr2`, `spr2`
 - All four precision variants: `s` (float), `d` (double), `c` (complex float), `z` (complex double)
 - BLAS-compatible stride parameters (`incx`, `incy`), negative strides, and 1-based `iamax` index returns
 - Conjugated (`cdotc`/`zdotc`) and unconjugated (`cdotu`/`zdotu`) complex dot products
@@ -67,6 +68,36 @@ int k = theblas::isamax(3, x, 1);   // 3  (x[2] = 3.0)
 
 `i?amax` returns a **1-based** index to match Netlib BLAS semantics.
 
+### Level 2 — Matrix-Vector Operations
+
+| Routine family | Real variants | Complex variants |
+| --- | --- | --- |
+| `?gemv` | `sgemv`, `dgemv` | `cgemv`, `zgemv` |
+| `?gbmv` | `sgbmv`, `dgbmv` | `cgbmv`, `zgbmv` |
+| `?symv` | `ssymv`, `dsymv` | — |
+| `?sbmv` | `ssbmv`, `dsbmv` | — |
+| `?spmv` | `sspmv`, `dspmv` | — |
+| `?hemv` | — | `chemv`, `zhemv` |
+| `?hbmv` | — | `chbmv`, `zhbmv` |
+| `?hpmv` | — | `chpmv`, `zhpmv` |
+| `?trmv` | `strmv`, `dtrmv` | `ctrmv`, `ztrmv` |
+| `?tbmv` | `stbmv`, `dtbmv` | `ctbmv`, `ztbmv` |
+| `?tpmv` | `stpmv`, `dtpmv` | `ctpmv`, `ztpmv` |
+| `?trsv` | `strsv`, `dtrsv` | `ctrsv`, `ztrsv` |
+| `?tbsv` | `stbsv`, `dtbsv` | `ctbsv`, `ztbsv` |
+| `?tpsv` | `stpsv`, `dtpsv` | `ctpsv`, `ztpsv` |
+| `?ger` | `sger`, `dger` | — |
+| `?geru` | — | `cgeru`, `zgeru` |
+| `?gerc` | — | `cgerc`, `zgerc` |
+| `?syr` | `ssyr`, `dsyr` | — |
+| `?spr` | `sspr`, `dspr` | — |
+| `?syr2` | `ssyr2`, `dsyr2` | — |
+| `?spr2` | `sspr2`, `dspr2` | — |
+| `?her` | — | `cher`, `zher` |
+| `?hpr` | — | `chpr`, `zhpr` |
+| `?her2` | — | `cher2`, `zher2` |
+| `?hpr2` | — | `chpr2`, `zhpr2` |
+
 For the mathematical definitions of every operation see the
 [Mathematical Reference](https://thekyria.github.io/theblas/math-reference.html).
 
@@ -93,6 +124,43 @@ Notes:
 - `cdotu`/`zdotu` are unconjugated complex dot products; `cdotc`/`zdotc` are conjugated.
 - `*amax` routines return 1-based indices to match Netlib semantics.
 
+## Netlib Level 2 Compatibility Table
+
+| Netlib BLAS Routine Family | Implemented in theblas |
+| --- | --- |
+| `?gemv` | `sgemv`, `dgemv`, `cgemv`, `zgemv` |
+| `?gbmv` | `sgbmv`, `dgbmv`, `cgbmv`, `zgbmv` |
+| `?hemv` | `chemv`, `zhemv` |
+| `?hbmv` | `chbmv`, `zhbmv` |
+| `?hpmv` | `chpmv`, `zhpmv` |
+| `?symv` | `ssymv`, `dsymv` |
+| `?sbmv` | `ssbmv`, `dsbmv` |
+| `?spmv` | `sspmv`, `dspmv` |
+| `?trmv` | `strmv`, `dtrmv`, `ctrmv`, `ztrmv` |
+| `?tbmv` | `stbmv`, `dtbmv`, `ctbmv`, `ztbmv` |
+| `?tpmv` | `stpmv`, `dtpmv`, `ctpmv`, `ztpmv` |
+| `?trsv` | `strsv`, `dtrsv`, `ctrsv`, `ztrsv` |
+| `?tbsv` | `stbsv`, `dtbsv`, `ctbsv`, `ztbsv` |
+| `?tpsv` | `stpsv`, `dtpsv`, `ctpsv`, `ztpsv` |
+| `?ger` | `sger`, `dger` |
+| `?geru` | `cgeru`, `zgeru` |
+| `?gerc` | `cgerc`, `zgerc` |
+| `?syr` | `ssyr`, `dsyr` |
+| `?spr` | `sspr`, `dspr` |
+| `?syr2` | `ssyr2`, `dsyr2` |
+| `?spr2` | `sspr2`, `dspr2` |
+| `?her` | `cher`, `zher` |
+| `?hpr` | `chpr`, `zhpr` |
+| `?her2` | `cher2`, `zher2` |
+| `?hpr2` | `chpr2`, `zhpr2` |
+
+Notes:
+
+- Matrices are stored in column-major order (Fortran convention).
+- `uplo` parameters accept `'U'` (upper) or `'L'` (lower).
+- `trans` parameters accept `'N'` (no transpose), `'T'` (transpose), `'C'` (conjugate transpose).
+- `diag` parameters accept `'N'` (non-unit diagonal) or `'U'` (unit diagonal).
+
 ## Examples
 
 The `examples/` folder contains standalone programs you can build and run:
@@ -101,6 +169,7 @@ The `examples/` folder contains standalone programs you can build and run:
 | --- | --- |
 | [`examples/vector_ops.cpp`](examples/vector_ops.cpp) | `snrm2`, `sscal`, `saxpy`, `sdot`, `isamax` |
 | [`examples/complex_ops.cpp`](examples/complex_ops.cpp) | `dznrm2`, `zdscal`, `zaxpy`, `zdotc` |
+| [`examples/matrix_vector_ops.cpp`](examples/matrix_vector_ops.cpp) | `sgemv`, `dsymv`, `strmv`, `strsv`, `sger` |
 | [`examples/benchmark.cpp`](examples/benchmark.cpp) | All real and complex routines, memory bandwidth |
 
 Examples are built automatically. To disable them:
