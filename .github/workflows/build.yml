@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Install dependencies
       run: sudo apt-get update && sudo apt-get install -y cppcheck clang-tidy clang-tools
@@ -91,7 +91,7 @@ jobs:
     - name: Install Doxygen
       run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - name: Generate Doxygen docs
       run: doxygen Doxyfile
