@@ -36,7 +36,7 @@ int main() {
     // -----------------------------------------------------------------
     // 2. Superposition of two complex signals with zaxpy
     // -----------------------------------------------------------------
-    cd signal_a[] = { {1.0, 0.0}, {0.0, 1.0}, {-1.0, 0.0} };
+    const cd signal_a[] = { {1.0, 0.0}, {0.0, 1.0}, {-1.0, 0.0} };
     cd signal_b[] = { {0.0, 1.0}, {1.0, 0.0}, { 0.0, 1.0} };
     cd alpha = { 2.0, 0.0 }; // scale signal_a by 2 before adding
     int n3 = 3;
@@ -56,8 +56,8 @@ int main() {
     // 3. Complex inner product with zdotc (conjugates the first argument)
     //    <a, b> = sum_i conj(a[i]) * b[i] — returns real value for orthonormal bases
     // -----------------------------------------------------------------
-    cd p[] = { {1.0, 0.0}, {0.0, 1.0} }; // unit vector along (1, i)
-    cd q[] = { {0.0, 1.0}, {1.0, 0.0} }; // another unit vector
+    const cd p[] = { {1.0, 0.0}, {0.0, 1.0} }; // unit vector along (1, i)
+    const cd q[] = { {0.0, 1.0}, {1.0, 0.0} }; // another unit vector
 
     cd inner = theblas::zdotc(n, p, 1, q, 1);
     std::printf("p = [(1+0i), (0+1i)]\n");
