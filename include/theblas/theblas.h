@@ -10,7 +10,7 @@ namespace theblas {
 
 /**
  * @file theblas.h
- * @brief Public C++17 API for a minimal Level-1 BLAS-like library.
+ * @brief Public C++17 API for a minimal Level-1 and Level-2 BLAS-like library.
  *
  * Naming follows classic BLAS conventions:
  * - s*: single-precision real (`float`)

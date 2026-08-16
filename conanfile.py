@@ -6,8 +6,8 @@ import os
 
 class TheBlasConan(ConanFile):
     name = "theblas"
-    version = "0.1.0"
-    description = "A minimal C++17 Level-1 BLAS library"
+    version = "0.2.0"
+    description = "A minimal C++17 Level-1 and Level-2 BLAS library"
     license = "MIT"
     url = "https://github.com/thekyria/theblas"
     homepage = "https://github.com/thekyria/theblas"

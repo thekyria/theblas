@@ -14,6 +14,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-16
+
 ### Added
 
 - Complete Level-2 BLAS implementation in C++17 (`theblas` namespace):
@@ -68,5 +70,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Pre-commit hooks (clang-format, cmake-format, codespell, conventional commit)
 - CI via GitHub Actions
 
-[Unreleased]: https://github.com/thekyria_github/theblas/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/thekyria_github/theblas/releases/tag/v0.1.0
+[Unreleased]: https://github.com/thekyria/theblas/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/thekyria/theblas/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/thekyria/theblas/releases/tag/v0.1.0

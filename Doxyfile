@@ -1,8 +1,8 @@
 # Doxyfile for theblas (compact, repo-tuned)
 
 PROJECT_NAME           = "theblas"
-PROJECT_BRIEF          = "Minimal C++17 BLAS-style Level 1 library"
-PROJECT_NUMBER         = "0.1.0"
+PROJECT_BRIEF          = "Minimal C++17 BLAS-style Level 1 and Level 2 library"
+PROJECT_NUMBER         = "0.2.0"
 OUTPUT_DIRECTORY       = docs/doxygen
 
 INPUT                  = include src README.md

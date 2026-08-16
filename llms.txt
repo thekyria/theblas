@@ -16,7 +16,7 @@ The library honours BLAS-style stride parameters (`incx`, `incy`), negative stri
 
 ## Source Code
 
-- [include/theblas/theblas.h](include/theblas/theblas.h): Complete public C++ API — all Level 1 BLAS declarations with Doxygen comments and parameter descriptions
+- [include/theblas/theblas.h](include/theblas/theblas.h): Complete public C++ API — all Level 1 and Level 2 BLAS declarations with Doxygen comments and parameter descriptions
 - [src/level1.cpp](src/level1.cpp): Level 1 BLAS implementations, including vector operations, reductions, indexes, and rotations
 - [src/level2_dense.cpp](src/level2_dense.cpp): Dense Level 2 matrix-vector and rank-update implementations
 - [src/level2_banded.cpp](src/level2_banded.cpp): Banded Level 2 matrix-vector and triangular implementations
