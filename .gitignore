@@ -1,5 +1,6 @@
 # Build artifacts
 /build/
+/build-scan/
 !build/.gitkeep
 /CMakeFiles/
 /CMakeCache.txt

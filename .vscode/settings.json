@@ -24,7 +24,11 @@
         "gh": true,
         "git rev-parse": true,
         "git write-tree": true,
-        "test": true
+        "test": true,
+        "printf": true,
+        "git blame": true,
+        "genhtml": true,
+        "c++filt": true
     },
     "makefile.configureOnOpen": false,
     "sonarlint.connectedMode.project": {
