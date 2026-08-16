@@ -17,8 +17,15 @@ The library honours BLAS-style stride parameters (`incx`, `incy`), negative stri
 ## Source Code
 
 - [include/theblas/theblas.h](include/theblas/theblas.h): Complete public C++ API — all Level 1 BLAS declarations with Doxygen comments and parameter descriptions
-- [src/theblas.cpp](src/theblas.cpp): All Level 1 BLAS routine implementations (real/complex, rotations, templated helpers)
-- [tests/test_theblas.cpp](tests/test_theblas.cpp): Unit tests covering every implemented routine using `assert` and `almost_equal` helpers
+- [src/level1.cpp](src/level1.cpp): Level 1 BLAS implementations, including vector operations, reductions, indexes, and rotations
+- [src/level2_dense.cpp](src/level2_dense.cpp): Dense Level 2 matrix-vector and rank-update implementations
+- [src/level2_banded.cpp](src/level2_banded.cpp): Banded Level 2 matrix-vector and triangular implementations
+- [src/level2_packed.cpp](src/level2_packed.cpp): Packed Level 2 matrix-vector, triangular, and rank-update implementations
+- [src/theblas_detail.hpp](src/theblas_detail.hpp): Private shared indexing, option-validation, and conjugation helpers
+- [tests/test_main.cpp](tests/test_main.cpp): Single CTest executable runner
+- [tests/test_level1.cpp](tests/test_level1.cpp): Level 1 unit tests using `assert` and `almost_equal` helpers
+- [tests/test_level2_core.cpp](tests/test_level2_core.cpp): Representative Level 2 operation tests
+- [tests/test_level2_variants.cpp](tests/test_level2_variants.cpp): Level 2 precision, edge-case, and coverage-variant tests
 
 ## Examples
 

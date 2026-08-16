@@ -46,8 +46,14 @@ jobs:
       run: |
         clang-tidy \
           -p ${{github.workspace}}/build \
-          ${{github.workspace}}/src/theblas.cpp \
-          ${{github.workspace}}/tests/test_theblas.cpp \
+          ${{github.workspace}}/src/level1.cpp \
+          ${{github.workspace}}/src/level2_dense.cpp \
+          ${{github.workspace}}/src/level2_banded.cpp \
+          ${{github.workspace}}/src/level2_packed.cpp \
+          ${{github.workspace}}/tests/test_main.cpp \
+          ${{github.workspace}}/tests/test_level1.cpp \
+          ${{github.workspace}}/tests/test_level2_core.cpp \
+          ${{github.workspace}}/tests/test_level2_variants.cpp \
           ${{github.workspace}}/examples/vector_ops.cpp \
           ${{github.workspace}}/examples/complex_ops.cpp
 

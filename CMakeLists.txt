@@ -28,7 +28,12 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CheckIPOSupported)
 
-add_library(theblas src/theblas.cpp)
+add_library(
+  theblas
+  src/level1.cpp
+  src/level2_dense.cpp
+  src/level2_banded.cpp
+  src/level2_packed.cpp)
 
 add_library(theblas::theblas ALIAS theblas)
 

@@ -247,7 +247,9 @@ cppcheck --enable=warning,style,performance,portability \
 
 ```bash
 cmake -B build -DCMAKE_BUILD_TYPE=Debug
-clang-tidy -p build src/theblas.cpp tests/test_theblas.cpp
+clang-tidy -p build \
+  src/level1.cpp src/level2_dense.cpp src/level2_banded.cpp src/level2_packed.cpp \
+  tests/test_main.cpp tests/test_level1.cpp tests/test_level2_core.cpp tests/test_level2_variants.cpp
 ```
 
 **scan-build** (browsable HTML report):

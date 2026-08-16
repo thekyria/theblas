@@ -1,4 +1,9 @@
-add_executable(test_theblas test_theblas.cpp)
+add_executable(
+	test_theblas
+	test_main.cpp
+	test_level1.cpp
+	test_level2_core.cpp
+	test_level2_variants.cpp)
 
 target_link_libraries(test_theblas PRIVATE theblas)
 
