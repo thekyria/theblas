@@ -25,8 +25,10 @@ bool almost_equal(std::complex<double> a, std::complex<double> b, double eps = 1
 
 } // namespace
 
+namespace {
+
 // NOLINTNEXTLINE(readability-function-cognitive-complexity)
-int main() {
+void test_level1() {
     {
         std::array<float, 3> x = {1.0F, 2.0F, 3.0F};
         std::array<float, 3> y = {4.0F, 5.0F, 6.0F};
@@ -859,6 +861,10 @@ int main() {
         assert(almost_equal(x[0], 7.0));
         assert(almost_equal(y[0], 10.0));
     }
+}
+
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void test_level2_core() {
 
     /* ================================================================
      * Level 2 BLAS tests
@@ -1239,6 +1245,10 @@ int main() {
         assert(almost_equal(y[0], cd(3, 1)));
         assert(almost_equal(y[1], cd(4, -2)));
     }
+}
+
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void test_level2_coverage_variants() {
 
     /* --- remaining band-matrix precision variants --- */
     {
@@ -1812,6 +1822,13 @@ int main() {
         theblas::stpsv('U', 'N', 'N', 0, a.data(), x.data(), 1);
         assert(almost_equal(x[0], 1.0F));
     }
+}
 
+} // namespace
+
+int main() {
+    test_level1();
+    test_level2_core();
+    test_level2_coverage_variants();
     return 0;
 }
