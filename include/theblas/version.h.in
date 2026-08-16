@@ -1,3 +1,4 @@
+// NOLINTNEXTLINE(portability-avoid-pragma-once)
 #pragma once
 
 /// @defgroup version Version macros

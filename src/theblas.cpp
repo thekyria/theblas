@@ -240,9 +240,9 @@ void rot_impl(int n, T* x, int incx, T* y, int incy, T c, T s) {
 	for (int i = 0; i < n; ++i) {
 		const T w = x[ix];
 		const T z = y[iy];
-		x[ix] = c * w + s * z;
-		y[iy] = c * z - s * w;
-		ix += incx;
+                x[ix] = (c * w) + (s * z);
+                y[iy] = (c * z) - (s * w);
+                ix += incx;
 		iy += incy;
 	}
 }
@@ -258,9 +258,9 @@ void rot_complex_real_impl(int n, std::complex<T>* x, int incx, std::complex<T>*
 	for (int i = 0; i < n; ++i) {
 		const std::complex<T> w = x[ix];
 		const std::complex<T> z = y[iy];
-		x[ix] = c * w + s * z;
-		y[iy] = c * z - s * w;
-		ix += incx;
+                x[ix] = (c * w) + (s * z);
+                y[iy] = (c * z) - (s * w);
+                ix += incx;
 		iy += incy;
 	}
 }
@@ -277,8 +277,8 @@ void rotg_impl(T* a, T* b, T* c, T* s) { // NOLINT(bugprone-easily-swappable-par
 		return;
 	}
 
-	T r = scale * std::sqrt((*a / scale) * (*a / scale) + (*b / scale) * (*b / scale));
-	r = std::copysign(r, roe);
+        T r = scale * std::sqrt(((*a / scale) * (*a / scale)) + ((*b / scale) * (*b / scale)));
+        r = std::copysign(r, roe);
 	*c = *a / r;
 	*s = *b / r;
 	auto z = static_cast<T>(1);
@@ -330,15 +330,15 @@ void rotm_impl(int n, T* x, int incx, T* y, int incy, const T* p) {
 		const T w = x[ix];
 		const T z = y[iy];
 		if (flag < static_cast<T>(0)) {
-			x[ix] = w * h11 + z * h12;
-			y[iy] = w * h21 + z * h22;
-		} else if (flag == static_cast<T>(0)) {
-			x[ix] = w + z * h12;
-			y[iy] = w * h21 + z;
-		} else {
-			x[ix] = w * h11 + z;
-			y[iy] = -w + z * h22;
-		}
+                    x[ix] = (w * h11) + (z * h12);
+                    y[iy] = (w * h21) + (z * h22);
+                } else if (flag == static_cast<T>(0)) {
+                    x[ix] = w + (z * h12);
+                    y[iy] = (w * h21) + z;
+                } else {
+                    x[ix] = (w * h11) + z;
+                    y[iy] = -w + (z * h22);
+                }
 		ix += incx;
 		iy += incy;
 	}
@@ -368,9 +368,9 @@ void rotmg_impl(T* d1, T* d2, T* b1, T b2, T* p) { // NOLINT(bugprone-easily-swa
 	const T s2 = s * s;
 	const T d1_old = *d1;
 	const T d2_old = *d2;
-	*d1 = d1_old * c2 + d2_old * s2;
-	*d2 = d1_old * s2 + d2_old * c2;
-	*b1 = a / std::sqrt(std::max(*d1, static_cast<T>(1e-30)));
+        *d1 = (d1_old * c2) + (d2_old * s2);
+        *d2 = (d1_old * s2) + (d2_old * c2);
+        *b1 = a / std::sqrt(std::max(*d1, static_cast<T>(1e-30)));
 }
 
 } // namespace
@@ -603,10 +603,11 @@ std::complex<T> conj_val(std::complex<T> v) {
 }
 
 /* ------------------------------------------------------------------ */
-/* gemv_impl — y ← α·op(A)·x + β·y                                  */
+/* gemv_impl — y ← α·op(a)·x + β·y                                  */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void gemv_impl(char trans, int m, int n, T alpha, const T* A, int lda, const T* x, int incx,
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void gemv_impl(char trans, int m, int n, T alpha, const T* a, int lda, const T* x, int incx,
                T beta, T* y, int incy) {
 	char tr = to_upper(trans);
 	if (!valid_trans(trans) || m <= 0 || n <= 0 || incx == 0 || incy == 0) {
@@ -636,14 +637,14 @@ void gemv_impl(char trans, int m, int n, T alpha, const T* A, int lda, const T* 
 	}
 
 	if (tr == 'N') {
-		// y ← α·A·x + y
+		// y ← α·a·x + y
 		int jx = start_index(lenx, incx);
 		for (int j = 0; j < n; ++j) {
 			T temp = alpha * x[jx];
 			int iy = start_index(leny, incy);
 			for (int i = 0; i < m; ++i) {
-				y[iy] += temp * A[i + j * lda];
-				iy += incy;
+                            y[iy] += temp * a[i + (j * lda)];
+                            iy += incy;
 			}
 			jx += incx;
 		}
@@ -654,8 +655,8 @@ void gemv_impl(char trans, int m, int n, T alpha, const T* A, int lda, const T* 
 			T temp = T(0);
 			int ix = start_index(lenx, incx);
 			for (int i = 0; i < m; ++i) {
-				temp += A[i + j * lda] * x[ix];
-				ix += incx;
+                            temp += a[i + (j * lda)] * x[ix];
+                            ix += incx;
 			}
 			y[jy] += alpha * temp;
 			jy += incy;
@@ -667,8 +668,8 @@ void gemv_impl(char trans, int m, int n, T alpha, const T* A, int lda, const T* 
 			T temp = T(0);
 			int ix = start_index(lenx, incx);
 			for (int i = 0; i < m; ++i) {
-				temp += conj_val(A[i + j * lda]) * x[ix];
-				ix += incx;
+                            temp += conj_val(a[i + (j * lda)]) * x[ix];
+                            ix += incx;
 			}
 			y[jy] += alpha * temp;
 			jy += incy;
@@ -677,10 +678,10 @@ void gemv_impl(char trans, int m, int n, T alpha, const T* A, int lda, const T* 
 }
 
 /* ------------------------------------------------------------------ */
-/* symv_impl — y ← α·A·x + β·y   (A symmetric)                     */
+/* symv_impl — y ← α·a·x + β·y   (a symmetric)                     */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void symv_impl(char uplo, int n, T alpha, const T* A, int lda, const T* x, int incx, T beta,
+void symv_impl(char uplo, int n, T alpha, const T* a, int lda, const T* x, int incx, T beta,
                T* y, int incy) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0 || incy == 0) {
@@ -716,13 +717,13 @@ void symv_impl(char uplo, int n, T alpha, const T* A, int lda, const T* x, int i
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i < j; ++i) {
-				y[iy] += temp1 * A[i + j * lda];
-				temp2 += A[i + j * lda] * x[ix];
-				ix += incx;
-				iy += incy;
+                            y[iy] += temp1 * a[i + (j * lda)];
+                            temp2 += a[i + (j * lda)] * x[ix];
+                            ix += incx;
+                            iy += incy;
 			}
-			y[jy] += temp1 * A[j + j * lda] + alpha * temp2;
-			jx += incx;
+                        y[jy] += (temp1 * a[j + (j * lda)]) + (alpha * temp2);
+                        jx += incx;
 			jy += incy;
 		}
 	} else {
@@ -731,15 +732,15 @@ void symv_impl(char uplo, int n, T alpha, const T* A, int lda, const T* x, int i
 		for (int j = 0; j < n; ++j) {
 			T temp1 = alpha * x[jx];
 			T temp2 = T(0);
-			y[jy] += temp1 * A[j + j * lda];
-			int ix = jx;
+                        y[jy] += temp1 * a[j + (j * lda)];
+                        int ix = jx;
 			int iy = jy;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
 				iy += incy;
-				y[iy] += temp1 * A[i + j * lda];
-				temp2 += A[i + j * lda] * x[ix];
-			}
+                                y[iy] += temp1 * a[i + (j * lda)];
+                                temp2 += a[i + (j * lda)] * x[ix];
+                        }
 			y[jy] += alpha * temp2;
 			jx += incx;
 			jy += incy;
@@ -748,10 +749,10 @@ void symv_impl(char uplo, int n, T alpha, const T* A, int lda, const T* x, int i
 }
 
 /* ------------------------------------------------------------------ */
-/* hemv_impl — y ← α·A·x + β·y   (A Hermitian)                     */
+/* hemv_impl — y ← α·a·x + β·y   (a Hermitian)                     */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void hemv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A, int lda,
+void hemv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* a, int lda,
                const std::complex<T>* x, int incx, std::complex<T> beta, std::complex<T>* y,
                int incy) {
 	using C = std::complex<T>;
@@ -789,14 +790,14 @@ void hemv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i < j; ++i) {
-				y[iy] += temp1 * A[i + j * lda];
-				temp2 += std::conj(A[i + j * lda]) * x[ix];
-				ix += incx;
-				iy += incy;
+                            y[iy] += temp1 * a[i + (j * lda)];
+                            temp2 += std::conj(a[i + (j * lda)]) * x[ix];
+                            ix += incx;
+                            iy += incy;
 			}
 			// Diagonal of a Hermitian matrix is real
-			y[jy] += temp1 * T(A[j + j * lda].real()) + alpha * temp2;
-			jx += incx;
+                        y[jy] += (temp1 * T(a[j + (j * lda)].real())) + (alpha * temp2);
+                        jx += incx;
 			jy += incy;
 		}
 	} else {
@@ -805,15 +806,15 @@ void hemv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A
 		for (int j = 0; j < n; ++j) {
 			C temp1 = alpha * x[jx];
 			C temp2 = C(0);
-			y[jy] += temp1 * T(A[j + j * lda].real());
-			int ix = jx;
+                        y[jy] += temp1 * T(a[j + (j * lda)].real());
+                        int ix = jx;
 			int iy = jy;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
 				iy += incy;
-				y[iy] += temp1 * A[i + j * lda];
-				temp2 += std::conj(A[i + j * lda]) * x[ix];
-			}
+                                y[iy] += temp1 * a[i + (j * lda)];
+                                temp2 += std::conj(a[i + (j * lda)]) * x[ix];
+                        }
 			y[jy] += alpha * temp2;
 			jx += incx;
 			jy += incy;
@@ -822,10 +823,11 @@ void hemv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A
 }
 
 /* ------------------------------------------------------------------ */
-/* trmv_impl — x ← op(A)·x   (A triangular)                        */
+/* trmv_impl — x ← op(a)·x   (a triangular)                        */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void trmv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* x, int incx) {
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void trmv_impl(char uplo, char trans, char diag, int n, const T* a, int lda, T* x, int incx) {
 	char ul = to_upper(uplo);
 	char tr = to_upper(trans);
 	char dg = to_upper(diag);
@@ -842,62 +844,64 @@ void trmv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* 
 					T temp = x[jx];
 					int ix = start_index(n, incx);
 					for (int i = 0; i < j; ++i) {
-						x[ix] += temp * A[i + j * lda];
-						ix += incx;
+                                            x[ix] += temp * a[i + (j * lda)];
+                                            ix += incx;
 					}
 					if (!unit) {
-						x[jx] *= A[j + j * lda];
-					}
+                                            x[jx] *= a[j + (j * lda)];
+                                        }
 				}
 				jx += incx;
 			}
 		} else {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				if (x[jx] != T(0)) {
-					T temp = x[jx];
-					int ix = start_index(n, incx) + (n - 1) * incx;
-					for (int i = n - 1; i > j; --i) {
-						x[ix] += temp * A[i + j * lda];
-						ix -= incx;
-					}
-					if (!unit) {
-						x[jx] *= A[j + j * lda];
-					}
-				}
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        if (x[jx] != T(0)) {
+                            T temp = x[jx];
+                            int ix = start_index(n, incx) + ((n - 1) * incx);
+                            for (int i = n - 1; i > j; --i) {
+                                x[ix] += temp * a[i + (j * lda)];
+                                ix -= incx;
+                            }
+                            if (!unit) {
+                                x[jx] *= a[j + (j * lda)];
+                            }
+                        }
+                        jx -= incx;
+                    }
 		}
 	} else {
 		// Transpose or conjugate-transpose
 		bool conj = (tr == 'C');
 		if (ul == 'U') {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				T temp = x[jx];
-				if (!unit) {
-					temp *= conj ? conj_val(A[j + j * lda]) : A[j + j * lda];
-				}
-				int ix = jx;
-				for (int i = j - 1; i >= 0; --i) {
-					ix -= incx;
-					temp += (conj ? conj_val(A[i + j * lda]) : A[i + j * lda]) * x[ix];
-				}
-				x[jx] = temp;
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        T temp = x[jx];
+                        if (!unit) {
+                            temp *= conj ? conj_val(a[j + (j * lda)]) : a[j + (j * lda)];
+                        }
+                        int ix = jx;
+                        for (int i = j - 1; i >= 0; --i) {
+                            ix -= incx;
+                            temp += (conj ? conj_val(a[i + (j * lda)]) : a[i + (j * lda)]) * x[ix];
+                        }
+                        x[jx] = temp;
+                        jx -= incx;
+                    }
 		} else {
 			int jx = start_index(n, incx);
 			for (int j = 0; j < n; ++j) {
 				T temp = x[jx];
 				if (!unit) {
-					temp *= conj ? conj_val(A[j + j * lda]) : A[j + j * lda];
-				}
+                                    temp *= conj ? conj_val(a[j + (j * lda)]) : a[j + (j * lda)];
+                                }
 				int ix = jx;
 				for (int i = j + 1; i < n; ++i) {
 					ix += incx;
-					temp += (conj ? conj_val(A[i + j * lda]) : A[i + j * lda]) * x[ix];
-				}
+                                        temp +=
+                                            (conj ? conj_val(a[i + (j * lda)]) : a[i + (j * lda)]) *
+                                            x[ix];
+                                }
 				x[jx] = temp;
 				jx += incx;
 			}
@@ -906,10 +910,11 @@ void trmv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* 
 }
 
 /* ------------------------------------------------------------------ */
-/* trsv_impl — solve op(A)·x = b   (A triangular)                   */
+/* trsv_impl — solve op(a)·x = b   (a triangular)                   */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void trsv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* x, int incx) {
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void trsv_impl(char uplo, char trans, char diag, int n, const T* a, int lda, T* x, int incx) {
 	char ul = to_upper(uplo);
 	char tr = to_upper(trans);
 	char dg = to_upper(diag);
@@ -921,17 +926,17 @@ void trsv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* 
 	if (tr == 'N') {
 		if (ul == 'U') {
 			// Back-substitution
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
+                        int jx = start_index(n, incx) + ((n - 1) * incx);
+                        for (int j = n - 1; j >= 0; --j) {
 				if (!unit) {
-					x[jx] /= A[j + j * lda];
-				}
+                                    x[jx] /= a[j + (j * lda)];
+                                }
 				T temp = x[jx];
 				int ix = jx;
 				for (int i = j - 1; i >= 0; --i) {
 					ix -= incx;
-					x[ix] -= temp * A[i + j * lda];
-				}
+                                        x[ix] -= temp * a[i + (j * lda)];
+                                }
 				jx -= incx;
 			}
 		} else {
@@ -939,14 +944,14 @@ void trsv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* 
 			int jx = start_index(n, incx);
 			for (int j = 0; j < n; ++j) {
 				if (!unit) {
-					x[jx] /= A[j + j * lda];
-				}
+                                    x[jx] /= a[j + (j * lda)];
+                                }
 				T temp = x[jx];
 				int ix = jx;
 				for (int i = j + 1; i < n; ++i) {
 					ix += incx;
-					x[ix] -= temp * A[i + j * lda];
-				}
+                                        x[ix] -= temp * a[i + (j * lda)];
+                                }
 				jx += incx;
 			}
 		}
@@ -958,39 +963,40 @@ void trsv_impl(char uplo, char trans, char diag, int n, const T* A, int lda, T* 
 				T temp = x[jx];
 				int ix = start_index(n, incx);
 				for (int i = 0; i < j; ++i) {
-					temp -= (conj ? conj_val(A[i + j * lda]) : A[i + j * lda]) * x[ix];
-					ix += incx;
+                                    temp -= (conj ? conj_val(a[i + (j * lda)]) : a[i + (j * lda)]) *
+                                            x[ix];
+                                    ix += incx;
 				}
 				if (!unit) {
-					temp /= conj ? conj_val(A[j + j * lda]) : A[j + j * lda];
-				}
+                                    temp /= conj ? conj_val(a[j + (j * lda)]) : a[j + (j * lda)];
+                                }
 				x[jx] = temp;
 				jx += incx;
 			}
 		} else {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				T temp = x[jx];
-				int ix = start_index(n, incx) + (n - 1) * incx;
-				for (int i = n - 1; i > j; --i) {
-					temp -= (conj ? conj_val(A[i + j * lda]) : A[i + j * lda]) * x[ix];
-					ix -= incx;
-				}
-				if (!unit) {
-					temp /= conj ? conj_val(A[j + j * lda]) : A[j + j * lda];
-				}
-				x[jx] = temp;
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        T temp = x[jx];
+                        int ix = start_index(n, incx) + ((n - 1) * incx);
+                        for (int i = n - 1; i > j; --i) {
+                            temp -= (conj ? conj_val(a[i + (j * lda)]) : a[i + (j * lda)]) * x[ix];
+                            ix -= incx;
+                        }
+                        if (!unit) {
+                            temp /= conj ? conj_val(a[j + (j * lda)]) : a[j + (j * lda)];
+                        }
+                        x[jx] = temp;
+                        jx -= incx;
+                    }
 		}
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* ger_impl — A ← α·x·yᵀ + A   (real rank-1 update)                */
+/* ger_impl — a ← α·x·yᵀ + a   (real rank-1 update)                */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void ger_impl(int m, int n, T alpha, const T* x, int incx, const T* y, int incy, T* A, int lda) {
+void ger_impl(int m, int n, T alpha, const T* x, int incx, const T* y, int incy, T* a, int lda) {
 	if (m <= 0 || n <= 0 || incx == 0 || incy == 0) {
 		return;
 	}
@@ -1003,19 +1009,19 @@ void ger_impl(int m, int n, T alpha, const T* x, int incx, const T* y, int incy,
 		T temp = alpha * y[jy];
 		int ix = start_index(m, incx);
 		for (int i = 0; i < m; ++i) {
-			A[i + j * lda] += x[ix] * temp;
-			ix += incx;
+                    a[i + (j * lda)] += x[ix] * temp;
+                    ix += incx;
 		}
 		jy += incy;
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* geru_impl — A ← α·x·yᵀ + A   (complex unconjugated rank-1)      */
+/* geru_impl — a ← α·x·yᵀ + a   (complex unconjugated rank-1)      */
 /* ------------------------------------------------------------------ */
 template <typename T>
 void geru_impl(int m, int n, std::complex<T> alpha, const std::complex<T>* x, int incx,
-               const std::complex<T>* y, int incy, std::complex<T>* A, int lda) {
+               const std::complex<T>* y, int incy, std::complex<T>* a, int lda) {
 	using C = std::complex<T>;
 	if (m <= 0 || n <= 0 || incx == 0 || incy == 0) {
 		return;
@@ -1029,19 +1035,19 @@ void geru_impl(int m, int n, std::complex<T> alpha, const std::complex<T>* x, in
 		C temp = alpha * y[jy];
 		int ix = start_index(m, incx);
 		for (int i = 0; i < m; ++i) {
-			A[i + j * lda] += x[ix] * temp;
-			ix += incx;
+                    a[i + (j * lda)] += x[ix] * temp;
+                    ix += incx;
 		}
 		jy += incy;
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* gerc_impl — A ← α·x·conj(y)ᵀ + A   (complex conjugated rank-1)  */
+/* gerc_impl — a ← α·x·conj(y)ᵀ + a   (complex conjugated rank-1)  */
 /* ------------------------------------------------------------------ */
 template <typename T>
 void gerc_impl(int m, int n, std::complex<T> alpha, const std::complex<T>* x, int incx,
-               const std::complex<T>* y, int incy, std::complex<T>* A, int lda) {
+               const std::complex<T>* y, int incy, std::complex<T>* a, int lda) {
 	using C = std::complex<T>;
 	if (m <= 0 || n <= 0 || incx == 0 || incy == 0) {
 		return;
@@ -1055,18 +1061,18 @@ void gerc_impl(int m, int n, std::complex<T> alpha, const std::complex<T>* x, in
 		C temp = alpha * std::conj(y[jy]);
 		int ix = start_index(m, incx);
 		for (int i = 0; i < m; ++i) {
-			A[i + j * lda] += x[ix] * temp;
-			ix += incx;
+                    a[i + (j * lda)] += x[ix] * temp;
+                    ix += incx;
 		}
 		jy += incy;
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* syr_impl — A ← α·x·xᵀ + A   (A symmetric)                       */
+/* syr_impl — a ← α·x·xᵀ + a   (a symmetric)                       */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void syr_impl(char uplo, int n, T alpha, const T* x, int incx, T* A, int lda) {
+void syr_impl(char uplo, int n, T alpha, const T* x, int incx, T* a, int lda) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0) {
 		return;
@@ -1081,8 +1087,8 @@ void syr_impl(char uplo, int n, T alpha, const T* x, int incx, T* A, int lda) {
 			T temp = alpha * x[jx];
 			int ix = start_index(n, incx);
 			for (int i = 0; i <= j; ++i) {
-				A[i + j * lda] += x[ix] * temp;
-				ix += incx;
+                            a[i + (j * lda)] += x[ix] * temp;
+                            ix += incx;
 			}
 			jx += incx;
 		}
@@ -1091,8 +1097,8 @@ void syr_impl(char uplo, int n, T alpha, const T* x, int incx, T* A, int lda) {
 			T temp = alpha * x[jx];
 			int ix = jx;
 			for (int i = j; i < n; ++i) {
-				A[i + j * lda] += x[ix] * temp;
-				ix += incx;
+                            a[i + (j * lda)] += x[ix] * temp;
+                            ix += incx;
 			}
 			jx += incx;
 		}
@@ -1100,11 +1106,11 @@ void syr_impl(char uplo, int n, T alpha, const T* x, int incx, T* A, int lda) {
 }
 
 /* ------------------------------------------------------------------ */
-/* her_impl — A ← α·x·xᴴ + A   (A Hermitian, α real)               */
+/* her_impl — a ← α·x·xᴴ + a   (a Hermitian, α real)               */
 /* ------------------------------------------------------------------ */
 template <typename T>
 void her_impl(char uplo, int n, T alpha, const std::complex<T>* x, int incx,
-              std::complex<T>* A, int lda) {
+              std::complex<T>* a, int lda) {
 	using C = std::complex<T>;
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0) {
@@ -1120,33 +1126,33 @@ void her_impl(char uplo, int n, T alpha, const std::complex<T>* x, int incx,
 			C temp = C(alpha) * std::conj(x[jx]);
 			int ix = start_index(n, incx);
 			for (int i = 0; i < j; ++i) {
-				A[i + j * lda] += x[ix] * temp;
-				ix += incx;
+                            a[i + (j * lda)] += x[ix] * temp;
+                            ix += incx;
 			}
 			// Diagonal is real
-			A[j + j * lda] = C(A[j + j * lda].real() + (x[jx] * temp).real());
-			jx += incx;
+                        a[j + (j * lda)] = C(a[j + (j * lda)].real() + (x[jx] * temp).real());
+                        jx += incx;
 		}
 	} else {
 		for (int j = 0; j < n; ++j) {
 			C temp = C(alpha) * std::conj(x[jx]);
 			// Diagonal is real
-			A[j + j * lda] = C(A[j + j * lda].real() + (x[jx] * temp).real());
-			int ix = jx;
+                        a[j + (j * lda)] = C(a[j + (j * lda)].real() + (x[jx] * temp).real());
+                        int ix = jx;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
-				A[i + j * lda] += x[ix] * temp;
-			}
+                                a[i + (j * lda)] += x[ix] * temp;
+                        }
 			jx += incx;
 		}
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* syr2_impl — A ← α·x·yᵀ + α·y·xᵀ + A   (A symmetric)            */
+/* syr2_impl — a ← α·x·yᵀ + α·y·xᵀ + a   (a symmetric)            */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void syr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int incy, T* A,
+void syr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int incy, T* a,
                int lda) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0 || incy == 0) {
@@ -1165,9 +1171,9 @@ void syr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int 
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i <= j; ++i) {
-				A[i + j * lda] += x[ix] * temp1 + y[iy] * temp2;
-				ix += incx;
-				iy += incy;
+                            a[i + (j * lda)] += (x[ix] * temp1) + (y[iy] * temp2);
+                            ix += incx;
+                            iy += incy;
 			}
 			jx += incx;
 			jy += incy;
@@ -1179,9 +1185,9 @@ void syr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int 
 			int ix = jx;
 			int iy = jy;
 			for (int i = j; i < n; ++i) {
-				A[i + j * lda] += x[ix] * temp1 + y[iy] * temp2;
-				ix += incx;
-				iy += incy;
+                            a[i + (j * lda)] += (x[ix] * temp1) + (y[iy] * temp2);
+                            ix += incx;
+                            iy += incy;
 			}
 			jx += incx;
 			jy += incy;
@@ -1190,11 +1196,11 @@ void syr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int 
 }
 
 /* ------------------------------------------------------------------ */
-/* her2_impl — A ← α·x·yᴴ + conj(α)·y·xᴴ + A   (A Hermitian)      */
+/* her2_impl — a ← α·x·yᴴ + conj(α)·y·xᴴ + a   (a Hermitian)      */
 /* ------------------------------------------------------------------ */
 template <typename T>
 void her2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x, int incx,
-               const std::complex<T>* y, int incy, std::complex<T>* A, int lda) {
+               const std::complex<T>* y, int incy, std::complex<T>* a, int lda) {
 	using C = std::complex<T>;
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0 || incy == 0) {
@@ -1213,28 +1219,28 @@ void her2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i < j; ++i) {
-				A[i + j * lda] += x[ix] * temp1 + y[iy] * temp2;
-				ix += incx;
-				iy += incy;
+                            a[i + (j * lda)] += (x[ix] * temp1) + (y[iy] * temp2);
+                            ix += incx;
+                            iy += incy;
 			}
-			A[j + j * lda] =
-			    C((A[j + j * lda] + x[jx] * temp1 + y[jy] * temp2).real());
-			jx += incx;
+                        a[j + (j * lda)] =
+                            C((a[j + (j * lda)] + (x[jx] * temp1) + (y[jy] * temp2)).real());
+                        jx += incx;
 			jy += incy;
 		}
 	} else {
 		for (int j = 0; j < n; ++j) {
 			C temp1 = alpha * std::conj(y[jy]);
 			C temp2 = std::conj(alpha * x[jx]);
-			A[j + j * lda] =
-			    C((A[j + j * lda] + x[jx] * temp1 + y[jy] * temp2).real());
-			int ix = jx;
+                        a[j + (j * lda)] =
+                            C((a[j + (j * lda)] + (x[jx] * temp1) + (y[jy] * temp2)).real());
+                        int ix = jx;
 			int iy = jy;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
 				iy += incy;
-				A[i + j * lda] += x[ix] * temp1 + y[iy] * temp2;
-			}
+                                a[i + (j * lda)] += (x[ix] * temp1) + (y[iy] * temp2);
+                        }
 			jx += incx;
 			jy += incy;
 		}
@@ -1242,10 +1248,11 @@ void her2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x
 }
 
 /* ------------------------------------------------------------------ */
-/* gbmv_impl — y ← α·op(A)·x + β·y   (A banded)                    */
+/* gbmv_impl — y ← α·op(a)·x + β·y   (a banded)                    */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void gbmv_impl(char trans, int m, int n, int kl, int ku, T alpha, const T* A, int lda,
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void gbmv_impl(char trans, int m, int n, int kl, int ku, T alpha, const T* a, int lda,
                const T* x, int incx, T beta, T* y, int incy) {
 	char tr = to_upper(trans);
 	if (!valid_trans(trans) || m <= 0 || n <= 0 || kl < 0 || ku < 0 || incx == 0 || incy == 0) {
@@ -1280,10 +1287,10 @@ void gbmv_impl(char trans, int m, int n, int kl, int ku, T alpha, const T* A, in
 			T temp = alpha * x[jx];
 			int i_start = std::max(0, j - ku);
 			int i_end = std::min(m - 1, j + kl);
-			int iy = start_index(leny, incy) + i_start * incy;
-			for (int i = i_start; i <= i_end; ++i) {
-				y[iy] += temp * A[ku + i - j + j * lda];
-				iy += incy;
+                        int iy = start_index(leny, incy) + (i_start * incy);
+                        for (int i = i_start; i <= i_end; ++i) {
+                            y[iy] += temp * a[ku + i - j + (j * lda)];
+                            iy += incy;
 			}
 			jx += incx;
 		}
@@ -1293,10 +1300,10 @@ void gbmv_impl(char trans, int m, int n, int kl, int ku, T alpha, const T* A, in
 			T temp = T(0);
 			int i_start = std::max(0, j - ku);
 			int i_end = std::min(m - 1, j + kl);
-			int ix = start_index(lenx, incx) + i_start * incx;
-			for (int i = i_start; i <= i_end; ++i) {
-				temp += A[ku + i - j + j * lda] * x[ix];
-				ix += incx;
+                        int ix = start_index(lenx, incx) + (i_start * incx);
+                        for (int i = i_start; i <= i_end; ++i) {
+                            temp += a[ku + i - j + (j * lda)] * x[ix];
+                            ix += incx;
 			}
 			y[jy] += alpha * temp;
 			jy += incy;
@@ -1308,10 +1315,10 @@ void gbmv_impl(char trans, int m, int n, int kl, int ku, T alpha, const T* A, in
 			T temp = T(0);
 			int i_start = std::max(0, j - ku);
 			int i_end = std::min(m - 1, j + kl);
-			int ix = start_index(lenx, incx) + i_start * incx;
-			for (int i = i_start; i <= i_end; ++i) {
-				temp += conj_val(A[ku + i - j + j * lda]) * x[ix];
-				ix += incx;
+                        int ix = start_index(lenx, incx) + (i_start * incx);
+                        for (int i = i_start; i <= i_end; ++i) {
+                            temp += conj_val(a[ku + i - j + (j * lda)]) * x[ix];
+                            ix += incx;
 			}
 			y[jy] += alpha * temp;
 			jy += incy;
@@ -1320,10 +1327,10 @@ void gbmv_impl(char trans, int m, int n, int kl, int ku, T alpha, const T* A, in
 }
 
 /* ------------------------------------------------------------------ */
-/* sbmv_impl — y ← α·A·x + β·y   (A symmetric banded)              */
+/* sbmv_impl — y ← α·a·x + β·y   (a symmetric banded)              */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void sbmv_impl(char uplo, int n, int k, T alpha, const T* A, int lda, const T* x, int incx,
+void sbmv_impl(char uplo, int n, int k, T alpha, const T* a, int lda, const T* x, int incx,
                T beta, T* y, int incy) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || k < 0 || incx == 0 || incy == 0) {
@@ -1358,16 +1365,16 @@ void sbmv_impl(char uplo, int n, int k, T alpha, const T* A, int lda, const T* x
 			T temp2 = T(0);
 			int l = k - j;
 			int i_start = std::max(0, j - k);
-			int ix = start_index(n, incx) + i_start * incx;
-			int iy = start_index(n, incy) + i_start * incy;
-			for (int i = i_start; i < j; ++i) {
-				y[iy] += temp1 * A[l + i + j * lda];
-				temp2 += A[l + i + j * lda] * x[ix];
-				ix += incx;
-				iy += incy;
+                        int ix = start_index(n, incx) + (i_start * incx);
+                        int iy = start_index(n, incy) + (i_start * incy);
+                        for (int i = i_start; i < j; ++i) {
+                            y[iy] += temp1 * a[l + i + (j * lda)];
+                            temp2 += a[l + i + (j * lda)] * x[ix];
+                            ix += incx;
+                            iy += incy;
 			}
-			y[jy] += temp1 * A[k + j * lda] + alpha * temp2;
-			jx += incx;
+                        y[jy] += (temp1 * a[k + (j * lda)]) + (alpha * temp2);
+                        jx += incx;
 			jy += incy;
 		}
 	} else {
@@ -1376,16 +1383,16 @@ void sbmv_impl(char uplo, int n, int k, T alpha, const T* A, int lda, const T* x
 		for (int j = 0; j < n; ++j) {
 			T temp1 = alpha * x[jx];
 			T temp2 = T(0);
-			y[jy] += temp1 * A[0 + j * lda];
-			int ix = jx;
+                        y[jy] += temp1 * a[0 + (j * lda)];
+                        int ix = jx;
 			int iy = jy;
 			int i_end = std::min(n - 1, j + k);
 			for (int i = j + 1; i <= i_end; ++i) {
 				ix += incx;
 				iy += incy;
-				y[iy] += temp1 * A[i - j + j * lda];
-				temp2 += A[i - j + j * lda] * x[ix];
-			}
+                                y[iy] += temp1 * a[i - j + (j * lda)];
+                                temp2 += a[i - j + (j * lda)] * x[ix];
+                        }
 			y[jy] += alpha * temp2;
 			jx += incx;
 			jy += incy;
@@ -1394,10 +1401,10 @@ void sbmv_impl(char uplo, int n, int k, T alpha, const T* A, int lda, const T* x
 }
 
 /* ------------------------------------------------------------------ */
-/* hbmv_impl — y ← α·A·x + β·y   (A Hermitian banded)              */
+/* hbmv_impl — y ← α·a·x + β·y   (a Hermitian banded)              */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void hbmv_impl(char uplo, int n, int k, std::complex<T> alpha, const std::complex<T>* A,
+void hbmv_impl(char uplo, int n, int k, std::complex<T> alpha, const std::complex<T>* a,
                int lda, const std::complex<T>* x, int incx, std::complex<T> beta,
                std::complex<T>* y, int incy) {
 	using C = std::complex<T>;
@@ -1434,16 +1441,16 @@ void hbmv_impl(char uplo, int n, int k, std::complex<T> alpha, const std::comple
 			C temp2 = C(0);
 			int l = k - j;
 			int i_start = std::max(0, j - k);
-			int ix = start_index(n, incx) + i_start * incx;
-			int iy = start_index(n, incy) + i_start * incy;
-			for (int i = i_start; i < j; ++i) {
-				y[iy] += temp1 * A[l + i + j * lda];
-				temp2 += std::conj(A[l + i + j * lda]) * x[ix];
-				ix += incx;
-				iy += incy;
+                        int ix = start_index(n, incx) + (i_start * incx);
+                        int iy = start_index(n, incy) + (i_start * incy);
+                        for (int i = i_start; i < j; ++i) {
+                            y[iy] += temp1 * a[l + i + (j * lda)];
+                            temp2 += std::conj(a[l + i + (j * lda)]) * x[ix];
+                            ix += incx;
+                            iy += incy;
 			}
-			y[jy] += temp1 * T(A[k + j * lda].real()) + alpha * temp2;
-			jx += incx;
+                        y[jy] += (temp1 * T(a[k + (j * lda)].real())) + (alpha * temp2);
+                        jx += incx;
 			jy += incy;
 		}
 	} else {
@@ -1452,16 +1459,16 @@ void hbmv_impl(char uplo, int n, int k, std::complex<T> alpha, const std::comple
 		for (int j = 0; j < n; ++j) {
 			C temp1 = alpha * x[jx];
 			C temp2 = C(0);
-			y[jy] += temp1 * T(A[0 + j * lda].real());
-			int ix = jx;
+                        y[jy] += temp1 * T(a[0 + (j * lda)].real());
+                        int ix = jx;
 			int iy = jy;
 			int i_end = std::min(n - 1, j + k);
 			for (int i = j + 1; i <= i_end; ++i) {
 				ix += incx;
 				iy += incy;
-				y[iy] += temp1 * A[i - j + j * lda];
-				temp2 += std::conj(A[i - j + j * lda]) * x[ix];
-			}
+                                y[iy] += temp1 * a[i - j + (j * lda)];
+                                temp2 += std::conj(a[i - j + (j * lda)]) * x[ix];
+                        }
 			y[jy] += alpha * temp2;
 			jx += incx;
 			jy += incy;
@@ -1470,10 +1477,11 @@ void hbmv_impl(char uplo, int n, int k, std::complex<T> alpha, const std::comple
 }
 
 /* ------------------------------------------------------------------ */
-/* tbmv_impl — x ← op(A)·x   (A triangular banded)                  */
+/* tbmv_impl — x ← op(a)·x   (a triangular banded)                  */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void tbmv_impl(char uplo, char trans, char diag, int n, int k, const T* A, int lda, T* x,
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void tbmv_impl(char uplo, char trans, char diag, int n, int k, const T* a, int lda, T* x,
                int incx) {
 	char ul = to_upper(uplo);
 	char tr = to_upper(trans);
@@ -1493,70 +1501,71 @@ void tbmv_impl(char uplo, char trans, char diag, int n, int k, const T* A, int l
 					T temp = x[jx];
 					int l = k - j;
 					int i_start = std::max(0, j - k);
-					int ix = start_index(n, incx) + i_start * incx;
-					for (int i = i_start; i < j; ++i) {
-						x[ix] += temp * A[l + i + j * lda];
-						ix += incx;
+                                        int ix = start_index(n, incx) + (i_start * incx);
+                                        for (int i = i_start; i < j; ++i) {
+                                            x[ix] += temp * a[l + i + (j * lda)];
+                                            ix += incx;
 					}
 					if (!unit) {
-						x[jx] *= A[k + j * lda];
-					}
+                                            x[jx] *= a[k + (j * lda)];
+                                        }
 				}
 				jx += incx;
 			}
 		} else {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				if (x[jx] != T(0)) {
-					T temp = x[jx];
-					int i_end = std::min(n - 1, j + k);
-					int ix = start_index(n, incx) + i_end * incx;
-					for (int i = i_end; i > j; --i) {
-						x[ix] += temp * A[i - j + j * lda];
-						ix -= incx;
-					}
-					if (!unit) {
-						x[jx] *= A[0 + j * lda];
-					}
-				}
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        if (x[jx] != T(0)) {
+                            T temp = x[jx];
+                            int i_end = std::min(n - 1, j + k);
+                            int ix = start_index(n, incx) + (i_end * incx);
+                            for (int i = i_end; i > j; --i) {
+                                x[ix] += temp * a[i - j + (j * lda)];
+                                ix -= incx;
+                            }
+                            if (!unit) {
+                                x[jx] *= a[0 + (j * lda)];
+                            }
+                        }
+                        jx -= incx;
+                    }
 		}
 	} else {
 		// Transpose or conjugate-transpose
 		if (ul == 'U') {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				T temp = x[jx];
-				int l = k - j;
-				if (!unit) {
-					T aval = conj ? conj_val(A[k + j * lda]) : A[k + j * lda];
-					temp *= aval;
-				}
-				int i_start = std::max(0, j - k);
-				int ix = jx;
-				for (int i = j - 1; i >= i_start; --i) {
-					ix -= incx;
-					T aval = conj ? conj_val(A[l + i + j * lda]) : A[l + i + j * lda];
-					temp += aval * x[ix];
-				}
-				x[jx] = temp;
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        T temp = x[jx];
+                        int l = k - j;
+                        if (!unit) {
+                            T aval = conj ? conj_val(a[k + (j * lda)]) : a[k + (j * lda)];
+                            temp *= aval;
+                        }
+                        int i_start = std::max(0, j - k);
+                        int ix = jx;
+                        for (int i = j - 1; i >= i_start; --i) {
+                            ix -= incx;
+                            T aval = conj ? conj_val(a[l + i + (j * lda)]) : a[l + i + (j * lda)];
+                            temp += aval * x[ix];
+                        }
+                        x[jx] = temp;
+                        jx -= incx;
+                    }
 		} else {
 			int jx = start_index(n, incx);
 			for (int j = 0; j < n; ++j) {
 				T temp = x[jx];
 				if (!unit) {
-					T aval = conj ? conj_val(A[0 + j * lda]) : A[0 + j * lda];
-					temp *= aval;
+                                    T aval = conj ? conj_val(a[0 + (j * lda)]) : a[0 + (j * lda)];
+                                    temp *= aval;
 				}
 				int i_end = std::min(n - 1, j + k);
 				int ix = jx;
 				for (int i = j + 1; i <= i_end; ++i) {
 					ix += incx;
-					T aval = conj ? conj_val(A[i - j + j * lda]) : A[i - j + j * lda];
-					temp += aval * x[ix];
+                                        T aval = conj ? conj_val(a[i - j + (j * lda)])
+                                                      : a[i - j + (j * lda)];
+                                        temp += aval * x[ix];
 				}
 				x[jx] = temp;
 				jx += incx;
@@ -1566,10 +1575,11 @@ void tbmv_impl(char uplo, char trans, char diag, int n, int k, const T* A, int l
 }
 
 /* ------------------------------------------------------------------ */
-/* tbsv_impl — solve op(A)·x = b   (A triangular banded)             */
+/* tbsv_impl — solve op(a)·x = b   (a triangular banded)             */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void tbsv_impl(char uplo, char trans, char diag, int n, int k, const T* A, int lda, T* x,
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void tbsv_impl(char uplo, char trans, char diag, int n, int k, const T* a, int lda, T* x,
                int incx) {
 	char ul = to_upper(uplo);
 	char tr = to_upper(trans);
@@ -1583,34 +1593,34 @@ void tbsv_impl(char uplo, char trans, char diag, int n, int k, const T* A, int l
 
 	if (tr == 'N') {
 		if (ul == 'U') {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				if (!unit) {
-					x[jx] /= A[k + j * lda];
-				}
-				T temp = x[jx];
-				int l = k - j;
-				int i_start = std::max(0, j - k);
-				int ix = jx;
-				for (int i = j - 1; i >= i_start; --i) {
-					ix -= incx;
-					x[ix] -= temp * A[l + i + j * lda];
-				}
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        if (!unit) {
+                            x[jx] /= a[k + (j * lda)];
+                        }
+                        T temp = x[jx];
+                        int l = k - j;
+                        int i_start = std::max(0, j - k);
+                        int ix = jx;
+                        for (int i = j - 1; i >= i_start; --i) {
+                            ix -= incx;
+                            x[ix] -= temp * a[l + i + (j * lda)];
+                        }
+                        jx -= incx;
+                    }
 		} else {
 			int jx = start_index(n, incx);
 			for (int j = 0; j < n; ++j) {
 				if (!unit) {
-					x[jx] /= A[0 + j * lda];
-				}
+                                    x[jx] /= a[0 + (j * lda)];
+                                }
 				T temp = x[jx];
 				int i_end = std::min(n - 1, j + k);
 				int ix = jx;
 				for (int i = j + 1; i <= i_end; ++i) {
 					ix += incx;
-					x[ix] -= temp * A[i - j + j * lda];
-				}
+                                        x[ix] -= temp * a[i - j + (j * lda)];
+                                }
 				jx += incx;
 			}
 		}
@@ -1621,46 +1631,47 @@ void tbsv_impl(char uplo, char trans, char diag, int n, int k, const T* A, int l
 				T temp = x[jx];
 				int l = k - j;
 				int i_start = std::max(0, j - k);
-				int ix = start_index(n, incx) + i_start * incx;
-				for (int i = i_start; i < j; ++i) {
-					T aval = conj ? conj_val(A[l + i + j * lda]) : A[l + i + j * lda];
-					temp -= aval * x[ix];
-					ix += incx;
+                                int ix = start_index(n, incx) + (i_start * incx);
+                                for (int i = i_start; i < j; ++i) {
+                                    T aval = conj ? conj_val(a[l + i + (j * lda)])
+                                                  : a[l + i + (j * lda)];
+                                    temp -= aval * x[ix];
+                                    ix += incx;
 				}
 				if (!unit) {
-					T aval = conj ? conj_val(A[k + j * lda]) : A[k + j * lda];
-					temp /= aval;
+                                    T aval = conj ? conj_val(a[k + (j * lda)]) : a[k + (j * lda)];
+                                    temp /= aval;
 				}
 				x[jx] = temp;
 				jx += incx;
 			}
 		} else {
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				T temp = x[jx];
-				int i_end = std::min(n - 1, j + k);
-				int ix = start_index(n, incx) + i_end * incx;
-				for (int i = i_end; i > j; --i) {
-					T aval = conj ? conj_val(A[i - j + j * lda]) : A[i - j + j * lda];
-					temp -= aval * x[ix];
-					ix -= incx;
-				}
-				if (!unit) {
-					T aval = conj ? conj_val(A[0 + j * lda]) : A[0 + j * lda];
-					temp /= aval;
-				}
-				x[jx] = temp;
-				jx -= incx;
-			}
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        T temp = x[jx];
+                        int i_end = std::min(n - 1, j + k);
+                        int ix = start_index(n, incx) + (i_end * incx);
+                        for (int i = i_end; i > j; --i) {
+                            T aval = conj ? conj_val(a[i - j + (j * lda)]) : a[i - j + (j * lda)];
+                            temp -= aval * x[ix];
+                            ix -= incx;
+                        }
+                        if (!unit) {
+                            T aval = conj ? conj_val(a[0 + (j * lda)]) : a[0 + (j * lda)];
+                            temp /= aval;
+                        }
+                        x[jx] = temp;
+                        jx -= incx;
+                    }
 		}
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* spmv_impl — y ← α·A·x + β·y   (A symmetric, packed)             */
+/* spmv_impl — y ← α·a·x + β·y   (a symmetric, packed)             */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void spmv_impl(char uplo, int n, T alpha, const T* Ap, const T* x, int incx, T beta, T* y,
+void spmv_impl(char uplo, int n, T alpha, const T* ap, const T* x, int incx, T beta, T* y,
                int incy) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0 || incy == 0) {
@@ -1697,13 +1708,13 @@ void spmv_impl(char uplo, int n, T alpha, const T* Ap, const T* x, int incx, T b
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i < j; ++i) {
-				y[iy] += temp1 * Ap[kk + i];
-				temp2 += Ap[kk + i] * x[ix];
+				y[iy] += temp1 * ap[kk + i];
+				temp2 += ap[kk + i] * x[ix];
 				ix += incx;
 				iy += incy;
 			}
-			y[jy] += temp1 * Ap[kk + j] + alpha * temp2;
-			kk += j + 1;
+                        y[jy] += (temp1 * ap[kk + j]) + (alpha * temp2);
+                        kk += j + 1;
 			jx += incx;
 			jy += incy;
 		}
@@ -1713,14 +1724,14 @@ void spmv_impl(char uplo, int n, T alpha, const T* Ap, const T* x, int incx, T b
 		for (int j = 0; j < n; ++j) {
 			T temp1 = alpha * x[jx];
 			T temp2 = T(0);
-			y[jy] += temp1 * Ap[kk];
+			y[jy] += temp1 * ap[kk];
 			int ix = jx;
 			int iy = jy;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
 				iy += incy;
-				y[iy] += temp1 * Ap[kk + i - j];
-				temp2 += Ap[kk + i - j] * x[ix];
+				y[iy] += temp1 * ap[kk + i - j];
+				temp2 += ap[kk + i - j] * x[ix];
 			}
 			y[jy] += alpha * temp2;
 			kk += n - j;
@@ -1731,10 +1742,10 @@ void spmv_impl(char uplo, int n, T alpha, const T* Ap, const T* x, int incx, T b
 }
 
 /* ------------------------------------------------------------------ */
-/* hpmv_impl — y ← α·A·x + β·y   (A Hermitian, packed)             */
+/* hpmv_impl — y ← α·a·x + β·y   (a Hermitian, packed)             */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void hpmv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* Ap,
+void hpmv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* ap,
                const std::complex<T>* x, int incx, std::complex<T> beta, std::complex<T>* y,
                int incy) {
 	using C = std::complex<T>;
@@ -1773,13 +1784,13 @@ void hpmv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i < j; ++i) {
-				y[iy] += temp1 * Ap[kk + i];
-				temp2 += std::conj(Ap[kk + i]) * x[ix];
+				y[iy] += temp1 * ap[kk + i];
+				temp2 += std::conj(ap[kk + i]) * x[ix];
 				ix += incx;
 				iy += incy;
 			}
-			y[jy] += temp1 * T(Ap[kk + j].real()) + alpha * temp2;
-			kk += j + 1;
+                        y[jy] += (temp1 * T(ap[kk + j].real())) + (alpha * temp2);
+                        kk += j + 1;
 			jx += incx;
 			jy += incy;
 		}
@@ -1789,14 +1800,14 @@ void hpmv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A
 		for (int j = 0; j < n; ++j) {
 			C temp1 = alpha * x[jx];
 			C temp2 = C(0);
-			y[jy] += temp1 * T(Ap[kk].real());
+			y[jy] += temp1 * T(ap[kk].real());
 			int ix = jx;
 			int iy = jy;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
 				iy += incy;
-				y[iy] += temp1 * Ap[kk + i - j];
-				temp2 += std::conj(Ap[kk + i - j]) * x[ix];
+				y[iy] += temp1 * ap[kk + i - j];
+				temp2 += std::conj(ap[kk + i - j]) * x[ix];
 			}
 			y[jy] += alpha * temp2;
 			kk += n - j;
@@ -1807,10 +1818,11 @@ void hpmv_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* A
 }
 
 /* ------------------------------------------------------------------ */
-/* tpmv_impl — x ← op(A)·x   (A triangular, packed)                 */
+/* tpmv_impl — x ← op(a)·x   (a triangular, packed)                 */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void tpmv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int incx) {
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void tpmv_impl(char uplo, char trans, char diag, int n, const T* ap, T* x, int incx) {
 	char ul = to_upper(uplo);
 	char tr = to_upper(trans);
 	char dg = to_upper(diag);
@@ -1829,72 +1841,72 @@ void tpmv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int i
 					T temp = x[jx];
 					int ix = start_index(n, incx);
 					for (int i = 0; i < j; ++i) {
-						x[ix] += temp * Ap[kk + i];
+						x[ix] += temp * ap[kk + i];
 						ix += incx;
 					}
 					if (!unit) {
-						x[jx] *= Ap[kk + j];
+						x[jx] *= ap[kk + j];
 					}
 				}
 				kk += j + 1;
 				jx += incx;
 			}
 		} else {
-			int kk = n * (n + 1) / 2 - 1;
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				if (x[jx] != T(0)) {
-					T temp = x[jx];
-					int ix = start_index(n, incx) + (n - 1) * incx;
-					for (int i = n - 1; i > j; --i) {
-						x[ix] += temp * Ap[kk - (n - 1 - i)];
-						ix -= incx;
-					}
-					if (!unit) {
-						x[jx] *= Ap[kk - (n - 1 - j)];
-					}
-				}
-				kk -= n - j;
-				jx -= incx;
-			}
+                    int kk = (n * (n + 1) / 2) - 1;
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        if (x[jx] != T(0)) {
+                            T temp = x[jx];
+                            int ix = start_index(n, incx) + ((n - 1) * incx);
+                            for (int i = n - 1; i > j; --i) {
+                                x[ix] += temp * ap[kk - (n - 1 - i)];
+                                ix -= incx;
+                            }
+                            if (!unit) {
+                                x[jx] *= ap[kk - (n - 1 - j)];
+                            }
+                        }
+                        kk -= n - j;
+                        jx -= incx;
+                    }
 		}
 	} else {
 		// Transpose or conjugate-transpose
 		if (ul == 'U') {
-			int kk = n * (n + 1) / 2 - 1;
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				T temp = x[jx];
-				if (!unit) {
-					T aval = conj ? conj_val(Ap[kk]) : Ap[kk];
-					temp *= aval;
-				}
-				int ix = jx;
-				int k = kk - 1;
-				for (int i = j - 1; i >= 0; --i) {
-					ix -= incx;
-					T aval = conj ? conj_val(Ap[k]) : Ap[k];
-					temp += aval * x[ix];
-					--k;
-				}
-				x[jx] = temp;
-				kk -= j + 1;
-				jx -= incx;
-			}
+                    int kk = (n * (n + 1) / 2) - 1;
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        T temp = x[jx];
+                        if (!unit) {
+                            T aval = conj ? conj_val(ap[kk]) : ap[kk];
+                            temp *= aval;
+                        }
+                        int ix = jx;
+                        int k = kk - 1;
+                        for (int i = j - 1; i >= 0; --i) {
+                            ix -= incx;
+                            T aval = conj ? conj_val(ap[k]) : ap[k];
+                            temp += aval * x[ix];
+                            --k;
+                        }
+                        x[jx] = temp;
+                        kk -= j + 1;
+                        jx -= incx;
+                    }
 		} else {
 			int kk = 0;
 			int jx = start_index(n, incx);
 			for (int j = 0; j < n; ++j) {
 				T temp = x[jx];
 				if (!unit) {
-					T aval = conj ? conj_val(Ap[kk]) : Ap[kk];
+					T aval = conj ? conj_val(ap[kk]) : ap[kk];
 					temp *= aval;
 				}
 				int ix = jx;
 				int k = kk + 1;
 				for (int i = j + 1; i < n; ++i) {
 					ix += incx;
-					T aval = conj ? conj_val(Ap[k]) : Ap[k];
+					T aval = conj ? conj_val(ap[k]) : ap[k];
 					temp += aval * x[ix];
 					++k;
 				}
@@ -1907,10 +1919,11 @@ void tpmv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int i
 }
 
 /* ------------------------------------------------------------------ */
-/* tpsv_impl — solve op(A)·x = b   (A triangular, packed)            */
+/* tpsv_impl — solve op(a)·x = b   (a triangular, packed)            */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void tpsv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int incx) {
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
+void tpsv_impl(char uplo, char trans, char diag, int n, const T* ap, T* x, int incx) {
 	char ul = to_upper(uplo);
 	char tr = to_upper(trans);
 	char dg = to_upper(diag);
@@ -1922,36 +1935,36 @@ void tpsv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int i
 
 	if (tr == 'N') {
 		if (ul == 'U') {
-			int kk = n * (n + 1) / 2 - 1;
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				if (!unit) {
-					x[jx] /= Ap[kk];
-				}
-				T temp = x[jx];
-				int ix = jx;
-				int k = kk - 1;
-				for (int i = j - 1; i >= 0; --i) {
-					ix -= incx;
-					x[ix] -= temp * Ap[k];
-					--k;
-				}
-				kk -= j + 1;
-				jx -= incx;
-			}
+                    int kk = (n * (n + 1) / 2) - 1;
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        if (!unit) {
+                            x[jx] /= ap[kk];
+                        }
+                        T temp = x[jx];
+                        int ix = jx;
+                        int k = kk - 1;
+                        for (int i = j - 1; i >= 0; --i) {
+                            ix -= incx;
+                            x[ix] -= temp * ap[k];
+                            --k;
+                        }
+                        kk -= j + 1;
+                        jx -= incx;
+                    }
 		} else {
 			int kk = 0;
 			int jx = start_index(n, incx);
 			for (int j = 0; j < n; ++j) {
 				if (!unit) {
-					x[jx] /= Ap[kk];
+					x[jx] /= ap[kk];
 				}
 				T temp = x[jx];
 				int ix = jx;
 				int k = kk + 1;
 				for (int i = j + 1; i < n; ++i) {
 					ix += incx;
-					x[ix] -= temp * Ap[k];
+					x[ix] -= temp * ap[k];
 					++k;
 				}
 				kk += n - j;
@@ -1967,13 +1980,13 @@ void tpsv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int i
 				int ix = start_index(n, incx);
 				int k = kk;
 				for (int i = 0; i < j; ++i) {
-					T aval = conj ? conj_val(Ap[k]) : Ap[k];
+					T aval = conj ? conj_val(ap[k]) : ap[k];
 					temp -= aval * x[ix];
 					ix += incx;
 					++k;
 				}
 				if (!unit) {
-					T aval = conj ? conj_val(Ap[k]) : Ap[k];
+					T aval = conj ? conj_val(ap[k]) : ap[k];
 					temp /= aval;
 				}
 				x[jx] = temp;
@@ -1981,35 +1994,35 @@ void tpsv_impl(char uplo, char trans, char diag, int n, const T* Ap, T* x, int i
 				jx += incx;
 			}
 		} else {
-			int kk = n * (n + 1) / 2 - 1;
-			int jx = start_index(n, incx) + (n - 1) * incx;
-			for (int j = n - 1; j >= 0; --j) {
-				T temp = x[jx];
-				int ix = start_index(n, incx) + (n - 1) * incx;
-				int k = kk;
-				for (int i = n - 1; i > j; --i) {
-					T aval = conj ? conj_val(Ap[k]) : Ap[k];
-					temp -= aval * x[ix];
-					ix -= incx;
-					--k;
-				}
-				if (!unit) {
-					T aval = conj ? conj_val(Ap[k]) : Ap[k];
-					temp /= aval;
-				}
-				x[jx] = temp;
-				kk -= n - j;
-				jx -= incx;
-			}
+                    int kk = (n * (n + 1) / 2) - 1;
+                    int jx = start_index(n, incx) + ((n - 1) * incx);
+                    for (int j = n - 1; j >= 0; --j) {
+                        T temp = x[jx];
+                        int ix = start_index(n, incx) + ((n - 1) * incx);
+                        int k = kk;
+                        for (int i = n - 1; i > j; --i) {
+                            T aval = conj ? conj_val(ap[k]) : ap[k];
+                            temp -= aval * x[ix];
+                            ix -= incx;
+                            --k;
+                        }
+                        if (!unit) {
+                            T aval = conj ? conj_val(ap[k]) : ap[k];
+                            temp /= aval;
+                        }
+                        x[jx] = temp;
+                        kk -= n - j;
+                        jx -= incx;
+                    }
 		}
 	}
 }
 
 /* ------------------------------------------------------------------ */
-/* spr_impl — A ← α·x·xᵀ + A   (A symmetric, packed)               */
+/* spr_impl — a ← α·x·xᵀ + a   (a symmetric, packed)               */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void spr_impl(char uplo, int n, T alpha, const T* x, int incx, T* Ap) {
+void spr_impl(char uplo, int n, T alpha, const T* x, int incx, T* ap) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0) {
 		return;
@@ -2025,7 +2038,7 @@ void spr_impl(char uplo, int n, T alpha, const T* x, int incx, T* Ap) {
 			T temp = alpha * x[jx];
 			int ix = start_index(n, incx);
 			for (int i = 0; i <= j; ++i) {
-				Ap[kk + i] += x[ix] * temp;
+				ap[kk + i] += x[ix] * temp;
 				ix += incx;
 			}
 			kk += j + 1;
@@ -2036,7 +2049,7 @@ void spr_impl(char uplo, int n, T alpha, const T* x, int incx, T* Ap) {
 			T temp = alpha * x[jx];
 			int ix = jx;
 			for (int i = j; i < n; ++i) {
-				Ap[kk + i - j] += x[ix] * temp;
+				ap[kk + i - j] += x[ix] * temp;
 				ix += incx;
 			}
 			kk += n - j;
@@ -2046,11 +2059,11 @@ void spr_impl(char uplo, int n, T alpha, const T* x, int incx, T* Ap) {
 }
 
 /* ------------------------------------------------------------------ */
-/* hpr_impl — A ← α·x·xᴴ + A   (A Hermitian, packed, α real)       */
+/* hpr_impl — a ← α·x·xᴴ + a   (a Hermitian, packed, α real)       */
 /* ------------------------------------------------------------------ */
 template <typename T>
 void hpr_impl(char uplo, int n, T alpha, const std::complex<T>* x, int incx,
-              std::complex<T>* Ap) {
+              std::complex<T>* ap) {
 	using C = std::complex<T>;
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0) {
@@ -2067,21 +2080,21 @@ void hpr_impl(char uplo, int n, T alpha, const std::complex<T>* x, int incx,
 			C temp = C(alpha) * std::conj(x[jx]);
 			int ix = start_index(n, incx);
 			for (int i = 0; i < j; ++i) {
-				Ap[kk + i] += x[ix] * temp;
+				ap[kk + i] += x[ix] * temp;
 				ix += incx;
 			}
-			Ap[kk + j] = C(Ap[kk + j].real() + (x[jx] * temp).real());
+			ap[kk + j] = C(ap[kk + j].real() + (x[jx] * temp).real());
 			kk += j + 1;
 			jx += incx;
 		}
 	} else {
 		for (int j = 0; j < n; ++j) {
 			C temp = C(alpha) * std::conj(x[jx]);
-			Ap[kk] = C(Ap[kk].real() + (x[jx] * temp).real());
+			ap[kk] = C(ap[kk].real() + (x[jx] * temp).real());
 			int ix = jx;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
-				Ap[kk + i - j] += x[ix] * temp;
+				ap[kk + i - j] += x[ix] * temp;
 			}
 			kk += n - j;
 			jx += incx;
@@ -2090,10 +2103,10 @@ void hpr_impl(char uplo, int n, T alpha, const std::complex<T>* x, int incx,
 }
 
 /* ------------------------------------------------------------------ */
-/* spr2_impl — A ← α·x·yᵀ + α·y·xᵀ + A   (symmetric packed)       */
+/* spr2_impl — a ← α·x·yᵀ + α·y·xᵀ + a   (symmetric packed)       */
 /* ------------------------------------------------------------------ */
 template <typename T>
-void spr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int incy, T* Ap) {
+void spr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int incy, T* ap) {
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0 || incy == 0) {
 		return;
@@ -2112,9 +2125,9 @@ void spr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int 
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i <= j; ++i) {
-				Ap[kk + i] += x[ix] * temp1 + y[iy] * temp2;
-				ix += incx;
-				iy += incy;
+                            ap[kk + i] += (x[ix] * temp1) + (y[iy] * temp2);
+                            ix += incx;
+                            iy += incy;
 			}
 			kk += j + 1;
 			jx += incx;
@@ -2127,9 +2140,9 @@ void spr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int 
 			int ix = jx;
 			int iy = jy;
 			for (int i = j; i < n; ++i) {
-				Ap[kk + i - j] += x[ix] * temp1 + y[iy] * temp2;
-				ix += incx;
-				iy += incy;
+                            ap[kk + i - j] += (x[ix] * temp1) + (y[iy] * temp2);
+                            ix += incx;
+                            iy += incy;
 			}
 			kk += n - j;
 			jx += incx;
@@ -2139,11 +2152,11 @@ void spr2_impl(char uplo, int n, T alpha, const T* x, int incx, const T* y, int 
 }
 
 /* ------------------------------------------------------------------ */
-/* hpr2_impl — A ← α·x·yᴴ + conj(α)·y·xᴴ + A   (Hermitian packed) */
+/* hpr2_impl — a ← α·x·yᴴ + conj(α)·y·xᴴ + a   (Hermitian packed) */
 /* ------------------------------------------------------------------ */
 template <typename T>
 void hpr2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x, int incx,
-               const std::complex<T>* y, int incy, std::complex<T>* Ap) {
+               const std::complex<T>* y, int incy, std::complex<T>* ap) {
 	using C = std::complex<T>;
 	char ul = to_upper(uplo);
 	if (!valid_uplo(uplo) || n <= 0 || incx == 0 || incy == 0) {
@@ -2163,12 +2176,12 @@ void hpr2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x
 			int ix = start_index(n, incx);
 			int iy = start_index(n, incy);
 			for (int i = 0; i < j; ++i) {
-				Ap[kk + i] += x[ix] * temp1 + y[iy] * temp2;
-				ix += incx;
-				iy += incy;
+                            ap[kk + i] += (x[ix] * temp1) + (y[iy] * temp2);
+                            ix += incx;
+                            iy += incy;
 			}
-			Ap[kk + j] = C((Ap[kk + j] + x[jx] * temp1 + y[jy] * temp2).real());
-			kk += j + 1;
+                        ap[kk + j] = C((ap[kk + j] + (x[jx] * temp1) + (y[jy] * temp2)).real());
+                        kk += j + 1;
 			jx += incx;
 			jy += incy;
 		}
@@ -2176,14 +2189,14 @@ void hpr2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x
 		for (int j = 0; j < n; ++j) {
 			C temp1 = alpha * std::conj(y[jy]);
 			C temp2 = std::conj(alpha * x[jx]);
-			Ap[kk] = C((Ap[kk] + x[jx] * temp1 + y[jy] * temp2).real());
-			int ix = jx;
+                        ap[kk] = C((ap[kk] + (x[jx] * temp1) + (y[jy] * temp2)).real());
+                        int ix = jx;
 			int iy = jy;
 			for (int i = j + 1; i < n; ++i) {
 				ix += incx;
 				iy += incy;
-				Ap[kk + i - j] += x[ix] * temp1 + y[iy] * temp2;
-			}
+                                ap[kk + i - j] += (x[ix] * temp1) + (y[iy] * temp2);
+                        }
 			kk += n - j;
 			jx += incx;
 			jy += incy;
@@ -2198,317 +2211,317 @@ void hpr2_impl(char uplo, int n, std::complex<T> alpha, const std::complex<T>* x
  * ==================================================================== */
 
 /* gemv */
-void sgemv(char trans, int m, int n, float alpha, const float* A, int lda, const float* x,
+void sgemv(char trans, int m, int n, float alpha, const float* a, int lda, const float* x,
            int incx, float beta, float* y, int incy) {
-	gemv_impl(trans, m, n, alpha, A, lda, x, incx, beta, y, incy);
+	gemv_impl(trans, m, n, alpha, a, lda, x, incx, beta, y, incy);
 }
-void dgemv(char trans, int m, int n, double alpha, const double* A, int lda, const double* x,
+void dgemv(char trans, int m, int n, double alpha, const double* a, int lda, const double* x,
            int incx, double beta, double* y, int incy) {
-	gemv_impl(trans, m, n, alpha, A, lda, x, incx, beta, y, incy);
+	gemv_impl(trans, m, n, alpha, a, lda, x, incx, beta, y, incy);
 }
-void cgemv(char trans, int m, int n, std::complex<float> alpha, const std::complex<float>* A,
+void cgemv(char trans, int m, int n, std::complex<float> alpha, const std::complex<float>* a,
            int lda, const std::complex<float>* x, int incx, std::complex<float> beta,
            std::complex<float>* y, int incy) {
-	gemv_impl(trans, m, n, alpha, A, lda, x, incx, beta, y, incy);
+	gemv_impl(trans, m, n, alpha, a, lda, x, incx, beta, y, incy);
 }
-void zgemv(char trans, int m, int n, std::complex<double> alpha, const std::complex<double>* A,
+void zgemv(char trans, int m, int n, std::complex<double> alpha, const std::complex<double>* a,
            int lda, const std::complex<double>* x, int incx, std::complex<double> beta,
            std::complex<double>* y, int incy) {
-	gemv_impl(trans, m, n, alpha, A, lda, x, incx, beta, y, incy);
+	gemv_impl(trans, m, n, alpha, a, lda, x, incx, beta, y, incy);
 }
 
 /* symv */
-void ssymv(char uplo, int n, float alpha, const float* A, int lda, const float* x, int incx,
+void ssymv(char uplo, int n, float alpha, const float* a, int lda, const float* x, int incx,
            float beta, float* y, int incy) {
-	symv_impl(uplo, n, alpha, A, lda, x, incx, beta, y, incy);
+	symv_impl(uplo, n, alpha, a, lda, x, incx, beta, y, incy);
 }
-void dsymv(char uplo, int n, double alpha, const double* A, int lda, const double* x, int incx,
+void dsymv(char uplo, int n, double alpha, const double* a, int lda, const double* x, int incx,
            double beta, double* y, int incy) {
-	symv_impl(uplo, n, alpha, A, lda, x, incx, beta, y, incy);
+	symv_impl(uplo, n, alpha, a, lda, x, incx, beta, y, incy);
 }
 
 /* hemv */
-void chemv(char uplo, int n, std::complex<float> alpha, const std::complex<float>* A, int lda,
+void chemv(char uplo, int n, std::complex<float> alpha, const std::complex<float>* a, int lda,
            const std::complex<float>* x, int incx, std::complex<float> beta,
            std::complex<float>* y, int incy) {
-	hemv_impl(uplo, n, alpha, A, lda, x, incx, beta, y, incy);
+	hemv_impl(uplo, n, alpha, a, lda, x, incx, beta, y, incy);
 }
-void zhemv(char uplo, int n, std::complex<double> alpha, const std::complex<double>* A, int lda,
+void zhemv(char uplo, int n, std::complex<double> alpha, const std::complex<double>* a, int lda,
            const std::complex<double>* x, int incx, std::complex<double> beta,
            std::complex<double>* y, int incy) {
-	hemv_impl(uplo, n, alpha, A, lda, x, incx, beta, y, incy);
+	hemv_impl(uplo, n, alpha, a, lda, x, incx, beta, y, incy);
 }
 
 /* trmv */
-void strmv(char uplo, char trans, char diag, int n, const float* A, int lda, float* x,
+void strmv(char uplo, char trans, char diag, int n, const float* a, int lda, float* x,
            int incx) {
-	trmv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trmv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
-void dtrmv(char uplo, char trans, char diag, int n, const double* A, int lda, double* x,
+void dtrmv(char uplo, char trans, char diag, int n, const double* a, int lda, double* x,
            int incx) {
-	trmv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trmv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
-void ctrmv(char uplo, char trans, char diag, int n, const std::complex<float>* A, int lda,
+void ctrmv(char uplo, char trans, char diag, int n, const std::complex<float>* a, int lda,
            std::complex<float>* x, int incx) {
-	trmv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trmv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
-void ztrmv(char uplo, char trans, char diag, int n, const std::complex<double>* A, int lda,
+void ztrmv(char uplo, char trans, char diag, int n, const std::complex<double>* a, int lda,
            std::complex<double>* x, int incx) {
-	trmv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trmv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
 
 /* trsv */
-void strsv(char uplo, char trans, char diag, int n, const float* A, int lda, float* x,
+void strsv(char uplo, char trans, char diag, int n, const float* a, int lda, float* x,
            int incx) {
-	trsv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trsv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
-void dtrsv(char uplo, char trans, char diag, int n, const double* A, int lda, double* x,
+void dtrsv(char uplo, char trans, char diag, int n, const double* a, int lda, double* x,
            int incx) {
-	trsv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trsv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
-void ctrsv(char uplo, char trans, char diag, int n, const std::complex<float>* A, int lda,
+void ctrsv(char uplo, char trans, char diag, int n, const std::complex<float>* a, int lda,
            std::complex<float>* x, int incx) {
-	trsv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trsv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
-void ztrsv(char uplo, char trans, char diag, int n, const std::complex<double>* A, int lda,
+void ztrsv(char uplo, char trans, char diag, int n, const std::complex<double>* a, int lda,
            std::complex<double>* x, int incx) {
-	trsv_impl(uplo, trans, diag, n, A, lda, x, incx);
+	trsv_impl(uplo, trans, diag, n, a, lda, x, incx);
 }
 
 /* ger */
 void sger(int m, int n, float alpha, const float* x, int incx, const float* y, int incy,
-          float* A, int lda) {
-	ger_impl(m, n, alpha, x, incx, y, incy, A, lda);
+          float* a, int lda) {
+	ger_impl(m, n, alpha, x, incx, y, incy, a, lda);
 }
 void dger(int m, int n, double alpha, const double* x, int incx, const double* y, int incy,
-          double* A, int lda) {
-	ger_impl(m, n, alpha, x, incx, y, incy, A, lda);
+          double* a, int lda) {
+	ger_impl(m, n, alpha, x, incx, y, incy, a, lda);
 }
 
 /* geru / gerc */
 void cgeru(int m, int n, std::complex<float> alpha, const std::complex<float>* x, int incx,
-           const std::complex<float>* y, int incy, std::complex<float>* A, int lda) {
-	geru_impl(m, n, alpha, x, incx, y, incy, A, lda);
+           const std::complex<float>* y, int incy, std::complex<float>* a, int lda) {
+	geru_impl(m, n, alpha, x, incx, y, incy, a, lda);
 }
 void zgeru(int m, int n, std::complex<double> alpha, const std::complex<double>* x, int incx,
-           const std::complex<double>* y, int incy, std::complex<double>* A, int lda) {
-	geru_impl(m, n, alpha, x, incx, y, incy, A, lda);
+           const std::complex<double>* y, int incy, std::complex<double>* a, int lda) {
+	geru_impl(m, n, alpha, x, incx, y, incy, a, lda);
 }
 void cgerc(int m, int n, std::complex<float> alpha, const std::complex<float>* x, int incx,
-           const std::complex<float>* y, int incy, std::complex<float>* A, int lda) {
-	gerc_impl(m, n, alpha, x, incx, y, incy, A, lda);
+           const std::complex<float>* y, int incy, std::complex<float>* a, int lda) {
+	gerc_impl(m, n, alpha, x, incx, y, incy, a, lda);
 }
 void zgerc(int m, int n, std::complex<double> alpha, const std::complex<double>* x, int incx,
-           const std::complex<double>* y, int incy, std::complex<double>* A, int lda) {
-	gerc_impl(m, n, alpha, x, incx, y, incy, A, lda);
+           const std::complex<double>* y, int incy, std::complex<double>* a, int lda) {
+	gerc_impl(m, n, alpha, x, incx, y, incy, a, lda);
 }
 
 /* syr */
-void ssyr(char uplo, int n, float alpha, const float* x, int incx, float* A, int lda) {
-	syr_impl(uplo, n, alpha, x, incx, A, lda);
+void ssyr(char uplo, int n, float alpha, const float* x, int incx, float* a, int lda) {
+	syr_impl(uplo, n, alpha, x, incx, a, lda);
 }
-void dsyr(char uplo, int n, double alpha, const double* x, int incx, double* A, int lda) {
-	syr_impl(uplo, n, alpha, x, incx, A, lda);
+void dsyr(char uplo, int n, double alpha, const double* x, int incx, double* a, int lda) {
+	syr_impl(uplo, n, alpha, x, incx, a, lda);
 }
 
 /* her */
 void cher(char uplo, int n, float alpha, const std::complex<float>* x, int incx,
-          std::complex<float>* A, int lda) {
-	her_impl(uplo, n, alpha, x, incx, A, lda);
+          std::complex<float>* a, int lda) {
+	her_impl(uplo, n, alpha, x, incx, a, lda);
 }
 void zher(char uplo, int n, double alpha, const std::complex<double>* x, int incx,
-          std::complex<double>* A, int lda) {
-	her_impl(uplo, n, alpha, x, incx, A, lda);
+          std::complex<double>* a, int lda) {
+	her_impl(uplo, n, alpha, x, incx, a, lda);
 }
 
 /* syr2 */
 void ssyr2(char uplo, int n, float alpha, const float* x, int incx, const float* y, int incy,
-           float* A, int lda) {
-	syr2_impl(uplo, n, alpha, x, incx, y, incy, A, lda);
+           float* a, int lda) {
+	syr2_impl(uplo, n, alpha, x, incx, y, incy, a, lda);
 }
 void dsyr2(char uplo, int n, double alpha, const double* x, int incx, const double* y, int incy,
-           double* A, int lda) {
-	syr2_impl(uplo, n, alpha, x, incx, y, incy, A, lda);
+           double* a, int lda) {
+	syr2_impl(uplo, n, alpha, x, incx, y, incy, a, lda);
 }
 
 /* her2 */
 void cher2(char uplo, int n, std::complex<float> alpha, const std::complex<float>* x, int incx,
-           const std::complex<float>* y, int incy, std::complex<float>* A, int lda) {
-	her2_impl(uplo, n, alpha, x, incx, y, incy, A, lda);
+           const std::complex<float>* y, int incy, std::complex<float>* a, int lda) {
+	her2_impl(uplo, n, alpha, x, incx, y, incy, a, lda);
 }
 void zher2(char uplo, int n, std::complex<double> alpha, const std::complex<double>* x, int incx,
-           const std::complex<double>* y, int incy, std::complex<double>* A, int lda) {
-	her2_impl(uplo, n, alpha, x, incx, y, incy, A, lda);
+           const std::complex<double>* y, int incy, std::complex<double>* a, int lda) {
+	her2_impl(uplo, n, alpha, x, incx, y, incy, a, lda);
 }
 
 /* gbmv */
-void sgbmv(char trans, int m, int n, int kl, int ku, float alpha, const float* A, int lda,
+void sgbmv(char trans, int m, int n, int kl, int ku, float alpha, const float* a, int lda,
            const float* x, int incx, float beta, float* y, int incy) {
-	gbmv_impl(trans, m, n, kl, ku, alpha, A, lda, x, incx, beta, y, incy);
+	gbmv_impl(trans, m, n, kl, ku, alpha, a, lda, x, incx, beta, y, incy);
 }
-void dgbmv(char trans, int m, int n, int kl, int ku, double alpha, const double* A, int lda,
+void dgbmv(char trans, int m, int n, int kl, int ku, double alpha, const double* a, int lda,
            const double* x, int incx, double beta, double* y, int incy) {
-	gbmv_impl(trans, m, n, kl, ku, alpha, A, lda, x, incx, beta, y, incy);
+	gbmv_impl(trans, m, n, kl, ku, alpha, a, lda, x, incx, beta, y, incy);
 }
 void cgbmv(char trans, int m, int n, int kl, int ku, std::complex<float> alpha,
-           const std::complex<float>* A, int lda, const std::complex<float>* x, int incx,
+           const std::complex<float>* a, int lda, const std::complex<float>* x, int incx,
            std::complex<float> beta, std::complex<float>* y, int incy) {
-	gbmv_impl(trans, m, n, kl, ku, alpha, A, lda, x, incx, beta, y, incy);
+	gbmv_impl(trans, m, n, kl, ku, alpha, a, lda, x, incx, beta, y, incy);
 }
 void zgbmv(char trans, int m, int n, int kl, int ku, std::complex<double> alpha,
-           const std::complex<double>* A, int lda, const std::complex<double>* x, int incx,
+           const std::complex<double>* a, int lda, const std::complex<double>* x, int incx,
            std::complex<double> beta, std::complex<double>* y, int incy) {
-	gbmv_impl(trans, m, n, kl, ku, alpha, A, lda, x, incx, beta, y, incy);
+	gbmv_impl(trans, m, n, kl, ku, alpha, a, lda, x, incx, beta, y, incy);
 }
 
 /* sbmv */
-void ssbmv(char uplo, int n, int k, float alpha, const float* A, int lda, const float* x,
+void ssbmv(char uplo, int n, int k, float alpha, const float* a, int lda, const float* x,
            int incx, float beta, float* y, int incy) {
-	sbmv_impl(uplo, n, k, alpha, A, lda, x, incx, beta, y, incy);
+	sbmv_impl(uplo, n, k, alpha, a, lda, x, incx, beta, y, incy);
 }
-void dsbmv(char uplo, int n, int k, double alpha, const double* A, int lda, const double* x,
+void dsbmv(char uplo, int n, int k, double alpha, const double* a, int lda, const double* x,
            int incx, double beta, double* y, int incy) {
-	sbmv_impl(uplo, n, k, alpha, A, lda, x, incx, beta, y, incy);
+	sbmv_impl(uplo, n, k, alpha, a, lda, x, incx, beta, y, incy);
 }
 
 /* hbmv */
-void chbmv(char uplo, int n, int k, std::complex<float> alpha, const std::complex<float>* A,
+void chbmv(char uplo, int n, int k, std::complex<float> alpha, const std::complex<float>* a,
            int lda, const std::complex<float>* x, int incx, std::complex<float> beta,
            std::complex<float>* y, int incy) {
-	hbmv_impl(uplo, n, k, alpha, A, lda, x, incx, beta, y, incy);
+	hbmv_impl(uplo, n, k, alpha, a, lda, x, incx, beta, y, incy);
 }
-void zhbmv(char uplo, int n, int k, std::complex<double> alpha, const std::complex<double>* A,
+void zhbmv(char uplo, int n, int k, std::complex<double> alpha, const std::complex<double>* a,
            int lda, const std::complex<double>* x, int incx, std::complex<double> beta,
            std::complex<double>* y, int incy) {
-	hbmv_impl(uplo, n, k, alpha, A, lda, x, incx, beta, y, incy);
+	hbmv_impl(uplo, n, k, alpha, a, lda, x, incx, beta, y, incy);
 }
 
 /* tbmv */
-void stbmv(char uplo, char trans, char diag, int n, int k, const float* A, int lda, float* x,
+void stbmv(char uplo, char trans, char diag, int n, int k, const float* a, int lda, float* x,
            int incx) {
-	tbmv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbmv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
-void dtbmv(char uplo, char trans, char diag, int n, int k, const double* A, int lda, double* x,
+void dtbmv(char uplo, char trans, char diag, int n, int k, const double* a, int lda, double* x,
            int incx) {
-	tbmv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbmv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
-void ctbmv(char uplo, char trans, char diag, int n, int k, const std::complex<float>* A, int lda,
+void ctbmv(char uplo, char trans, char diag, int n, int k, const std::complex<float>* a, int lda,
            std::complex<float>* x, int incx) {
-	tbmv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbmv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
-void ztbmv(char uplo, char trans, char diag, int n, int k, const std::complex<double>* A,
+void ztbmv(char uplo, char trans, char diag, int n, int k, const std::complex<double>* a,
            int lda, std::complex<double>* x, int incx) {
-	tbmv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbmv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
 
 /* tbsv */
-void stbsv(char uplo, char trans, char diag, int n, int k, const float* A, int lda, float* x,
+void stbsv(char uplo, char trans, char diag, int n, int k, const float* a, int lda, float* x,
            int incx) {
-	tbsv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbsv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
-void dtbsv(char uplo, char trans, char diag, int n, int k, const double* A, int lda, double* x,
+void dtbsv(char uplo, char trans, char diag, int n, int k, const double* a, int lda, double* x,
            int incx) {
-	tbsv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbsv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
-void ctbsv(char uplo, char trans, char diag, int n, int k, const std::complex<float>* A, int lda,
+void ctbsv(char uplo, char trans, char diag, int n, int k, const std::complex<float>* a, int lda,
            std::complex<float>* x, int incx) {
-	tbsv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbsv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
-void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<double>* A,
+void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<double>* a,
            int lda, std::complex<double>* x, int incx) {
-	tbsv_impl(uplo, trans, diag, n, k, A, lda, x, incx);
+	tbsv_impl(uplo, trans, diag, n, k, a, lda, x, incx);
 }
 
 /* spmv */
-void sspmv(char uplo, int n, float alpha, const float* Ap, const float* x, int incx, float beta,
+void sspmv(char uplo, int n, float alpha, const float* ap, const float* x, int incx, float beta,
            float* y, int incy) {
-	spmv_impl(uplo, n, alpha, Ap, x, incx, beta, y, incy);
+	spmv_impl(uplo, n, alpha, ap, x, incx, beta, y, incy);
 }
-void dspmv(char uplo, int n, double alpha, const double* Ap, const double* x, int incx,
+void dspmv(char uplo, int n, double alpha, const double* ap, const double* x, int incx,
            double beta, double* y, int incy) {
-	spmv_impl(uplo, n, alpha, Ap, x, incx, beta, y, incy);
+	spmv_impl(uplo, n, alpha, ap, x, incx, beta, y, incy);
 }
 
 /* hpmv */
-void chpmv(char uplo, int n, std::complex<float> alpha, const std::complex<float>* Ap,
+void chpmv(char uplo, int n, std::complex<float> alpha, const std::complex<float>* ap,
            const std::complex<float>* x, int incx, std::complex<float> beta,
            std::complex<float>* y, int incy) {
-	hpmv_impl(uplo, n, alpha, Ap, x, incx, beta, y, incy);
+	hpmv_impl(uplo, n, alpha, ap, x, incx, beta, y, incy);
 }
-void zhpmv(char uplo, int n, std::complex<double> alpha, const std::complex<double>* Ap,
+void zhpmv(char uplo, int n, std::complex<double> alpha, const std::complex<double>* ap,
            const std::complex<double>* x, int incx, std::complex<double> beta,
            std::complex<double>* y, int incy) {
-	hpmv_impl(uplo, n, alpha, Ap, x, incx, beta, y, incy);
+	hpmv_impl(uplo, n, alpha, ap, x, incx, beta, y, incy);
 }
 
 /* tpmv */
-void stpmv(char uplo, char trans, char diag, int n, const float* Ap, float* x, int incx) {
-	tpmv_impl(uplo, trans, diag, n, Ap, x, incx);
+void stpmv(char uplo, char trans, char diag, int n, const float* ap, float* x, int incx) {
+	tpmv_impl(uplo, trans, diag, n, ap, x, incx);
 }
-void dtpmv(char uplo, char trans, char diag, int n, const double* Ap, double* x, int incx) {
-	tpmv_impl(uplo, trans, diag, n, Ap, x, incx);
+void dtpmv(char uplo, char trans, char diag, int n, const double* ap, double* x, int incx) {
+	tpmv_impl(uplo, trans, diag, n, ap, x, incx);
 }
-void ctpmv(char uplo, char trans, char diag, int n, const std::complex<float>* Ap,
+void ctpmv(char uplo, char trans, char diag, int n, const std::complex<float>* ap,
            std::complex<float>* x, int incx) {
-	tpmv_impl(uplo, trans, diag, n, Ap, x, incx);
+	tpmv_impl(uplo, trans, diag, n, ap, x, incx);
 }
-void ztpmv(char uplo, char trans, char diag, int n, const std::complex<double>* Ap,
+void ztpmv(char uplo, char trans, char diag, int n, const std::complex<double>* ap,
            std::complex<double>* x, int incx) {
-	tpmv_impl(uplo, trans, diag, n, Ap, x, incx);
+	tpmv_impl(uplo, trans, diag, n, ap, x, incx);
 }
 
 /* tpsv */
-void stpsv(char uplo, char trans, char diag, int n, const float* Ap, float* x, int incx) {
-	tpsv_impl(uplo, trans, diag, n, Ap, x, incx);
+void stpsv(char uplo, char trans, char diag, int n, const float* ap, float* x, int incx) {
+	tpsv_impl(uplo, trans, diag, n, ap, x, incx);
 }
-void dtpsv(char uplo, char trans, char diag, int n, const double* Ap, double* x, int incx) {
-	tpsv_impl(uplo, trans, diag, n, Ap, x, incx);
+void dtpsv(char uplo, char trans, char diag, int n, const double* ap, double* x, int incx) {
+	tpsv_impl(uplo, trans, diag, n, ap, x, incx);
 }
-void ctpsv(char uplo, char trans, char diag, int n, const std::complex<float>* Ap,
+void ctpsv(char uplo, char trans, char diag, int n, const std::complex<float>* ap,
            std::complex<float>* x, int incx) {
-	tpsv_impl(uplo, trans, diag, n, Ap, x, incx);
+	tpsv_impl(uplo, trans, diag, n, ap, x, incx);
 }
-void ztpsv(char uplo, char trans, char diag, int n, const std::complex<double>* Ap,
+void ztpsv(char uplo, char trans, char diag, int n, const std::complex<double>* ap,
            std::complex<double>* x, int incx) {
-	tpsv_impl(uplo, trans, diag, n, Ap, x, incx);
+	tpsv_impl(uplo, trans, diag, n, ap, x, incx);
 }
 
 /* spr */
-void sspr(char uplo, int n, float alpha, const float* x, int incx, float* Ap) {
-	spr_impl(uplo, n, alpha, x, incx, Ap);
+void sspr(char uplo, int n, float alpha, const float* x, int incx, float* ap) {
+	spr_impl(uplo, n, alpha, x, incx, ap);
 }
-void dspr(char uplo, int n, double alpha, const double* x, int incx, double* Ap) {
-	spr_impl(uplo, n, alpha, x, incx, Ap);
+void dspr(char uplo, int n, double alpha, const double* x, int incx, double* ap) {
+	spr_impl(uplo, n, alpha, x, incx, ap);
 }
 
 /* hpr */
 void chpr(char uplo, int n, float alpha, const std::complex<float>* x, int incx,
-          std::complex<float>* Ap) {
-	hpr_impl(uplo, n, alpha, x, incx, Ap);
+          std::complex<float>* ap) {
+	hpr_impl(uplo, n, alpha, x, incx, ap);
 }
 void zhpr(char uplo, int n, double alpha, const std::complex<double>* x, int incx,
-          std::complex<double>* Ap) {
-	hpr_impl(uplo, n, alpha, x, incx, Ap);
+          std::complex<double>* ap) {
+	hpr_impl(uplo, n, alpha, x, incx, ap);
 }
 
 /* spr2 */
 void sspr2(char uplo, int n, float alpha, const float* x, int incx, const float* y, int incy,
-           float* Ap) {
-	spr2_impl(uplo, n, alpha, x, incx, y, incy, Ap);
+           float* ap) {
+	spr2_impl(uplo, n, alpha, x, incx, y, incy, ap);
 }
 void dspr2(char uplo, int n, double alpha, const double* x, int incx, const double* y, int incy,
-           double* Ap) {
-	spr2_impl(uplo, n, alpha, x, incx, y, incy, Ap);
+           double* ap) {
+	spr2_impl(uplo, n, alpha, x, incx, y, incy, ap);
 }
 
 /* hpr2 */
 void chpr2(char uplo, int n, std::complex<float> alpha, const std::complex<float>* x, int incx,
-           const std::complex<float>* y, int incy, std::complex<float>* Ap) {
-	hpr2_impl(uplo, n, alpha, x, incx, y, incy, Ap);
+           const std::complex<float>* y, int incy, std::complex<float>* ap) {
+	hpr2_impl(uplo, n, alpha, x, incx, y, incy, ap);
 }
 void zhpr2(char uplo, int n, std::complex<double> alpha, const std::complex<double>* x, int incx,
-           const std::complex<double>* y, int incy, std::complex<double>* Ap) {
-	hpr2_impl(uplo, n, alpha, x, incx, y, incy, Ap);
+           const std::complex<double>* y, int incy, std::complex<double>* ap) {
+	hpr2_impl(uplo, n, alpha, x, incx, y, incy, ap);
 }
 
 } // namespace theblas

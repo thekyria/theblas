@@ -1,3 +1,4 @@
+// NOLINTNEXTLINE(portability-avoid-pragma-once)
 #pragma once
 
 #include "theblas/version.h"
@@ -500,9 +501,9 @@ int izamax(int n, const std::complex<double> *x, int incx);
 /** @defgroup level2_ops Level-2 Matrix-Vector Operations
  *  @brief BLAS-like matrix-vector operations with strided storage.
  *
- *  Level-2 routines operate on a matrix **A** and one or two vectors.
+ *  Level-2 routines operate on a matrix **a** and one or two vectors.
  *  Matrices are stored in **column-major** order (Fortran layout):
- *  element \f$A(i,j)\f$ resides at offset \f$i + j \cdot \text{lda}\f$.
+ *  element \f$a(i,j)\f$ resides at offset \f$i + j \cdot \text{lda}\f$.
  *
  *  **Additional parameter conventions:**
  *  - `lda`  — leading dimension of the matrix (≥ max(1, rows))
@@ -522,616 +523,616 @@ int izamax(int n, const std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* gemv — General Matrix-Vector Multiply                              */
-/*   y ← α·op(A)·x + β·y                                            */
+/*   y ← α·op(a)·x + β·y                                            */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision general matrix-vector multiply: y ← α·op(A)·x + β·y.
+ * @brief Single-precision general matrix-vector multiply: y ← α·op(a)·x + β·y.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
- * @param m Number of rows of A.
- * @param n Number of columns of A.
- * @param alpha Scalar multiplier for op(A)·x.
- * @param A Pointer to the m×n matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,m)).
+ * @param m Number of rows of a.
+ * @param n Number of columns of a.
+ * @param alpha Scalar multiplier for op(a)·x.
+ * @param a Pointer to the m×n matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,m)).
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void sgemv(char trans, int m, int n, float alpha, const float *A, int lda, const float *x,
+void sgemv(char trans, int m, int n, float alpha, const float *a, int lda, const float *x,
            int incx, float beta, float *y, int incy);
 /** @copydoc sgemv */
-void dgemv(char trans, int m, int n, double alpha, const double *A, int lda, const double *x,
+void dgemv(char trans, int m, int n, double alpha, const double *a, int lda, const double *x,
            int incx, double beta, double *y, int incy);
 /** @copydoc sgemv */
-void cgemv(char trans, int m, int n, std::complex<float> alpha, const std::complex<float> *A,
+void cgemv(char trans, int m, int n, std::complex<float> alpha, const std::complex<float> *a,
            int lda, const std::complex<float> *x, int incx, std::complex<float> beta,
            std::complex<float> *y, int incy);
 /** @copydoc sgemv */
-void zgemv(char trans, int m, int n, std::complex<double> alpha, const std::complex<double> *A,
+void zgemv(char trans, int m, int n, std::complex<double> alpha, const std::complex<double> *a,
            int lda, const std::complex<double> *x, int incx, std::complex<double> beta,
            std::complex<double> *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* symv — Symmetric Matrix-Vector Multiply                            */
-/*   y ← α·A·x + β·y   (A symmetric)                                */
+/*   y ← α·a·x + β·y   (a symmetric)                                */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric matrix-vector multiply: y ← α·A·x + β·y.
+ * @brief Single-precision symmetric matrix-vector multiply: y ← α·a·x + β·y.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the symmetric matrix A.
- * @param alpha Scalar multiplier for A·x.
- * @param A Pointer to the n×n symmetric matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param n Order of the symmetric matrix a.
+ * @param alpha Scalar multiplier for a·x.
+ * @param a Pointer to the n×n symmetric matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void ssymv(char uplo, int n, float alpha, const float *A, int lda, const float *x, int incx,
+void ssymv(char uplo, int n, float alpha, const float *a, int lda, const float *x, int incx,
            float beta, float *y, int incy);
 /** @copydoc ssymv */
-void dsymv(char uplo, int n, double alpha, const double *A, int lda, const double *x, int incx,
+void dsymv(char uplo, int n, double alpha, const double *a, int lda, const double *x, int incx,
            double beta, double *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* hemv — Hermitian Matrix-Vector Multiply                            */
-/*   y ← α·A·x + β·y   (A Hermitian)                                */
+/*   y ← α·a·x + β·y   (a Hermitian)                                */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian matrix-vector multiply: y ← α·A·x + β·y.
+ * @brief Complex-float Hermitian matrix-vector multiply: y ← α·a·x + β·y.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the Hermitian matrix A.
- * @param alpha Scalar multiplier for A·x.
- * @param A Pointer to the n×n Hermitian matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param n Order of the Hermitian matrix a.
+ * @param alpha Scalar multiplier for a·x.
+ * @param a Pointer to the n×n Hermitian matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void chemv(char uplo, int n, std::complex<float> alpha, const std::complex<float> *A, int lda,
+void chemv(char uplo, int n, std::complex<float> alpha, const std::complex<float> *a, int lda,
            const std::complex<float> *x, int incx, std::complex<float> beta,
            std::complex<float> *y, int incy);
 /** @copydoc chemv */
-void zhemv(char uplo, int n, std::complex<double> alpha, const std::complex<double> *A, int lda,
+void zhemv(char uplo, int n, std::complex<double> alpha, const std::complex<double> *a, int lda,
            const std::complex<double> *x, int incx, std::complex<double> beta,
            std::complex<double> *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* trmv — Triangular Matrix-Vector Multiply                           */
-/*   x ← op(A)·x   (A triangular)                                   */
+/*   x ← op(a)·x   (a triangular)                                   */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision triangular matrix-vector multiply: x ← op(A)·x.
+ * @brief Single-precision triangular matrix-vector multiply: x ← op(a)·x.
  * @param uplo 'U' upper triangular, 'L' lower triangular.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
  * @param diag 'U' unit diagonal, 'N' non-unit diagonal.
- * @param n Order of the triangular matrix A.
- * @param A Pointer to the n×n triangular matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param n Order of the triangular matrix a.
+ * @param a Pointer to the n×n triangular matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  * @param x Input/output vector.
  * @param incx Stride between elements of x.
  */
-void strmv(char uplo, char trans, char diag, int n, const float *A, int lda, float *x, int incx);
+void strmv(char uplo, char trans, char diag, int n, const float *a, int lda, float *x, int incx);
 /** @copydoc strmv */
-void dtrmv(char uplo, char trans, char diag, int n, const double *A, int lda, double *x,
+void dtrmv(char uplo, char trans, char diag, int n, const double *a, int lda, double *x,
            int incx);
 /** @copydoc strmv */
-void ctrmv(char uplo, char trans, char diag, int n, const std::complex<float> *A, int lda,
+void ctrmv(char uplo, char trans, char diag, int n, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
 /** @copydoc strmv */
-void ztrmv(char uplo, char trans, char diag, int n, const std::complex<double> *A, int lda,
+void ztrmv(char uplo, char trans, char diag, int n, const std::complex<double> *a, int lda,
            std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* trsv — Triangular Solve                                            */
-/*   solve op(A)·x = b   (A triangular, x overwrites b)              */
+/*   solve op(a)·x = b   (a triangular, x overwrites b)              */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision triangular solve: solve op(A)·x = b.
+ * @brief Single-precision triangular solve: solve op(a)·x = b.
  * @param uplo 'U' upper triangular, 'L' lower triangular.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
  * @param diag 'U' unit diagonal, 'N' non-unit diagonal.
- * @param n Order of the triangular matrix A.
- * @param A Pointer to the n×n triangular matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param n Order of the triangular matrix a.
+ * @param a Pointer to the n×n triangular matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  * @param x On entry, the right-hand side b; on exit, the solution x.
  * @param incx Stride between elements of x.
  */
-void strsv(char uplo, char trans, char diag, int n, const float *A, int lda, float *x, int incx);
+void strsv(char uplo, char trans, char diag, int n, const float *a, int lda, float *x, int incx);
 /** @copydoc strsv */
-void dtrsv(char uplo, char trans, char diag, int n, const double *A, int lda, double *x,
+void dtrsv(char uplo, char trans, char diag, int n, const double *a, int lda, double *x,
            int incx);
 /** @copydoc strsv */
-void ctrsv(char uplo, char trans, char diag, int n, const std::complex<float> *A, int lda,
+void ctrsv(char uplo, char trans, char diag, int n, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
 /** @copydoc strsv */
-void ztrsv(char uplo, char trans, char diag, int n, const std::complex<double> *A, int lda,
+void ztrsv(char uplo, char trans, char diag, int n, const std::complex<double> *a, int lda,
            std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* ger — General Rank-1 Update (real)                                 */
-/*   A ← α·x·yᵀ + A                                                 */
+/*   a ← α·x·yᵀ + a                                                 */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision rank-1 update: A ← α·x·yᵀ + A.
- * @param m Number of rows of A.
- * @param n Number of columns of A.
+ * @brief Single-precision rank-1 update: a ← α·x·yᵀ + a.
+ * @param m Number of rows of a.
+ * @param n Number of columns of a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length m.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n.
  * @param incy Stride between elements of y.
- * @param A Input/output m×n matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,m)).
+ * @param a Input/output m×n matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,m)).
  */
 void sger(int m, int n, float alpha, const float *x, int incx, const float *y, int incy,
-          float *A, int lda);
+          float *a, int lda);
 /** @copydoc sger */
 void dger(int m, int n, double alpha, const double *x, int incx, const double *y, int incy,
-          double *A, int lda);
+          double *a, int lda);
 
 /* ------------------------------------------------------------------ */
 /* geru / gerc — General Rank-1 Update (complex)                      */
-/*   geru: A ← α·x·yᵀ + A   (unconjugated)                          */
-/*   gerc: A ← α·x·yᴴ + A   (conjugated)                            */
+/*   geru: a ← α·x·yᵀ + a   (unconjugated)                          */
+/*   gerc: a ← α·x·yᴴ + a   (conjugated)                            */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float unconjugated rank-1 update: A ← α·x·yᵀ + A.
- * @param m Number of rows of A.
- * @param n Number of columns of A.
+ * @brief Complex-float unconjugated rank-1 update: a ← α·x·yᵀ + a.
+ * @param m Number of rows of a.
+ * @param n Number of columns of a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length m.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n.
  * @param incy Stride between elements of y.
- * @param A Input/output m×n matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,m)).
+ * @param a Input/output m×n matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,m)).
  */
 void cgeru(int m, int n, std::complex<float> alpha, const std::complex<float> *x, int incx,
-           const std::complex<float> *y, int incy, std::complex<float> *A, int lda);
+           const std::complex<float> *y, int incy, std::complex<float> *a, int lda);
 /** @copydoc cgeru */
 void zgeru(int m, int n, std::complex<double> alpha, const std::complex<double> *x, int incx,
-           const std::complex<double> *y, int incy, std::complex<double> *A, int lda);
+           const std::complex<double> *y, int incy, std::complex<double> *a, int lda);
 
 /**
- * @brief Complex-float conjugated rank-1 update: A ← α·x·yᴴ + A.
- * @param m Number of rows of A.
- * @param n Number of columns of A.
+ * @brief Complex-float conjugated rank-1 update: a ← α·x·yᴴ + a.
+ * @param m Number of rows of a.
+ * @param n Number of columns of a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length m.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n (conjugated in the product).
  * @param incy Stride between elements of y.
- * @param A Input/output m×n matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,m)).
+ * @param a Input/output m×n matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,m)).
  */
 void cgerc(int m, int n, std::complex<float> alpha, const std::complex<float> *x, int incx,
-           const std::complex<float> *y, int incy, std::complex<float> *A, int lda);
+           const std::complex<float> *y, int incy, std::complex<float> *a, int lda);
 /** @copydoc cgerc */
 void zgerc(int m, int n, std::complex<double> alpha, const std::complex<double> *x, int incx,
-           const std::complex<double> *y, int incy, std::complex<double> *A, int lda);
+           const std::complex<double> *y, int incy, std::complex<double> *a, int lda);
 
 /* ------------------------------------------------------------------ */
 /* syr — Symmetric Rank-1 Update                                      */
-/*   A ← α·x·xᵀ + A   (A symmetric)                                 */
+/*   a ← α·x·xᵀ + a   (a symmetric)                                 */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric rank-1 update: A ← α·x·xᵀ + A.
+ * @brief Single-precision symmetric rank-1 update: a ← α·x·xᵀ + a.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the symmetric matrix A.
+ * @param n Order of the symmetric matrix a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
- * @param A Input/output n×n symmetric matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param a Input/output n×n symmetric matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  */
-void ssyr(char uplo, int n, float alpha, const float *x, int incx, float *A, int lda);
+void ssyr(char uplo, int n, float alpha, const float *x, int incx, float *a, int lda);
 /** @copydoc ssyr */
-void dsyr(char uplo, int n, double alpha, const double *x, int incx, double *A, int lda);
+void dsyr(char uplo, int n, double alpha, const double *x, int incx, double *a, int lda);
 
 /* ------------------------------------------------------------------ */
 /* her — Hermitian Rank-1 Update                                      */
-/*   A ← α·x·xᴴ + A   (A Hermitian, α real)                         */
+/*   a ← α·x·xᴴ + a   (a Hermitian, α real)                         */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian rank-1 update: A ← α·x·xᴴ + A.
+ * @brief Complex-float Hermitian rank-1 update: a ← α·x·xᴴ + a.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the Hermitian matrix A.
+ * @param n Order of the Hermitian matrix a.
  * @param alpha Real scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
- * @param A Input/output n×n Hermitian matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param a Input/output n×n Hermitian matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  */
 void cher(char uplo, int n, float alpha, const std::complex<float> *x, int incx,
-          std::complex<float> *A, int lda);
+          std::complex<float> *a, int lda);
 /** @copydoc cher */
 void zher(char uplo, int n, double alpha, const std::complex<double> *x, int incx,
-          std::complex<double> *A, int lda);
+          std::complex<double> *a, int lda);
 
 /* ------------------------------------------------------------------ */
 /* syr2 — Symmetric Rank-2 Update                                     */
-/*   A ← α·x·yᵀ + α·y·xᵀ + A   (A symmetric)                       */
+/*   a ← α·x·yᵀ + α·y·xᵀ + a   (a symmetric)                       */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric rank-2 update: A ← α·x·yᵀ + α·y·xᵀ + A.
+ * @brief Single-precision symmetric rank-2 update: a ← α·x·yᵀ + α·y·xᵀ + a.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the symmetric matrix A.
+ * @param n Order of the symmetric matrix a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n.
  * @param incy Stride between elements of y.
- * @param A Input/output n×n symmetric matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param a Input/output n×n symmetric matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  */
 void ssyr2(char uplo, int n, float alpha, const float *x, int incx, const float *y, int incy,
-           float *A, int lda);
+           float *a, int lda);
 /** @copydoc ssyr2 */
 void dsyr2(char uplo, int n, double alpha, const double *x, int incx, const double *y, int incy,
-           double *A, int lda);
+           double *a, int lda);
 
 /* ------------------------------------------------------------------ */
 /* her2 — Hermitian Rank-2 Update                                     */
-/*   A ← α·x·yᴴ + conj(α)·y·xᴴ + A   (A Hermitian)                 */
+/*   a ← α·x·yᴴ + conj(α)·y·xᴴ + a   (a Hermitian)                 */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian rank-2 update: A ← α·x·yᴴ + conj(α)·y·xᴴ + A.
+ * @brief Complex-float Hermitian rank-2 update: a ← α·x·yᴴ + conj(α)·y·xᴴ + a.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the Hermitian matrix A.
+ * @param n Order of the Hermitian matrix a.
  * @param alpha Complex scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n.
  * @param incy Stride between elements of y.
- * @param A Input/output n×n Hermitian matrix in column-major order.
- * @param lda Leading dimension of A (≥ max(1,n)).
+ * @param a Input/output n×n Hermitian matrix in column-major order.
+ * @param lda Leading dimension of a (≥ max(1,n)).
  */
 void cher2(char uplo, int n, std::complex<float> alpha, const std::complex<float> *x, int incx,
-           const std::complex<float> *y, int incy, std::complex<float> *A, int lda);
+           const std::complex<float> *y, int incy, std::complex<float> *a, int lda);
 /** @copydoc cher2 */
 void zher2(char uplo, int n, std::complex<double> alpha, const std::complex<double> *x, int incx,
-           const std::complex<double> *y, int incy, std::complex<double> *A, int lda);
+           const std::complex<double> *y, int incy, std::complex<double> *a, int lda);
 
 /* ------------------------------------------------------------------ */
 /* gbmv — General Band Matrix-Vector Multiply                         */
-/*   y ← α·op(A)·x + β·y   (A banded)                               */
+/*   y ← α·op(a)·x + β·y   (a banded)                               */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision general band matrix-vector multiply: y ← α·op(A)·x + β·y.
+ * @brief Single-precision general band matrix-vector multiply: y ← α·op(a)·x + β·y.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
- * @param m Number of rows of A.
- * @param n Number of columns of A.
+ * @param m Number of rows of a.
+ * @param n Number of columns of a.
  * @param kl Number of sub-diagonals.
  * @param ku Number of super-diagonals.
- * @param alpha Scalar multiplier for op(A)·x.
- * @param A Pointer to the band matrix in column-major band storage.
- * @param lda Leading dimension of A (≥ kl+ku+1).
+ * @param alpha Scalar multiplier for op(a)·x.
+ * @param a Pointer to the band matrix in column-major band storage.
+ * @param lda Leading dimension of a (≥ kl+ku+1).
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void sgbmv(char trans, int m, int n, int kl, int ku, float alpha, const float *A, int lda,
+void sgbmv(char trans, int m, int n, int kl, int ku, float alpha, const float *a, int lda,
            const float *x, int incx, float beta, float *y, int incy);
 /** @copydoc sgbmv */
-void dgbmv(char trans, int m, int n, int kl, int ku, double alpha, const double *A, int lda,
+void dgbmv(char trans, int m, int n, int kl, int ku, double alpha, const double *a, int lda,
            const double *x, int incx, double beta, double *y, int incy);
 /** @copydoc sgbmv */
 void cgbmv(char trans, int m, int n, int kl, int ku, std::complex<float> alpha,
-           const std::complex<float> *A, int lda, const std::complex<float> *x, int incx,
+           const std::complex<float> *a, int lda, const std::complex<float> *x, int incx,
            std::complex<float> beta, std::complex<float> *y, int incy);
 /** @copydoc sgbmv */
 void zgbmv(char trans, int m, int n, int kl, int ku, std::complex<double> alpha,
-           const std::complex<double> *A, int lda, const std::complex<double> *x, int incx,
+           const std::complex<double> *a, int lda, const std::complex<double> *x, int incx,
            std::complex<double> beta, std::complex<double> *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* sbmv — Symmetric Band Matrix-Vector Multiply                       */
-/*   y ← α·A·x + β·y   (A symmetric banded)                         */
+/*   y ← α·a·x + β·y   (a symmetric banded)                         */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric band matrix-vector multiply: y ← α·A·x + β·y.
+ * @brief Single-precision symmetric band matrix-vector multiply: y ← α·a·x + β·y.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the symmetric matrix A.
+ * @param n Order of the symmetric matrix a.
  * @param k Number of super-diagonals (bandwidth).
- * @param alpha Scalar multiplier for A·x.
- * @param A Pointer to the symmetric band matrix in column-major band storage.
- * @param lda Leading dimension of A (≥ k+1).
+ * @param alpha Scalar multiplier for a·x.
+ * @param a Pointer to the symmetric band matrix in column-major band storage.
+ * @param lda Leading dimension of a (≥ k+1).
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void ssbmv(char uplo, int n, int k, float alpha, const float *A, int lda, const float *x,
+void ssbmv(char uplo, int n, int k, float alpha, const float *a, int lda, const float *x,
            int incx, float beta, float *y, int incy);
 /** @copydoc ssbmv */
-void dsbmv(char uplo, int n, int k, double alpha, const double *A, int lda, const double *x,
+void dsbmv(char uplo, int n, int k, double alpha, const double *a, int lda, const double *x,
            int incx, double beta, double *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* hbmv — Hermitian Band Matrix-Vector Multiply                       */
-/*   y ← α·A·x + β·y   (A Hermitian banded)                         */
+/*   y ← α·a·x + β·y   (a Hermitian banded)                         */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian band matrix-vector multiply: y ← α·A·x + β·y.
+ * @brief Complex-float Hermitian band matrix-vector multiply: y ← α·a·x + β·y.
  * @param uplo 'U' upper triangle stored, 'L' lower triangle stored.
- * @param n Order of the Hermitian matrix A.
+ * @param n Order of the Hermitian matrix a.
  * @param k Number of super-diagonals (bandwidth).
- * @param alpha Scalar multiplier for A·x.
- * @param A Pointer to the Hermitian band matrix in column-major band storage.
- * @param lda Leading dimension of A (≥ k+1).
+ * @param alpha Scalar multiplier for a·x.
+ * @param a Pointer to the Hermitian band matrix in column-major band storage.
+ * @param lda Leading dimension of a (≥ k+1).
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void chbmv(char uplo, int n, int k, std::complex<float> alpha, const std::complex<float> *A,
+void chbmv(char uplo, int n, int k, std::complex<float> alpha, const std::complex<float> *a,
            int lda, const std::complex<float> *x, int incx, std::complex<float> beta,
            std::complex<float> *y, int incy);
 /** @copydoc chbmv */
-void zhbmv(char uplo, int n, int k, std::complex<double> alpha, const std::complex<double> *A,
+void zhbmv(char uplo, int n, int k, std::complex<double> alpha, const std::complex<double> *a,
            int lda, const std::complex<double> *x, int incx, std::complex<double> beta,
            std::complex<double> *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* tbmv — Triangular Band Matrix-Vector Multiply                      */
-/*   x ← op(A)·x   (A triangular banded)                             */
+/*   x ← op(a)·x   (a triangular banded)                             */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision triangular band matrix-vector multiply: x ← op(A)·x.
+ * @brief Single-precision triangular band matrix-vector multiply: x ← op(a)·x.
  * @param uplo 'U' upper triangular, 'L' lower triangular.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
  * @param diag 'U' unit diagonal, 'N' non-unit diagonal.
- * @param n Order of the triangular matrix A.
+ * @param n Order of the triangular matrix a.
  * @param k Number of super-diagonals (uplo='U') or sub-diagonals (uplo='L').
- * @param A Pointer to the triangular band matrix in column-major band storage.
- * @param lda Leading dimension of A (≥ k+1).
+ * @param a Pointer to the triangular band matrix in column-major band storage.
+ * @param lda Leading dimension of a (≥ k+1).
  * @param x Input/output vector.
  * @param incx Stride between elements of x.
  */
-void stbmv(char uplo, char trans, char diag, int n, int k, const float *A, int lda, float *x,
+void stbmv(char uplo, char trans, char diag, int n, int k, const float *a, int lda, float *x,
            int incx);
 /** @copydoc stbmv */
-void dtbmv(char uplo, char trans, char diag, int n, int k, const double *A, int lda, double *x,
+void dtbmv(char uplo, char trans, char diag, int n, int k, const double *a, int lda, double *x,
            int incx);
 /** @copydoc stbmv */
-void ctbmv(char uplo, char trans, char diag, int n, int k, const std::complex<float> *A, int lda,
+void ctbmv(char uplo, char trans, char diag, int n, int k, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
 /** @copydoc stbmv */
-void ztbmv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *A,
+void ztbmv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *a,
            int lda, std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* tbsv — Triangular Band Solve                                       */
-/*   solve op(A)·x = b   (A triangular banded)                       */
+/*   solve op(a)·x = b   (a triangular banded)                       */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision triangular band solve: solve op(A)·x = b.
+ * @brief Single-precision triangular band solve: solve op(a)·x = b.
  * @param uplo 'U' upper triangular, 'L' lower triangular.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
  * @param diag 'U' unit diagonal, 'N' non-unit diagonal.
- * @param n Order of the triangular matrix A.
+ * @param n Order of the triangular matrix a.
  * @param k Number of super-diagonals (uplo='U') or sub-diagonals (uplo='L').
- * @param A Pointer to the triangular band matrix in column-major band storage.
- * @param lda Leading dimension of A (≥ k+1).
+ * @param a Pointer to the triangular band matrix in column-major band storage.
+ * @param lda Leading dimension of a (≥ k+1).
  * @param x On entry, the right-hand side b; on exit, the solution x.
  * @param incx Stride between elements of x.
  */
-void stbsv(char uplo, char trans, char diag, int n, int k, const float *A, int lda, float *x,
+void stbsv(char uplo, char trans, char diag, int n, int k, const float *a, int lda, float *x,
            int incx);
 /** @copydoc stbsv */
-void dtbsv(char uplo, char trans, char diag, int n, int k, const double *A, int lda, double *x,
+void dtbsv(char uplo, char trans, char diag, int n, int k, const double *a, int lda, double *x,
            int incx);
 /** @copydoc stbsv */
-void ctbsv(char uplo, char trans, char diag, int n, int k, const std::complex<float> *A, int lda,
+void ctbsv(char uplo, char trans, char diag, int n, int k, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
 /** @copydoc stbsv */
-void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *A,
+void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *a,
            int lda, std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* spmv — Symmetric Packed Matrix-Vector Multiply                     */
-/*   y ← α·A·x + β·y   (A symmetric, packed storage)                */
+/*   y ← α·a·x + β·y   (a symmetric, packed storage)                */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric packed matrix-vector multiply: y ← α·A·x + β·y.
+ * @brief Single-precision symmetric packed matrix-vector multiply: y ← α·a·x + β·y.
  * @param uplo 'U' upper triangle packed, 'L' lower triangle packed.
- * @param n Order of the symmetric matrix A.
- * @param alpha Scalar multiplier for A·x.
- * @param Ap Packed storage array of n(n+1)/2 elements.
+ * @param n Order of the symmetric matrix a.
+ * @param alpha Scalar multiplier for a·x.
+ * @param ap Packed storage array of n(n+1)/2 elements.
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void sspmv(char uplo, int n, float alpha, const float *Ap, const float *x, int incx, float beta,
+void sspmv(char uplo, int n, float alpha, const float *ap, const float *x, int incx, float beta,
            float *y, int incy);
 /** @copydoc sspmv */
-void dspmv(char uplo, int n, double alpha, const double *Ap, const double *x, int incx,
+void dspmv(char uplo, int n, double alpha, const double *ap, const double *x, int incx,
            double beta, double *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* hpmv — Hermitian Packed Matrix-Vector Multiply                     */
-/*   y ← α·A·x + β·y   (A Hermitian, packed storage)                */
+/*   y ← α·a·x + β·y   (a Hermitian, packed storage)                */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian packed matrix-vector multiply: y ← α·A·x + β·y.
+ * @brief Complex-float Hermitian packed matrix-vector multiply: y ← α·a·x + β·y.
  * @param uplo 'U' upper triangle packed, 'L' lower triangle packed.
- * @param n Order of the Hermitian matrix A.
- * @param alpha Scalar multiplier for A·x.
- * @param Ap Packed storage array of n(n+1)/2 elements.
+ * @param n Order of the Hermitian matrix a.
+ * @param alpha Scalar multiplier for a·x.
+ * @param ap Packed storage array of n(n+1)/2 elements.
  * @param x Input vector.
  * @param incx Stride between elements of x.
  * @param beta Scalar multiplier for y.
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void chpmv(char uplo, int n, std::complex<float> alpha, const std::complex<float> *Ap,
+void chpmv(char uplo, int n, std::complex<float> alpha, const std::complex<float> *ap,
            const std::complex<float> *x, int incx, std::complex<float> beta,
            std::complex<float> *y, int incy);
 /** @copydoc chpmv */
-void zhpmv(char uplo, int n, std::complex<double> alpha, const std::complex<double> *Ap,
+void zhpmv(char uplo, int n, std::complex<double> alpha, const std::complex<double> *ap,
            const std::complex<double> *x, int incx, std::complex<double> beta,
            std::complex<double> *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* tpmv — Triangular Packed Matrix-Vector Multiply                    */
-/*   x ← op(A)·x   (A triangular, packed storage)                   */
+/*   x ← op(a)·x   (a triangular, packed storage)                   */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision triangular packed matrix-vector multiply: x ← op(A)·x.
+ * @brief Single-precision triangular packed matrix-vector multiply: x ← op(a)·x.
  * @param uplo 'U' upper triangular packed, 'L' lower triangular packed.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
  * @param diag 'U' unit diagonal, 'N' non-unit diagonal.
- * @param n Order of the triangular matrix A.
- * @param Ap Packed storage array of n(n+1)/2 elements.
+ * @param n Order of the triangular matrix a.
+ * @param ap Packed storage array of n(n+1)/2 elements.
  * @param x Input/output vector.
  * @param incx Stride between elements of x.
  */
-void stpmv(char uplo, char trans, char diag, int n, const float *Ap, float *x, int incx);
+void stpmv(char uplo, char trans, char diag, int n, const float *ap, float *x, int incx);
 /** @copydoc stpmv */
-void dtpmv(char uplo, char trans, char diag, int n, const double *Ap, double *x, int incx);
+void dtpmv(char uplo, char trans, char diag, int n, const double *ap, double *x, int incx);
 /** @copydoc stpmv */
-void ctpmv(char uplo, char trans, char diag, int n, const std::complex<float> *Ap,
+void ctpmv(char uplo, char trans, char diag, int n, const std::complex<float> *ap,
            std::complex<float> *x, int incx);
 /** @copydoc stpmv */
-void ztpmv(char uplo, char trans, char diag, int n, const std::complex<double> *Ap,
+void ztpmv(char uplo, char trans, char diag, int n, const std::complex<double> *ap,
            std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* tpsv — Triangular Packed Solve                                     */
-/*   solve op(A)·x = b   (A triangular, packed storage)              */
+/*   solve op(a)·x = b   (a triangular, packed storage)              */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision triangular packed solve: solve op(A)·x = b.
+ * @brief Single-precision triangular packed solve: solve op(a)·x = b.
  * @param uplo 'U' upper triangular packed, 'L' lower triangular packed.
  * @param trans 'N' no-transpose, 'T' transpose, 'C' conjugate-transpose.
  * @param diag 'U' unit diagonal, 'N' non-unit diagonal.
- * @param n Order of the triangular matrix A.
- * @param Ap Packed storage array of n(n+1)/2 elements.
+ * @param n Order of the triangular matrix a.
+ * @param ap Packed storage array of n(n+1)/2 elements.
  * @param x On entry, the right-hand side b; on exit, the solution x.
  * @param incx Stride between elements of x.
  */
-void stpsv(char uplo, char trans, char diag, int n, const float *Ap, float *x, int incx);
+void stpsv(char uplo, char trans, char diag, int n, const float *ap, float *x, int incx);
 /** @copydoc stpsv */
-void dtpsv(char uplo, char trans, char diag, int n, const double *Ap, double *x, int incx);
+void dtpsv(char uplo, char trans, char diag, int n, const double *ap, double *x, int incx);
 /** @copydoc stpsv */
-void ctpsv(char uplo, char trans, char diag, int n, const std::complex<float> *Ap,
+void ctpsv(char uplo, char trans, char diag, int n, const std::complex<float> *ap,
            std::complex<float> *x, int incx);
 /** @copydoc stpsv */
-void ztpsv(char uplo, char trans, char diag, int n, const std::complex<double> *Ap,
+void ztpsv(char uplo, char trans, char diag, int n, const std::complex<double> *ap,
            std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* spr — Symmetric Packed Rank-1 Update                               */
-/*   A ← α·x·xᵀ + A   (A symmetric, packed storage)                 */
+/*   a ← α·x·xᵀ + a   (a symmetric, packed storage)                 */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric packed rank-1 update: A ← α·x·xᵀ + A.
+ * @brief Single-precision symmetric packed rank-1 update: a ← α·x·xᵀ + a.
  * @param uplo 'U' upper triangle packed, 'L' lower triangle packed.
- * @param n Order of the symmetric matrix A.
+ * @param n Order of the symmetric matrix a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
- * @param Ap Input/output packed storage array of n(n+1)/2 elements.
+ * @param ap Input/output packed storage array of n(n+1)/2 elements.
  */
-void sspr(char uplo, int n, float alpha, const float *x, int incx, float *Ap);
+void sspr(char uplo, int n, float alpha, const float *x, int incx, float *ap);
 /** @copydoc sspr */
-void dspr(char uplo, int n, double alpha, const double *x, int incx, double *Ap);
+void dspr(char uplo, int n, double alpha, const double *x, int incx, double *ap);
 
 /* ------------------------------------------------------------------ */
 /* hpr — Hermitian Packed Rank-1 Update                               */
-/*   A ← α·x·xᴴ + A   (A Hermitian, packed, α real)                 */
+/*   a ← α·x·xᴴ + a   (a Hermitian, packed, α real)                 */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian packed rank-1 update: A ← α·x·xᴴ + A.
+ * @brief Complex-float Hermitian packed rank-1 update: a ← α·x·xᴴ + a.
  * @param uplo 'U' upper triangle packed, 'L' lower triangle packed.
- * @param n Order of the Hermitian matrix A.
+ * @param n Order of the Hermitian matrix a.
  * @param alpha Real scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
- * @param Ap Input/output packed storage array of n(n+1)/2 elements.
+ * @param ap Input/output packed storage array of n(n+1)/2 elements.
  */
 void chpr(char uplo, int n, float alpha, const std::complex<float> *x, int incx,
-          std::complex<float> *Ap);
+          std::complex<float> *ap);
 /** @copydoc chpr */
 void zhpr(char uplo, int n, double alpha, const std::complex<double> *x, int incx,
-          std::complex<double> *Ap);
+          std::complex<double> *ap);
 
 /* ------------------------------------------------------------------ */
 /* spr2 — Symmetric Packed Rank-2 Update                              */
-/*   A ← α·x·yᵀ + α·y·xᵀ + A   (A symmetric, packed)               */
+/*   a ← α·x·yᵀ + α·y·xᵀ + a   (a symmetric, packed)               */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Single-precision symmetric packed rank-2 update: A ← α·x·yᵀ + α·y·xᵀ + A.
+ * @brief Single-precision symmetric packed rank-2 update: a ← α·x·yᵀ + α·y·xᵀ + a.
  * @param uplo 'U' upper triangle packed, 'L' lower triangle packed.
- * @param n Order of the symmetric matrix A.
+ * @param n Order of the symmetric matrix a.
  * @param alpha Scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n.
  * @param incy Stride between elements of y.
- * @param Ap Input/output packed storage array of n(n+1)/2 elements.
+ * @param ap Input/output packed storage array of n(n+1)/2 elements.
  */
 void sspr2(char uplo, int n, float alpha, const float *x, int incx, const float *y, int incy,
-           float *Ap);
+           float *ap);
 /** @copydoc sspr2 */
 void dspr2(char uplo, int n, double alpha, const double *x, int incx, const double *y, int incy,
-           double *Ap);
+           double *ap);
 
 /* ------------------------------------------------------------------ */
 /* hpr2 — Hermitian Packed Rank-2 Update                              */
-/*   A ← α·x·yᴴ + conj(α)·y·xᴴ + A   (A Hermitian, packed)         */
+/*   a ← α·x·yᴴ + conj(α)·y·xᴴ + a   (a Hermitian, packed)         */
 /* ------------------------------------------------------------------ */
 
 /**
- * @brief Complex-float Hermitian packed rank-2 update: A ← α·x·yᴴ + conj(α)·y·xᴴ + A.
+ * @brief Complex-float Hermitian packed rank-2 update: a ← α·x·yᴴ + conj(α)·y·xᴴ + a.
  * @param uplo 'U' upper triangle packed, 'L' lower triangle packed.
- * @param n Order of the Hermitian matrix A.
+ * @param n Order of the Hermitian matrix a.
  * @param alpha Complex scalar multiplier.
  * @param x Input vector of length n.
  * @param incx Stride between elements of x.
  * @param y Input vector of length n.
  * @param incy Stride between elements of y.
- * @param Ap Input/output packed storage array of n(n+1)/2 elements.
+ * @param ap Input/output packed storage array of n(n+1)/2 elements.
  */
 void chpr2(char uplo, int n, std::complex<float> alpha, const std::complex<float> *x, int incx,
-           const std::complex<float> *y, int incy, std::complex<float> *Ap);
+           const std::complex<float> *y, int incy, std::complex<float> *ap);
 /** @copydoc chpr2 */
 void zhpr2(char uplo, int n, std::complex<double> alpha, const std::complex<double> *x, int incx,
-           const std::complex<double> *y, int incy, std::complex<double> *Ap);
+           const std::complex<double> *y, int incy, std::complex<double> *ap);
 
 /** @} */
 
