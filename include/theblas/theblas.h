@@ -34,6 +34,26 @@ namespace theblas {
  *   reference sufficient valid storage according to `n` and stride.
  */
 
+/**
+ * @brief Signature for theblas argument error handlers.
+ *
+ * The handler receives the Netlib-style routine name (for example, `"DGEMV"`) and the
+ * 1-based parameter number that had an illegal value.
+ */
+using error_handler_t = void (*)(const char *routine, int param);
+
+/**
+ * @brief Set the process-global argument error handler used by Level-2 routines.
+ *
+ * Passing `nullptr` restores the default silent handler. Changing the handler is not
+ * thread-safe while other threads may call theblas routines concurrently.
+ *
+ * @param handler Replacement handler or `nullptr` for the default silent handler.
+ * @return The previously installed handler, or `nullptr` if the default silent handler
+ *         was active.
+ */
+error_handler_t set_error_handler(error_handler_t handler);
+
 /** @defgroup level1_ops Level-1 Vector Operations
  *  @brief BLAS-like operations on strided vectors.
  *  @{
@@ -540,8 +560,8 @@ int izamax(int n, const std::complex<double> *x, int incx);
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void sgemv(char trans, int m, int n, float alpha, const float *a, int lda, const float *x,
-           int incx, float beta, float *y, int incy);
+void sgemv(char trans, int m, int n, float alpha, const float *a, int lda, const float *x, int incx,
+           float beta, float *y, int incy);
 /** @copydoc sgemv */
 void dgemv(char trans, int m, int n, double alpha, const double *a, int lda, const double *x,
            int incx, double beta, double *y, int incy);
@@ -597,8 +617,8 @@ void dsymv(char uplo, int n, double alpha, const double *a, int lda, const doubl
  * @param incy Stride between elements of y.
  */
 void chemv(char uplo, int n, std::complex<float> alpha, const std::complex<float> *a, int lda,
-           const std::complex<float> *x, int incx, std::complex<float> beta,
-           std::complex<float> *y, int incy);
+           const std::complex<float> *x, int incx, std::complex<float> beta, std::complex<float> *y,
+           int incy);
 /** @copydoc chemv */
 void zhemv(char uplo, int n, std::complex<double> alpha, const std::complex<double> *a, int lda,
            const std::complex<double> *x, int incx, std::complex<double> beta,
@@ -622,8 +642,7 @@ void zhemv(char uplo, int n, std::complex<double> alpha, const std::complex<doub
  */
 void strmv(char uplo, char trans, char diag, int n, const float *a, int lda, float *x, int incx);
 /** @copydoc strmv */
-void dtrmv(char uplo, char trans, char diag, int n, const double *a, int lda, double *x,
-           int incx);
+void dtrmv(char uplo, char trans, char diag, int n, const double *a, int lda, double *x, int incx);
 /** @copydoc strmv */
 void ctrmv(char uplo, char trans, char diag, int n, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
@@ -649,8 +668,7 @@ void ztrmv(char uplo, char trans, char diag, int n, const std::complex<double> *
  */
 void strsv(char uplo, char trans, char diag, int n, const float *a, int lda, float *x, int incx);
 /** @copydoc strsv */
-void dtrsv(char uplo, char trans, char diag, int n, const double *a, int lda, double *x,
-           int incx);
+void dtrsv(char uplo, char trans, char diag, int n, const double *a, int lda, double *x, int incx);
 /** @copydoc strsv */
 void ctrsv(char uplo, char trans, char diag, int n, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
@@ -675,8 +693,8 @@ void ztrsv(char uplo, char trans, char diag, int n, const std::complex<double> *
  * @param a Input/output m×n matrix in column-major order.
  * @param lda Leading dimension of a (≥ max(1,m)).
  */
-void sger(int m, int n, float alpha, const float *x, int incx, const float *y, int incy,
-          float *a, int lda);
+void sger(int m, int n, float alpha, const float *x, int incx, const float *y, int incy, float *a,
+          int lda);
 /** @copydoc sger */
 void dger(int m, int n, double alpha, const double *x, int incx, const double *y, int incy,
           double *a, int lda);
@@ -863,8 +881,8 @@ void zgbmv(char trans, int m, int n, int kl, int ku, std::complex<double> alpha,
  * @param y Input/output vector.
  * @param incy Stride between elements of y.
  */
-void ssbmv(char uplo, int n, int k, float alpha, const float *a, int lda, const float *x,
-           int incx, float beta, float *y, int incy);
+void ssbmv(char uplo, int n, int k, float alpha, const float *a, int lda, const float *x, int incx,
+           float beta, float *y, int incy);
 /** @copydoc ssbmv */
 void dsbmv(char uplo, int n, int k, double alpha, const double *a, int lda, const double *x,
            int incx, double beta, double *y, int incy);
@@ -922,8 +940,8 @@ void dtbmv(char uplo, char trans, char diag, int n, int k, const double *a, int 
 void ctbmv(char uplo, char trans, char diag, int n, int k, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
 /** @copydoc stbmv */
-void ztbmv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *a,
-           int lda, std::complex<double> *x, int incx);
+void ztbmv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *a, int lda,
+           std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* tbsv — Triangular Band Solve                                       */
@@ -951,8 +969,8 @@ void dtbsv(char uplo, char trans, char diag, int n, int k, const double *a, int 
 void ctbsv(char uplo, char trans, char diag, int n, int k, const std::complex<float> *a, int lda,
            std::complex<float> *x, int incx);
 /** @copydoc stbsv */
-void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *a,
-           int lda, std::complex<double> *x, int incx);
+void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<double> *a, int lda,
+           std::complex<double> *x, int incx);
 
 /* ------------------------------------------------------------------ */
 /* spmv — Symmetric Packed Matrix-Vector Multiply                     */
@@ -974,8 +992,8 @@ void ztbsv(char uplo, char trans, char diag, int n, int k, const std::complex<do
 void sspmv(char uplo, int n, float alpha, const float *ap, const float *x, int incx, float beta,
            float *y, int incy);
 /** @copydoc sspmv */
-void dspmv(char uplo, int n, double alpha, const double *ap, const double *x, int incx,
-           double beta, double *y, int incy);
+void dspmv(char uplo, int n, double alpha, const double *ap, const double *x, int incx, double beta,
+           double *y, int incy);
 
 /* ------------------------------------------------------------------ */
 /* hpmv — Hermitian Packed Matrix-Vector Multiply                     */
@@ -995,8 +1013,8 @@ void dspmv(char uplo, int n, double alpha, const double *ap, const double *x, in
  * @param incy Stride between elements of y.
  */
 void chpmv(char uplo, int n, std::complex<float> alpha, const std::complex<float> *ap,
-           const std::complex<float> *x, int incx, std::complex<float> beta,
-           std::complex<float> *y, int incy);
+           const std::complex<float> *x, int incx, std::complex<float> beta, std::complex<float> *y,
+           int incy);
 /** @copydoc chpmv */
 void zhpmv(char uplo, int n, std::complex<double> alpha, const std::complex<double> *ap,
            const std::complex<double> *x, int incx, std::complex<double> beta,

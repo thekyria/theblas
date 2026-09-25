@@ -1,0 +1,1435 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      The system is: Linux - 6.17.0-1022-azure - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /usr/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/3.31.6/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d4925/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_d4925.dir/build.make CMakeFiles/cmTC_d4925.dir/build
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7'
+        Building CXX object CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d4925.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_d4925.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0nlKJ9.s
+        GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/13"
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/include/c++/13
+         /usr/include/x86_64-linux-gnu/c++/13
+         /usr/include/c++/13/backward
+         /usr/lib/gcc/x86_64-linux-gnu/13/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Compiler executable checksum: 7896445e4990772fdae9dc0659a99266
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d4925.dir/'
+         as -v --64 -o CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc0nlKJ9.s
+        GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_d4925
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d4925.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d4925' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_d4925.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEDlCt2.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_d4925 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 13.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEDlCt2.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_d4925 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.42
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d4925' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_d4925.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_d4925
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/include/c++/13]
+          add: [/usr/include/x86_64-linux-gnu/c++/13]
+          add: [/usr/include/c++/13/backward]
+          add: [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/include/c++/13] ==> [/usr/include/c++/13]
+        collapse include dir [/usr/include/x86_64-linux-gnu/c++/13] ==> [/usr/include/x86_64-linux-gnu/c++/13]
+        collapse include dir [/usr/include/c++/13/backward] ==> [/usr/include/c++/13/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/13/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/13;/usr/include/x86_64-linux-gnu/c++/13;/usr/include/c++/13/backward;/usr/lib/gcc/x86_64-linux-gnu/13/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d4925/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_d4925.dir/build.make CMakeFiles/cmTC_d4925.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-5LlfG7']
+        ignore line: [Building CXX object CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d4925.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_d4925.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/cc0nlKJ9.s]
+        ignore line: [GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/13"]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/include/c++/13]
+        ignore line: [ /usr/include/x86_64-linux-gnu/c++/13]
+        ignore line: [ /usr/include/c++/13/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/13/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 7896445e4990772fdae9dc0659a99266]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d4925.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc0nlKJ9.s]
+        ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_d4925]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d4925.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_d4925' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_d4925.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEDlCt2.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_d4925 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccEDlCt2.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_d4925] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 13.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEDlCt2.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_d4925 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_d4925.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:2 (project)"
+    message: |
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.42
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckIPOSupported.cmake:138 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckIPOSupported.cmake:261 (_ipo_run_language_check)"
+      - "CMakeLists.txt:139 (check_ipo_supported)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin"
+    buildResult:
+      variable: "_IPO_LANGUAGE_CHECK_RESULT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src -B/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin//CMakeFiles/progress.marks
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 all
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/bin/gmake  -f CMakeFiles/foo.dir/build.make CMakeFiles/foo.dir/depend
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Scanning dependencies of target foo
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/bin/gmake  -f CMakeFiles/foo.dir/build.make CMakeFiles/foo.dir/build
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 25%] Building CXX object CMakeFiles/foo.dir/foo.cpp.o
+        /usr/bin/c++   -flto=auto -fno-fat-lto-objects -o CMakeFiles/foo.dir/foo.cpp.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src/foo.cpp
+        [ 50%] Linking CXX static library libfoo.a
+        /usr/local/bin/cmake -P CMakeFiles/foo.dir/cmake_clean_target.cmake
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/foo.dir/link.txt --verbose=1
+        "/usr/bin/gcc-ar-13" qc libfoo.a CMakeFiles/foo.dir/foo.cpp.o
+        "/usr/bin/gcc-ranlib-13" libfoo.a
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 50%] Built target foo
+        /usr/bin/gmake  -f CMakeFiles/boo.dir/build.make CMakeFiles/boo.dir/depend
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Scanning dependencies of target boo
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/bin/gmake  -f CMakeFiles/boo.dir/build.make CMakeFiles/boo.dir/build
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 75%] Building CXX object CMakeFiles/boo.dir/main.cpp.o
+        /usr/bin/c++   -flto=auto -fno-fat-lto-objects -o CMakeFiles/boo.dir/main.cpp.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src/main.cpp
+        [100%] Linking CXX executable boo
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/boo.dir/link.txt --verbose=1
+        /usr/bin/c++ -flto=auto -fno-fat-lto-objects CMakeFiles/boo.dir/main.cpp.o -o boo  libfoo.a
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [100%] Built target boo
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles 0
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /usr/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/3.31.6/CompilerIdC/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_08f48/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_08f48.dir/build.make CMakeFiles/cmTC_08f48.dir/build
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4'
+        Building C object CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_08f48.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_08f48.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccbkOdqY.s
+        GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-linux-gnu/13/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Compiler executable checksum: b220a7f1a1f69970d969d254ad9ec166
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_08f48.dir/'
+         as -v --64 -o CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o /tmp/ccbkOdqY.s
+        GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_08f48
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08f48.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_08f48' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_08f48.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGYxNTE.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_08f48 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 13.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGYxNTE.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_08f48 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.42
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_08f48' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_08f48.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -o cmTC_08f48
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/13/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-linux-gnu/13/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:3 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_08f48/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_08f48.dir/build.make CMakeFiles/cmTC_08f48.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-25vAP4']
+        ignore line: [Building C object CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_08f48.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_08f48.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccbkOdqY.s]
+        ignore line: [GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/13/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: b220a7f1a1f69970d969d254ad9ec166]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_08f48.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o /tmp/ccbkOdqY.s]
+        ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_08f48]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_08f48.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_08f48' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_08f48.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGYxNTE.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_08f48 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccGYxNTE.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_08f48] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 13.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccGYxNTE.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_08f48 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_08f48.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'C': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:3 (project)"
+    message: |
+      Running the C compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.42
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineFortranCompiler.cmake:190 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "build-netlib/_deps/reference_lapack-src/BLAS/CMakeLists.txt:1 (enable_language)"
+    message: |
+      Compiling the Fortran compiler identification source file "CMakeFortranCompilerId.F" succeeded.
+      Compiler: /usr/bin/gfortran 
+      Build flags: 
+      Id flags: -v 
+      
+      The output was:
+      0
+      Driving: /usr/bin/gfortran -v CMakeFortranCompilerId.F -l gfortran -l m -shared-libgcc
+      Using built-in specs.
+      COLLECT_GCC=/usr/bin/gfortran
+      COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+      OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+      OFFLOAD_TARGET_DEFAULT=1
+      Target: x86_64-linux-gnu
+      Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+      Thread model: posix
+      Supported LTO compression algorithms: zlib zstd
+      gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a-'
+       /usr/libexec/gcc/x86_64-linux-gnu/13/f951 CMakeFortranCompilerId.F -ffixed-form -cpp=/tmp/ccKUsHJ2.f90 -quiet -v -imultiarch x86_64-linux-gnu CMakeFortranCompilerId.F -quiet -dumpdir a- -dumpbase CMakeFortranCompilerId.F -dumpbase-ext .F -mtune=generic -march=x86-64 -version -fintrinsic-modules-path /usr/lib/gcc/x86_64-linux-gnu/13/finclude -fpre-include=/usr/include/finclude/x86_64-linux-gnu/math-vector-fortran.h -o /tmp/ccajLWao.s
+      GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)
+      	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+      
+      GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+      ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+      ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"
+      ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"
+      ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"
+      #include "..." search starts here:
+      #include <...> search starts here:
+       /usr/lib/gcc/x86_64-linux-gnu/13/finclude
+       /usr/lib/gcc/x86_64-linux-gnu/13/include
+       /usr/local/include
+       /usr/include/x86_64-linux-gnu
+       /usr/include
+      End of search list.
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a-'
+       as -v --64 -o /tmp/ccfgT1Bz.o /tmp/ccajLWao.s
+      GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+      Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.spec
+      rename spec lib to liborig
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a-'
+      COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+      LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a.'
+       /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccIxYrWl.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. /tmp/ccfgT1Bz.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+      COLLECT_GCC_OPTIONS='-v' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'a.'
+      
+      
+      Compilation of the Fortran compiler identification source "CMakeFortranCompilerId.F" produced "a.out"
+      
+      The Fortran compiler identification is GNU, found in:
+        /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/3.31.6/CompilerIdFortran/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/BLAS/CMakeLists.txt:1 (enable_language)"
+    checks:
+      - "Detecting Fortran compiler ABI info"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3"
+    cmakeVariables:
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_Fortran_FLAGS: ""
+      CMAKE_Fortran_FLAGS_DEBUG: "-g"
+      CMAKE_MODULE_PATH: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/CMAKE"
+    buildResult:
+      variable: "CMAKE_Fortran_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b7c96/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b7c96.dir/build.make CMakeFiles/cmTC_b7c96.dir/build
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3'
+        Building Fortran object CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o
+        /usr/bin/gfortran   -v -c /usr/local/share/cmake-3.31/Modules/CMakeFortranCompilerABI.F90 -o CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/gfortran
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+        COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b7c96.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/f951 /usr/local/share/cmake-3.31/Modules/CMakeFortranCompilerABI.F90 -cpp=/tmp/ccqtSKUe.f90 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.31/Modules/CMakeFortranCompilerABI.F90 -quiet -dumpdir CMakeFiles/cmTC_b7c96.dir/ -dumpbase CMakeFortranCompilerABI.F90.F90 -dumpbase-ext .F90 -mtune=generic -march=x86-64 -version -fintrinsic-modules-path /usr/lib/gcc/x86_64-linux-gnu/13/finclude -fpre-include=/usr/include/finclude/x86_64-linux-gnu/math-vector-fortran.h -o /tmp/ccLW1YVX.s
+        GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-linux-gnu/13/finclude
+         /usr/lib/gcc/x86_64-linux-gnu/13/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b7c96.dir/'
+         as -v --64 -o CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o /tmp/ccLW1YVX.s
+        GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.'
+        Linking Fortran executable cmTC_b7c96
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b7c96.dir/link.txt --verbose=1
+        Driving: /usr/bin/gfortran -v -Wl,-v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -o cmTC_b7c96 -l gfortran -l m -shared-libgcc
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/gfortran
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 
+        Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.spec
+        rename spec lib to liborig
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7c96' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b7c96-'
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7c96' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b7c96.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccsM38Zm.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_b7c96 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 13.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccsM38Zm.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_b7c96 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.42
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7c96' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b7c96.'
+        /usr/bin/gfortran  -v -Wl,-v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -o cmTC_b7c96
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/BLAS/CMakeLists.txt:1 (enable_language)"
+    message: |
+      Parsed Fortran implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-linux-gnu/13/finclude]
+          add: [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/13/finclude] ==> [/usr/lib/gcc/x86_64-linux-gnu/13/finclude]
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/13/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-linux-gnu/13/finclude;/usr/lib/gcc/x86_64-linux-gnu/13/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/BLAS/CMakeLists.txt:1 (enable_language)"
+    message: |
+      Parsed Fortran implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b7c96/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_b7c96.dir/build.make CMakeFiles/cmTC_b7c96.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-bDZtd3']
+        ignore line: [Building Fortran object CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o]
+        ignore line: [/usr/bin/gfortran   -v -c /usr/local/share/cmake-3.31/Modules/CMakeFortranCompilerABI.F90 -o CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/gfortran]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b7c96.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/f951 /usr/local/share/cmake-3.31/Modules/CMakeFortranCompilerABI.F90 -cpp=/tmp/ccqtSKUe.f90 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.31/Modules/CMakeFortranCompilerABI.F90 -quiet -dumpdir CMakeFiles/cmTC_b7c96.dir/ -dumpbase CMakeFortranCompilerABI.F90.F90 -dumpbase-ext .F90 -mtune=generic -march=x86-64 -version -fintrinsic-modules-path /usr/lib/gcc/x86_64-linux-gnu/13/finclude -fpre-include=/usr/include/finclude/x86_64-linux-gnu/math-vector-fortran.h -o /tmp/ccLW1YVX.s]
+        ignore line: [GNU Fortran (Ubuntu 13.3.0-6ubuntu2~24.04.1) version 13.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/13/finclude]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/13/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b7c96.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o /tmp/ccLW1YVX.s]
+        ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-c' '-o' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.']
+        ignore line: [Linking Fortran executable cmTC_b7c96]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b7c96.dir/link.txt --verbose=1]
+        ignore line: [Driving: /usr/bin/gfortran -v -Wl -v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -o cmTC_b7c96 -l gfortran -l m -shared-libgcc]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/gfortran]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04.1' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-EldibY/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1) ]
+        ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.spec]
+        ignore line: [rename spec lib to liborig]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7c96' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b7c96-']
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_b7c96' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_b7c96.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccsM38Zm.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_b7c96 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccsM38Zm.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lquadmath] ==> ignore
+          arg [-plugin-opt=-pass-through=-lm] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_b7c96] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o] ==> ignore
+          arg [-lgfortran] ==> lib [gfortran]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--as-needed] ==> ignore
+          arg [-lquadmath] ==> lib [quadmath]
+          arg [--no-as-needed] ==> ignore
+          arg [-lm] ==> lib [m]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 13.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccsM38Zm.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lquadmath -plugin-opt=-pass-through=-lm -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_b7c96 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_b7c96.dir/CMakeFortranCompilerABI.F90.o -lgfortran -lm -lgcc_s -lgcc --as-needed -lquadmath --no-as-needed -lm -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'Fortran': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [gfortran;m;gcc_s;gcc;quadmath;m;c;gcc_s;gcc]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestFortranCompiler.cmake:20 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "build-netlib/_deps/reference_lapack-src/BLAS/CMakeLists.txt:1 (enable_language)"
+    message: |
+      Running the Fortran compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.42
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FortranCInterface/Detect.cmake:49 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FortranCInterface.cmake:224 (include)"
+      - "build-netlib/_deps/reference_lapack-src/CBLAS/CMakeLists.txt:11 (include)"
+    checks:
+      - "Detecting Fortran/C Interface"
+    description: "Fortran/C interface test project"
+    directories:
+      source: "/usr/local/share/cmake-3.31/Modules/FortranCInterface"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface"
+    buildResult:
+      variable: "FortranCInterface_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile FortranCInterface
+        /usr/local/bin/cmake -S/usr/local/share/cmake-3.31/Modules/FortranCInterface -B/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 FortranCInterface
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        /usr/local/bin/cmake -S/usr/local/share/cmake-3.31/Modules/FortranCInterface -B/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles 39
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/FortranCInterface.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        /usr/bin/gmake  -f CMakeFiles/myfort.dir/build.make CMakeFiles/myfort.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.31/Modules/FortranCInterface /usr/local/share/cmake-3.31/Modules/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/myfort.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/myfort.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/myfort.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/myfort.dir/depend.internal".
+        Scanning dependencies of target myfort
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        /usr/bin/gmake  -f CMakeFiles/myfort.dir/build.make CMakeFiles/myfort.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        [  2%] Building Fortran object CMakeFiles/myfort.dir/my_module.f90.o
+        /usr/bin/gfortran   -O3 -flto=auto -ffat-lto-objects -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/my_module.f90 -o CMakeFiles/myfort.dir/my_module.f90.o
+        /usr/local/bin/cmake -E cmake_copy_f90_mod my_module.mod CMakeFiles/myfort.dir/my_module.mod.stamp GNU
+        /usr/local/bin/cmake -E touch CMakeFiles/myfort.dir/my_module.f90.o.provides.build
+        [  5%] Building Fortran object CMakeFiles/myfort.dir/mymodule.f90.o
+        /usr/bin/gfortran   -O3 -flto=auto -ffat-lto-objects -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/mymodule.f90 -o CMakeFiles/myfort.dir/mymodule.f90.o
+        /usr/local/bin/cmake -E cmake_copy_f90_mod mymodule.mod CMakeFiles/myfort.dir/mymodule.mod.stamp GNU
+        /usr/local/bin/cmake -E touch CMakeFiles/myfort.dir/mymodule.f90.o.provides.build
+        [  7%] Building Fortran object CMakeFiles/myfort.dir/mysub.f.o
+        /usr/bin/gfortran   -O3 -flto=auto -ffat-lto-objects -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/mysub.f -o CMakeFiles/myfort.dir/mysub.f.o
+        [ 10%] Building Fortran object CMakeFiles/myfort.dir/my_sub.f.o
+        /usr/bin/gfortran   -O3 -flto=auto -ffat-lto-objects -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/my_sub.f -o CMakeFiles/myfort.dir/my_sub.f.o
+        [ 12%] Linking Fortran static library libmyfort.a
+        /usr/local/bin/cmake -P CMakeFiles/myfort.dir/cmake_clean_target.cmake
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/myfort.dir/link.txt --verbose=1
+        /usr/bin/ar qc libmyfort.a CMakeFiles/myfort.dir/mysub.f.o CMakeFiles/myfort.dir/my_sub.f.o CMakeFiles/myfort.dir/mymodule.f90.o CMakeFiles/myfort.dir/my_module.f90.o
+        /usr/bin/ranlib libmyfort.a
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        [ 12%] Built target myfort
+        /usr/bin/gmake  -f CMakeFiles/symbols.dir/build.make CMakeFiles/symbols.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.31/Modules/FortranCInterface /usr/local/share/cmake-3.31/Modules/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/symbols.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/symbols.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/symbols.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/symbols.dir/depend.internal".
+        Scanning dependencies of target symbols
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        /usr/bin/gmake  -f CMakeFiles/symbols.dir/build.make CMakeFiles/symbols.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        [ 15%] Building C object CMakeFiles/symbols.dir/mymodule_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/mymodule_.c.o -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/mymodule_.c
+        [ 17%] Building C object CMakeFiles/symbols.dir/my_module_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/my_module_.c.o -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/my_module_.c
+        [ 20%] Building C object CMakeFiles/symbols.dir/MY_MODULE.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/MY_MODULE.c.o -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/MY_MODULE.c
+        [ 23%] Building C object CMakeFiles/symbols.dir/MYMODULE.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/MYMODULE.c.o -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/MYMODULE.c
+        [ 25%] Building C object CMakeFiles/symbols.dir/symbols/my_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_sub.c
+        [ 28%] Building C object CMakeFiles/symbols.dir/symbols/my_sub_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_sub_.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_sub_.c
+        [ 30%] Building C object CMakeFiles/symbols.dir/symbols/my_sub__.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_sub__.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_sub__.c
+        [ 33%] Building C object CMakeFiles/symbols.dir/symbols/MY_SUB-UPPER.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/MY_SUB-UPPER.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/MY_SUB-UPPER.c
+        [ 35%] Building C object CMakeFiles/symbols.dir/symbols/mysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/mysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/mysub.c
+        [ 38%] Building C object CMakeFiles/symbols.dir/symbols/mysub_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/mysub_.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/mysub_.c
+        [ 41%] Building C object CMakeFiles/symbols.dir/symbols/MYSUB-UPPER.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/MYSUB-UPPER.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/MYSUB-UPPER.c
+        [ 43%] Building C object CMakeFiles/symbols.dir/symbols/__my_module_MOD_my_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/__my_module_MOD_my_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/__my_module_MOD_my_sub.c
+        [ 46%] Building C object CMakeFiles/symbols.dir/symbols/__my_module_NMOD_my_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/__my_module_NMOD_my_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/__my_module_NMOD_my_sub.c
+        [ 48%] Building C object CMakeFiles/symbols.dir/symbols/__my_module__my_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/__my_module__my_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/__my_module__my_sub.c
+        [ 51%] Building C object CMakeFiles/symbols.dir/symbols/__mymodule_MOD_mysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/__mymodule_MOD_mysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/__mymodule_MOD_mysub.c
+        [ 53%] Building C object CMakeFiles/symbols.dir/symbols/__mymodule_NMOD_mysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/__mymodule_NMOD_mysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/__mymodule_NMOD_mysub.c
+        [ 56%] Building C object CMakeFiles/symbols.dir/symbols/__mymodule__mysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/__mymodule__mysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/__mymodule__mysub.c
+        [ 58%] Building C object CMakeFiles/symbols.dir/symbols/my_moduleSmy_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_moduleSmy_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_moduleSmy_sub.c
+        [ 61%] Building C object CMakeFiles/symbols.dir/symbols/my_module_mp_my_sub_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_module_mp_my_sub_.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_module_mp_my_sub_.c
+        [ 64%] Building C object CMakeFiles/symbols.dir/symbols/MY_MODULE_mp_MY_SUB-UPPER.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/MY_MODULE_mp_MY_SUB-UPPER.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/MY_MODULE_mp_MY_SUB-UPPER.c
+        [ 66%] Building C object CMakeFiles/symbols.dir/symbols/my_module_my_sub_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_module_my_sub_.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_module_my_sub_.c
+        [ 69%] Building C object CMakeFiles/symbols.dir/symbols/my_module_MP_my_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/my_module_MP_my_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/my_module_MP_my_sub.c
+        [ 71%] Building C object CMakeFiles/symbols.dir/symbols/mymoduleSmysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/mymoduleSmysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/mymoduleSmysub.c
+        [ 74%] Building C object CMakeFiles/symbols.dir/symbols/mymodule_mp_mysub_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/mymodule_mp_mysub_.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/mymodule_mp_mysub_.c
+        [ 76%] Building C object CMakeFiles/symbols.dir/symbols/MYMODULE_mp_MYSUB-UPPER.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/MYMODULE_mp_MYSUB-UPPER.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/MYMODULE_mp_MYSUB-UPPER.c
+        [ 79%] Building C object CMakeFiles/symbols.dir/symbols/mymodule_mysub_.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/mymodule_mysub_.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/mymodule_mysub_.c
+        [ 82%] Building C object CMakeFiles/symbols.dir/symbols/mymodule_MP_mysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/mymodule_MP_mysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/mymodule_MP_mysub.c
+        [ 84%] Building C object CMakeFiles/symbols.dir/symbols/_QMmy_modulePmy_sub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/_QMmy_modulePmy_sub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/_QMmy_modulePmy_sub.c
+        [ 87%] Building C object CMakeFiles/symbols.dir/symbols/_QMmymodulePmysub.c.o
+        /usr/bin/cc   -O3 -DNDEBUG -fPIC -flto=auto -ffat-lto-objects -o CMakeFiles/symbols.dir/symbols/_QMmymodulePmysub.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/symbols/_QMmymodulePmysub.c
+        [ 89%] Linking C static library libsymbols.a
+        /usr/local/bin/cmake -P CMakeFiles/symbols.dir/cmake_clean_target.cmake
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/symbols.dir/link.txt --verbose=1
+        /usr/bin/ar qc libsymbols.a CMakeFiles/symbols.dir/mymodule_.c.o CMakeFiles/symbols.dir/my_module_.c.o CMakeFiles/symbols.dir/MY_MODULE.c.o CMakeFiles/symbols.dir/MYMODULE.c.o CMakeFiles/symbols.dir/symbols/my_sub.c.o CMakeFiles/symbols.dir/symbols/my_sub_.c.o CMakeFiles/symbols.dir/symbols/my_sub__.c.o "CMakeFiles/symbols.dir/symbols/MY_SUB-UPPER.c.o" CMakeFiles/symbols.dir/symbols/mysub.c.o CMakeFiles/symbols.dir/symbols/mysub_.c.o "CMakeFiles/symbols.dir/symbols/MYSUB-UPPER.c.o" CMakeFiles/symbols.dir/symbols/__my_module_MOD_my_sub.c.o CMakeFiles/symbols.dir/symbols/__my_module_NMOD_my_sub.c.o CMakeFiles/symbols.dir/symbols/__my_module__my_sub.c.o CMakeFiles/symbols.dir/symbols/__mymodule_MOD_mysub.c.o CMakeFiles/symbols.dir/symbols/__mymodule_NMOD_mysub.c.o CMakeFiles/symbols.dir/symbols/__mymodule__mysub.c.o CMakeFiles/symbols.dir/symbols/my_moduleSmy_sub.c.o CMakeFiles/symbols.dir/symbols/my_module_mp_my_sub_.c.o "CMakeFiles/symbols.dir/symbols/MY_MODULE_mp_MY_SUB-UPPER.c.o" CMakeFiles/symbols.dir/symbols/my_module_my_sub_.c.o CMakeFiles/symbols.dir/symbols/my_module_MP_my_sub.c.o CMakeFiles/symbols.dir/symbols/mymoduleSmysub.c.o CMakeFiles/symbols.dir/symbols/mymodule_mp_mysub_.c.o "CMakeFiles/symbols.dir/symbols/MYMODULE_mp_MYSUB-UPPER.c.o" CMakeFiles/symbols.dir/symbols/mymodule_mysub_.c.o CMakeFiles/symbols.dir/symbols/mymodule_MP_mysub.c.o CMakeFiles/symbols.dir/symbols/_QMmy_modulePmy_sub.c.o CMakeFiles/symbols.dir/symbols/_QMmymodulePmysub.c.o
+        /usr/bin/ranlib libsymbols.a
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        [ 89%] Built target symbols
+        /usr/bin/gmake  -f CMakeFiles/FortranCInterface.dir/build.make CMakeFiles/FortranCInterface.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.31/Modules/FortranCInterface /usr/local/share/cmake-3.31/Modules/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/FortranCInterface.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/FortranCInterface.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/FortranCInterface.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles/FortranCInterface.dir/depend.internal".
+        Scanning dependencies of target FortranCInterface
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        /usr/bin/gmake  -f CMakeFiles/FortranCInterface.dir/build.make CMakeFiles/FortranCInterface.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        [ 92%] Building Fortran object CMakeFiles/FortranCInterface.dir/main.F.o
+        /usr/bin/gfortran  -DCALL_MOD  -O3 -fno-lto -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/main.F -o CMakeFiles/FortranCInterface.dir/main.F.o
+        [ 94%] Building Fortran object CMakeFiles/FortranCInterface.dir/call_sub.f.o
+        /usr/bin/gfortran   -O3 -fno-lto -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/call_sub.f -o CMakeFiles/FortranCInterface.dir/call_sub.f.o
+        [ 97%] Building Fortran object CMakeFiles/FortranCInterface.dir/call_mod.f90.o
+        /usr/bin/gfortran   -O3 -fno-lto -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/call_mod.f90 -o CMakeFiles/FortranCInterface.dir/call_mod.f90.o
+        [100%] Linking Fortran executable FortranCInterface
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/FortranCInterface.dir/link.txt --verbose=1
+        /usr/bin/gfortran -O3 CMakeFiles/FortranCInterface.dir/main.F.o CMakeFiles/FortranCInterface.dir/call_sub.f.o CMakeFiles/FortranCInterface.dir/call_mod.f90.o -o FortranCInterface  libsymbols.a libmyfort.a
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        [100%] Built target FortranCInterface
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles 0
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FortranCInterface.cmake:363 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CBLAS/CMakeLists.txt:13 (FortranCInterface_VERIFY)"
+    checks:
+      - "Verifying Fortran/C Compiler Compatibility"
+    directories:
+      source: "/usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC"
+    buildResult:
+      variable: "FortranCInterface_VERIFY_C_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile VerifyFortranC
+        /usr/local/bin/cmake -S/usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify -B/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 VerifyFortranC
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        /usr/local/bin/cmake -S/usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify -B/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles 5
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/VerifyFortranC.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        /usr/bin/gmake  -f CMakeFiles/VerifyFortran.dir/build.make CMakeFiles/VerifyFortran.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortran.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortran.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortran.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortran.dir/depend.internal".
+        Scanning dependencies of target VerifyFortran
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        /usr/bin/gmake  -f CMakeFiles/VerifyFortran.dir/build.make CMakeFiles/VerifyFortran.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        [ 20%] Building Fortran object CMakeFiles/VerifyFortran.dir/VerifyFortran.f.o
+        /usr/bin/gfortran  -I/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC -O3 -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify/VerifyFortran.f -o CMakeFiles/VerifyFortran.dir/VerifyFortran.f.o
+        [ 40%] Linking Fortran static library libVerifyFortran.a
+        /usr/local/bin/cmake -P CMakeFiles/VerifyFortran.dir/cmake_clean_target.cmake
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/VerifyFortran.dir/link.txt --verbose=1
+        /usr/bin/ar qc libVerifyFortran.a CMakeFiles/VerifyFortran.dir/VerifyFortran.f.o
+        /usr/bin/ranlib libVerifyFortran.a
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        [ 40%] Built target VerifyFortran
+        /usr/bin/gmake  -f CMakeFiles/VerifyFortranC.dir/build.make CMakeFiles/VerifyFortranC.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortranC.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortranC.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortranC.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles/VerifyFortranC.dir/depend.internal".
+        Scanning dependencies of target VerifyFortranC
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        /usr/bin/gmake  -f CMakeFiles/VerifyFortranC.dir/build.make CMakeFiles/VerifyFortranC.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        [ 60%] Building C object CMakeFiles/VerifyFortranC.dir/main.c.o
+        /usr/bin/cc  -I/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC -O3 -DNDEBUG -o CMakeFiles/VerifyFortranC.dir/main.c.o -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify/main.c
+        [ 80%] Building C object CMakeFiles/VerifyFortranC.dir/VerifyC.c.o
+        /usr/bin/cc  -I/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC -O3 -DNDEBUG -o CMakeFiles/VerifyFortranC.dir/VerifyC.c.o -c /usr/local/share/cmake-3.31/Modules/FortranCInterface/Verify/VerifyC.c
+        [100%] Linking C executable VerifyFortranC
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/VerifyFortranC.dir/link.txt --verbose=1
+        /usr/bin/cc -O3 -DNDEBUG CMakeFiles/VerifyFortranC.dir/main.c.o CMakeFiles/VerifyFortranC.dir/VerifyC.c.o -o VerifyFortranC  libVerifyFortran.a -lgfortran -lm -lquadmath -lm
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        [100%] Built target VerifyFortranC
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC/CMakeFiles 0
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/VerifyC'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "build-netlib/_deps/reference_lapack-src/CBLAS/CMakeLists.txt:29 (check_c_source_compiles)"
+    checks:
+      - "Performing Test HAS_ATTRIBUTE_WEAK_SUPPORT"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-WEkY2F"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-WEkY2F"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_RELEASE: "-O3 -DNDEBUG"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/CMAKE"
+    buildResult:
+      variable: "HAS_ATTRIBUTE_WEAK_SUPPORT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-WEkY2F'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_409ca/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_409ca.dir/build.make CMakeFiles/cmTC_409ca.dir/build
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-WEkY2F'
+        Building C object CMakeFiles/cmTC_409ca.dir/src.c.o
+        /usr/bin/cc -DHAS_ATTRIBUTE_WEAK_SUPPORT  -O3 -DNDEBUG -o CMakeFiles/cmTC_409ca.dir/src.c.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-WEkY2F/src.c
+        Linking C executable cmTC_409ca
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_409ca.dir/link.txt --verbose=1
+        /usr/bin/cc -O3 -DNDEBUG CMakeFiles/cmTC_409ca.dir/src.c.o -o cmTC_409ca
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/CMakeScratch/TryCompile-WEkY2F'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:322 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_NONE
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_NONE
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_NONE.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_NONE.dir/build.make CMakeFiles/secondtst_NONE.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/depend.internal".
+        Scanning dependencies of target secondtst_NONE
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_NONE.dir/build.make CMakeFiles/secondtst_NONE.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Building Fortran object CMakeFiles/secondtst_NONE.dir/second_NONE.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_NONE.f -o CMakeFiles/secondtst_NONE.dir/second_NONE.f.o
+        [ 66%] Building Fortran object CMakeFiles/secondtst_NONE.dir/secondtst.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_NONE.dir/secondtst.f.o
+        [100%] Linking Fortran executable secondtst_NONE
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_NONE.dir/link.txt --verbose=1
+        /usr/bin/gfortran CMakeFiles/secondtst_NONE.dir/second_NONE.f.o CMakeFiles/secondtst_NONE.dir/secondtst.f.o -o secondtst_NONE
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [100%] Built target secondtst_NONE
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 0
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:323 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_INT_CPU_TIME
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_INT_CPU_TIME
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_INT_CPU_TIME.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_CPU_TIME.dir/build.make CMakeFiles/secondtst_INT_CPU_TIME.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/depend.internal".
+        Scanning dependencies of target secondtst_INT_CPU_TIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_CPU_TIME.dir/build.make CMakeFiles/secondtst_INT_CPU_TIME.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Building Fortran object CMakeFiles/secondtst_INT_CPU_TIME.dir/second_INT_CPU_TIME.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_INT_CPU_TIME.f -o CMakeFiles/secondtst_INT_CPU_TIME.dir/second_INT_CPU_TIME.f.o
+        [ 66%] Building Fortran object CMakeFiles/secondtst_INT_CPU_TIME.dir/secondtst.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_INT_CPU_TIME.dir/secondtst.f.o
+        [100%] Linking Fortran executable secondtst_INT_CPU_TIME
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_INT_CPU_TIME.dir/link.txt --verbose=1
+        /usr/bin/gfortran CMakeFiles/secondtst_INT_CPU_TIME.dir/second_INT_CPU_TIME.f.o CMakeFiles/secondtst_INT_CPU_TIME.dir/secondtst.f.o -o secondtst_INT_CPU_TIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [100%] Built target secondtst_INT_CPU_TIME
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 0
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:324 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_EXT_ETIME
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_EXT_ETIME
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_EXT_ETIME.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME.dir/build.make CMakeFiles/secondtst_EXT_ETIME.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/depend.internal".
+        Scanning dependencies of target secondtst_EXT_ETIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME.dir/build.make CMakeFiles/secondtst_EXT_ETIME.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_EXT_ETIME.f -o CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o
+        [ 66%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o
+        [100%] Linking Fortran executable secondtst_EXT_ETIME
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_EXT_ETIME.dir/link.txt --verbose=1
+        /usr/bin/ld: CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o: in function `second_':
+        second_EXT_ETIME.f:(.text+0x10): undefined reference to `etime_'
+        collect2: error: ld returned 1 exit status
+        /usr/bin/gfortran CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o -o secondtst_EXT_ETIME
+        gmake[3]: *** [CMakeFiles/secondtst_EXT_ETIME.dir/build.make:117: secondtst_EXT_ETIME] Error 1
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[2]: *** [CMakeFiles/Makefile2:152: CMakeFiles/secondtst_EXT_ETIME.dir/all] Error 2
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: *** [CMakeFiles/Makefile2:159: CMakeFiles/secondtst_EXT_ETIME.dir/rule] Error 2
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake: *** [Makefile:140: secondtst_EXT_ETIME] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:325 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_EXT_ETIME_
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_EXT_ETIME_
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_EXT_ETIME_.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME_.dir/build.make CMakeFiles/secondtst_EXT_ETIME_.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/depend.internal".
+        Scanning dependencies of target secondtst_EXT_ETIME_
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME_.dir/build.make CMakeFiles/secondtst_EXT_ETIME_.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_EXT_ETIME_.f -o CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o
+        [ 66%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o
+        [100%] Linking Fortran executable secondtst_EXT_ETIME_
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_EXT_ETIME_.dir/link.txt --verbose=1
+        /usr/bin/ld: CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o: in function `second_':
+        second_EXT_ETIME_.f:(.text+0x10): undefined reference to `etime__'
+        collect2: error: ld returned 1 exit status
+        /usr/bin/gfortran CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o -o secondtst_EXT_ETIME_
+        gmake[3]: *** [CMakeFiles/secondtst_EXT_ETIME_.dir/build.make:117: secondtst_EXT_ETIME_] Error 1
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[2]: *** [CMakeFiles/Makefile2:184: CMakeFiles/secondtst_EXT_ETIME_.dir/all] Error 2
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: *** [CMakeFiles/Makefile2:191: CMakeFiles/secondtst_EXT_ETIME_.dir/rule] Error 2
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake: *** [Makefile:153: secondtst_EXT_ETIME_] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:326 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_INT_ETIME
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_INT_ETIME
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_INT_ETIME.dir/all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_ETIME.dir/build.make CMakeFiles/secondtst_INT_ETIME.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/depend.internal".
+        Scanning dependencies of target secondtst_INT_ETIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_ETIME.dir/build.make CMakeFiles/secondtst_INT_ETIME.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Building Fortran object CMakeFiles/secondtst_INT_ETIME.dir/second_INT_ETIME.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_INT_ETIME.f -o CMakeFiles/secondtst_INT_ETIME.dir/second_INT_ETIME.f.o
+        [ 66%] Building Fortran object CMakeFiles/secondtst_INT_ETIME.dir/secondtst.f.o
+        /usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_INT_ETIME.dir/secondtst.f.o
+        [100%] Linking Fortran executable secondtst_INT_ETIME
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_INT_ETIME.dir/link.txt --verbose=1
+        /usr/bin/gfortran CMakeFiles/secondtst_INT_ETIME.dir/second_INT_ETIME.f.o CMakeFiles/secondtst_INT_ETIME.dir/secondtst.f.o -o secondtst_INT_ETIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [100%] Built target secondtst_INT_ETIME
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 0
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 0
+...

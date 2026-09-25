@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/example_complex_ops.dir/link.d CMakeFiles/example_complex_ops.dir/complex_ops.cpp.o -o example_complex_ops  ../libtheblas.a

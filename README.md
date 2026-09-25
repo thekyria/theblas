@@ -21,8 +21,10 @@ A minimal, header-clean C++17 library implementing all [Netlib BLAS Level 1](htt
 - Complete Level 2 BLAS coverage: `gemv`, `gbmv`, `hemv`, `hbmv`, `hpmv`, `symv`, `sbmv`, `spmv`, `trmv`, `tbmv`, `tpmv`, `trsv`, `tbsv`, `tpsv`, `ger`/`geru`/`gerc`, `her`, `hpr`, `her2`, `hpr2`, `syr`, `spr`, `syr2`, `spr2`
 - All four precision variants: `s` (float), `d` (double), `c` (complex float), `z` (complex double)
 - BLAS-compatible stride parameters (`incx`, `incy`), negative strides, and 1-based `iamax` index returns
+- Overflow-safe internal indexing for large `lda`/stride products without changing the public BLAS-style `int` API
 - Conjugated (`cdotc`/`zdotc`) and unconjugated (`cdotu`/`zdotu`) complex dot products
 - Mixed-precision real-scalar scaling for complex vectors (`csscal`, `zdscal`)
+- Optional process-global Level-2 argument handler via `theblas::set_error_handler(...)` (default: silent no-op)
 - Single header, no dependencies beyond the C++17 standard library
 - Cross-platform: GCC, Clang, MSVC; native and cross-compiled ARM Linux / Cortex-M targets
 - vcpkg git registry and Conan 2.x recipe included
@@ -45,6 +47,17 @@ float n = theblas::snrm2(3, x, 1);  // √(1+4+9) ≈ 3.742
 // 1-based index of the largest element
 int k = theblas::isamax(3, x, 1);   // 3  (x[2] = 3.0)
 ```
+
+For Level-2 calls you can optionally install a Netlib-style argument handler:
+
+```cpp
+void record_error(const char* routine, int param);
+
+auto previous = theblas::set_error_handler(&record_error);
+theblas::set_error_handler(previous); // or nullptr to restore the default silent handler
+```
+
+`set_error_handler` is process-global and should not be changed concurrently with active BLAS calls.
 
 ## Routines
 
