@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/example_vector_ops.dir/link.d CMakeFiles/example_vector_ops.dir/vector_ops.cpp.o -o example_vector_ops  ../libtheblas.a

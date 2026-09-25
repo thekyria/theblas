@@ -1,0 +1,78 @@
+Fortran EXT_ETIME does not exist. 
+ Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+
+Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_EXT_ETIME
+/usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_EXT_ETIME
+gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+/usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+/usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_EXT_ETIME.dir/all
+gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+/usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME.dir/build.make CMakeFiles/secondtst_EXT_ETIME.dir/depend
+gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/DependInfo.cmake
+Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/depend.internal".
+Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/depend.internal".
+Scanning dependencies of target secondtst_EXT_ETIME
+gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+/usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME.dir/build.make CMakeFiles/secondtst_EXT_ETIME.dir/build
+gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+[ 33%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o
+/usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_EXT_ETIME.f -o CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o
+[ 66%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o
+/usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o
+[100%] Linking Fortran executable secondtst_EXT_ETIME
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_EXT_ETIME.dir/link.txt --verbose=1
+/usr/bin/ld: CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o: in function `second_':
+second_EXT_ETIME.f:(.text+0x10): undefined reference to `etime_'
+collect2: error: ld returned 1 exit status
+/usr/bin/gfortran CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o -o secondtst_EXT_ETIME
+gmake[3]: *** [CMakeFiles/secondtst_EXT_ETIME.dir/build.make:117: secondtst_EXT_ETIME] Error 1
+gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+gmake[2]: *** [CMakeFiles/Makefile2:152: CMakeFiles/secondtst_EXT_ETIME.dir/all] Error 2
+gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+gmake[1]: *** [CMakeFiles/Makefile2:159: CMakeFiles/secondtst_EXT_ETIME.dir/rule] Error 2
+gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+gmake: *** [Makefile:140: secondtst_EXT_ETIME] Error 2
+
+ 
+Fortran EXT_ETIME_ does not exist. 
+ Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+
+Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_EXT_ETIME_
+/usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_EXT_ETIME_
+gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+/usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+/usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+/usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_EXT_ETIME_.dir/all
+gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+/usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME_.dir/build.make CMakeFiles/secondtst_EXT_ETIME_.dir/depend
+gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/DependInfo.cmake
+Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/depend.internal".
+Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/depend.internal".
+Scanning dependencies of target secondtst_EXT_ETIME_
+gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+/usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME_.dir/build.make CMakeFiles/secondtst_EXT_ETIME_.dir/build
+gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+[ 33%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o
+/usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/second_EXT_ETIME_.f -o CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o
+[ 66%] Building Fortran object CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o
+/usr/bin/gfortran   -frecursive -c /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL/secondtst.f -o CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o
+[100%] Linking Fortran executable secondtst_EXT_ETIME_
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_EXT_ETIME_.dir/link.txt --verbose=1
+/usr/bin/ld: CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o: in function `second_':
+second_EXT_ETIME_.f:(.text+0x10): undefined reference to `etime__'
+collect2: error: ld returned 1 exit status
+/usr/bin/gfortran CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o -o secondtst_EXT_ETIME_
+gmake[3]: *** [CMakeFiles/secondtst_EXT_ETIME_.dir/build.make:117: secondtst_EXT_ETIME_] Error 1
+gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+gmake[2]: *** [CMakeFiles/Makefile2:184: CMakeFiles/secondtst_EXT_ETIME_.dir/all] Error 2
+gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+gmake[1]: *** [CMakeFiles/Makefile2:191: CMakeFiles/secondtst_EXT_ETIME_.dir/rule] Error 2
+gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+gmake: *** [Makefile:153: secondtst_EXT_ETIME_] Error 2
+
+ 

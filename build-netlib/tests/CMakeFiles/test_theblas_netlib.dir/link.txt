@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/test_theblas_netlib.dir/link.d CMakeFiles/test_theblas_netlib.dir/test_against_netlib.cpp.o -o test_theblas_netlib  ../libtheblas.a ../_deps/reference_lapack-build/lib/libcblas.a ../_deps/reference_lapack-build/lib/libblas.a

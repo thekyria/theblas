@@ -23,6 +23,9 @@ option(THEBLAS_ENABLE_COVERAGE
 option(THEBLAS_ENABLE_IPO "Enable IPO/LTO for release builds when supported" ON)
 option(THEBLAS_ENABLE_RELEASE_HARDENING
        "Enable additional hardening for release configurations on Clang/GCC" ON)
+option(THEBLAS_TEST_AGAINST_NETLIB
+       "Build optional CBLAS-based comparisons against Reference-LAPACK/Netlib BLAS"
+       OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -197,6 +200,38 @@ install(
 
 if(THEBLAS_BUILD_TESTS)
   include(CTest)
+endif()
+
+set(THEBLAS_NETLIB_CBLAS_TARGET "" CACHE INTERNAL "Reference CBLAS target")
+
+if(THEBLAS_TEST_AGAINST_NETLIB)
+  include(FetchContent)
+
+  set(_theblas_saved_build_testing ${BUILD_TESTING})
+  set(_theblas_saved_build_shared_libs ${BUILD_SHARED_LIBS})
+
+  set(BUILD_TESTING OFF CACHE BOOL "Disable Reference-LAPACK tests in the subproject"
+                                 FORCE)
+  set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Reference-LAPACK static libraries" FORCE)
+  set(CBLAS ON CACHE BOOL "Build Reference-LAPACK CBLAS" FORCE)
+  set(LAPACKE OFF CACHE BOOL "Disable Reference-LAPACK LAPACKE" FORCE)
+
+  FetchContent_Declare(
+    reference_lapack
+    GIT_REPOSITORY https://github.com/Reference-LAPACK/lapack.git
+    GIT_TAG v3.12.1
+    GIT_SHALLOW TRUE)
+  FetchContent_MakeAvailable(reference_lapack)
+
+  set(THEBLAS_NETLIB_CBLAS_TARGET cblas CACHE INTERNAL "Reference CBLAS target"
+                                             FORCE)
+
+  set(BUILD_TESTING ${_theblas_saved_build_testing} CACHE BOOL
+                                                         "Restore parent BUILD_TESTING"
+                                                         FORCE)
+  set(BUILD_SHARED_LIBS ${_theblas_saved_build_shared_libs} CACHE BOOL
+                                                             "Restore parent BUILD_SHARED_LIBS"
+                                                             FORCE)
 endif()
 
 if(THEBLAS_BUILD_TESTS AND BUILD_TESTING)

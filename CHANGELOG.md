@@ -14,6 +14,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- Replaceable Level-2 argument handler via `theblas::set_error_handler`, with Netlib-style
+  routine names and 1-based parameter numbers while keeping the default behavior silent.
+- Optional `THEBLAS_TEST_AGAINST_NETLIB` CMake target and Linux CI job for comparing theblas
+  Level-1/Level-2 routines against Reference-LAPACK CBLAS.
+
+### Changed
+
+- Level-1 and Level-2 internal indexing now uses `std::ptrdiff_t` helpers for matrix, banded,
+  packed, and negative-stride offsets to avoid signed `int` overflow in large layouts.
+
 ## [0.2.0] - 2026-08-16
 
 ### Added
