@@ -152,8 +152,8 @@ CMakeFiles/symbols.dir/clean:
 # Target rules for target CMakeFiles/FortranCInterface.dir
 
 # All Build rule for target.
-CMakeFiles/FortranCInterface.dir/all: CMakeFiles/symbols.dir/all
 CMakeFiles/FortranCInterface.dir/all: CMakeFiles/myfort.dir/all
+CMakeFiles/FortranCInterface.dir/all: CMakeFiles/symbols.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/FortranCInterface.dir/build.make CMakeFiles/FortranCInterface.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/FortranCInterface.dir/build.make CMakeFiles/FortranCInterface.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/FortranCInterface/CMakeFiles --progress-num=1,2,3,4 "Built target FortranCInterface"

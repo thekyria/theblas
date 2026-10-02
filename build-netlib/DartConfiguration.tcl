@@ -11,7 +11,7 @@ BuildDirectory: /home/runner/work/theblas/theblas/build-netlib
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: runnervmlun5p
+Site: runnervmtr4k5
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Linux-c++

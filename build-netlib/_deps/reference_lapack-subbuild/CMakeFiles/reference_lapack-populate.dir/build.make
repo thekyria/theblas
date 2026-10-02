@@ -82,9 +82,6 @@ CMakeFiles/reference_lapack-populate-complete: reference_lapack-populate-prefix/
 	/usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles/reference_lapack-populate-complete
 	/usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-done
 
-reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update:
-.PHONY : reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update
-
 reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-build: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-configure
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "No build step for 'reference_lapack-populate'"
 	cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build && /usr/local/bin/cmake -E echo_append
@@ -96,10 +93,13 @@ reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_l
 	cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build && /usr/local/bin/cmake -E echo_append
 	cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build && /usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-configure
 
-reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-gitinfo.txt
+reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/download-reference_lapack-populate.cmake
+reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-urlinfo.txt
 reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-mkdir
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (git clone) for 'reference_lapack-populate'"
-	cd /home/runner/work/theblas/theblas/build-netlib/_deps && /usr/local/bin/cmake -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/tmp/reference_lapack-populate-gitclone.cmake
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Performing download step (download, verify and extract) for 'reference_lapack-populate'"
+	cd /home/runner/work/theblas/theblas/build-netlib/_deps && /usr/local/bin/cmake -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/download-reference_lapack-populate.cmake
+	cd /home/runner/work/theblas/theblas/build-netlib/_deps && /usr/local/bin/cmake -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/verify-reference_lapack-populate.cmake
+	cd /home/runner/work/theblas/theblas/build-netlib/_deps && /usr/local/bin/cmake -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/extract-reference_lapack-populate.cmake
 	cd /home/runner/work/theblas/theblas/build-netlib/_deps && /usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download
 
 reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-install: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-build
@@ -118,19 +118,16 @@ reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_l
 	/usr/local/bin/cmake -E echo_append
 	/usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-patch
 
-reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update:
-.PHONY : reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update
-
 reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-test: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-install
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "No test step for 'reference_lapack-populate'"
 	cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build && /usr/local/bin/cmake -E echo_append
 	cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build && /usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-test
 
-reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update: reference_lapack-populate-prefix/tmp/reference_lapack-populate-gitupdate.cmake
 reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update-info.txt
 reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update: reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Performing update step for 'reference_lapack-populate'"
-	cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src && /usr/local/bin/cmake -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/tmp/reference_lapack-populate-gitupdate.cmake
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "No update step for 'reference_lapack-populate'"
+	/usr/local/bin/cmake -E echo_append
+	/usr/local/bin/cmake -E touch /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update
 
 CMakeFiles/reference_lapack-populate.dir/codegen:
 .PHONY : CMakeFiles/reference_lapack-populate.dir/codegen

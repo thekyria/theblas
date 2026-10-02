@@ -218,9 +218,7 @@ if(THEBLAS_TEST_AGAINST_NETLIB)
 
   FetchContent_Declare(
     reference_lapack
-    GIT_REPOSITORY https://github.com/Reference-LAPACK/lapack.git
-    GIT_TAG v3.12.1
-    GIT_SHALLOW TRUE)
+    URL https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.12.1.tar.gz)
   FetchContent_MakeAvailable(reference_lapack)
 
   set(THEBLAS_NETLIB_CBLAS_TARGET cblas CACHE INTERNAL "Reference CBLAS target"
