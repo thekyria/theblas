@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/runner/work/theblas/theblas/include -I/home/runner/work/theblas/theblas/build-netlib/include
+CXX_INCLUDES = -I/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/CBLAS/include -I/home/runner/work/theblas/theblas/include -I/home/runner/work/theblas/theblas/build-netlib/include
 
 CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17
 
