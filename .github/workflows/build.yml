@@ -111,3 +111,21 @@ jobs:
 
     - name: Create documentation (wrapper for doxygen)
       run: make docs
+
+  netlib-reference:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+
+    - name: Install gfortran
+      run: sudo apt-get update && sudo apt-get install -y gfortran
+
+    - name: Configure CMake with Netlib comparisons
+      run: cmake -B ${{github.workspace}}/build-netlib -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DTHEBLAS_TEST_AGAINST_NETLIB=ON
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build-netlib --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      run: ctest --test-dir ${{github.workspace}}/build-netlib --output-on-failure

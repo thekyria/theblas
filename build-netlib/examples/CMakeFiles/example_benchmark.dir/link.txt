@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/example_benchmark.dir/link.d CMakeFiles/example_benchmark.dir/benchmark.cpp.o -o example_benchmark  ../libtheblas.a

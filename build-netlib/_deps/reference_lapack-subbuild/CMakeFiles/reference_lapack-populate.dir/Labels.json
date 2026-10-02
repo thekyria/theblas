@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles/reference_lapack-populate"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles/reference_lapack-populate.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/CMakeFiles/reference_lapack-populate-complete.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-build.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-configure.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-download.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-install.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-mkdir.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-patch.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-test.rule"
+		},
+		{
+			"file" : "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-subbuild/reference_lapack-populate-prefix/src/reference_lapack-populate-stamp/reference_lapack-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"reference_lapack-populate"
+		],
+		"name" : "reference_lapack-populate"
+	}
+}

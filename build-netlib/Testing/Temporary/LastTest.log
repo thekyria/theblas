@@ -1,0 +1,33 @@
+Start testing: Oct 02 05:16 UTC
+----------------------------------------------------------
+1/2 Testing: theblas_test
+1/2 Test: theblas_test
+Command: "/home/runner/work/theblas/theblas/build-netlib/tests/test_theblas"
+Directory: /home/runner/work/theblas/theblas/build-netlib/tests
+"theblas_test" start time: Oct 02 05:16 UTC
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"theblas_test" end time: Oct 02 05:16 UTC
+"theblas_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: theblas_netlib_test
+2/2 Test: theblas_netlib_test
+Command: "/home/runner/work/theblas/theblas/build-netlib/tests/test_theblas_netlib"
+Directory: /home/runner/work/theblas/theblas/build-netlib/tests
+"theblas_netlib_test" start time: Oct 02 05:16 UTC
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"theblas_netlib_test" end time: Oct 02 05:16 UTC
+"theblas_netlib_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 02 05:16 UTC
