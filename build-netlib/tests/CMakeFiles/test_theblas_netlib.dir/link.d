@@ -5,6 +5,7 @@ test_theblas_netlib: \
   CMakeFiles/test_theblas_netlib.dir/test_against_netlib.cpp.o \
   ../libtheblas.a \
   ../_deps/reference_lapack-build/lib/libcblas.a \
+  /usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.so \
   ../_deps/reference_lapack-build/lib/libblas.a \
   /usr/lib/gcc/x86_64-linux-gnu/13/libstdc++.so \
   /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/libm.so \
@@ -45,6 +46,8 @@ CMakeFiles/test_theblas_netlib.dir/test_against_netlib.cpp.o:
 ../libtheblas.a:
 
 ../_deps/reference_lapack-build/lib/libcblas.a:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/libgfortran.so:
 
 ../_deps/reference_lapack-build/lib/libblas.a:
 
