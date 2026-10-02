@@ -16,9 +16,6 @@ if(THEBLAS_TEST_AGAINST_NETLIB)
 	                                   ${reference_lapack_BINARY_DIR}/include)
 	target_link_libraries(test_theblas_netlib PRIVATE theblas
 	                                                 ${THEBLAS_NETLIB_CBLAS_TARGET})
-	if(CMAKE_Fortran_IMPLICIT_LINK_LIBRARIES)
-	  target_link_libraries(test_theblas_netlib
-	                        PRIVATE ${CMAKE_Fortran_IMPLICIT_LINK_LIBRARIES})
-	endif()
+	target_link_libraries(test_theblas_netlib PRIVATE gfortran)
 	add_test(NAME theblas_netlib_test COMMAND test_theblas_netlib)
 endif()

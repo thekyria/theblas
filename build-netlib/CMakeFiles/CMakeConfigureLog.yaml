@@ -1987,3 +1987,286 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckIPOSupported.cmake:138 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckIPOSupported.cmake:261 (_ipo_run_language_check)"
+      - "CMakeLists.txt:139 (check_ipo_supported)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin"
+    buildResult:
+      variable: "_IPO_LANGUAGE_CHECK_RESULT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src -B/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin//CMakeFiles/progress.marks
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 all
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/bin/gmake  -f CMakeFiles/foo.dir/build.make CMakeFiles/foo.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/foo.dir/depend.internal".
+        Scanning dependencies of target foo
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/bin/gmake  -f CMakeFiles/foo.dir/build.make CMakeFiles/foo.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 25%] Building CXX object CMakeFiles/foo.dir/foo.cpp.o
+        /usr/bin/c++   -flto=auto -fno-fat-lto-objects -o CMakeFiles/foo.dir/foo.cpp.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src/foo.cpp
+        [ 50%] Linking CXX static library libfoo.a
+        /usr/local/bin/cmake -P CMakeFiles/foo.dir/cmake_clean_target.cmake
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/foo.dir/link.txt --verbose=1
+        "/usr/bin/gcc-ar-13" qc libfoo.a CMakeFiles/foo.dir/foo.cpp.o
+        "/usr/bin/gcc-ranlib-13" libfoo.a
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 50%] Built target foo
+        /usr/bin/gmake  -f CMakeFiles/boo.dir/build.make CMakeFiles/boo.dir/depend
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        cd /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles/boo.dir/depend.internal".
+        Scanning dependencies of target boo
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/bin/gmake  -f CMakeFiles/boo.dir/build.make CMakeFiles/boo.dir/build
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [ 75%] Building CXX object CMakeFiles/boo.dir/main.cpp.o
+        /usr/bin/c++   -flto=auto -fno-fat-lto-objects -o CMakeFiles/boo.dir/main.cpp.o -c /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/src/main.cpp
+        [100%] Linking CXX executable boo
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/boo.dir/link.txt --verbose=1
+        /usr/bin/c++ -flto=auto -fno-fat-lto-objects CMakeFiles/boo.dir/main.cpp.o -o boo  libfoo.a
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        [100%] Built target boo
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin/CMakeFiles 0
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/CMakeFiles/_CMakeLTOTest-CXX/bin'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:322 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_NONE
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_NONE
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_NONE.dir/all
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_NONE.dir/build.make CMakeFiles/secondtst_NONE.dir/depend
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_NONE.dir/depend.internal".
+        Scanning dependencies of target secondtst_NONE
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_NONE.dir/build.make CMakeFiles/secondtst_NONE.dir/build
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[4]: Nothing to be done for 'CMakeFiles/secondtst_NONE.dir/build'.
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [100%] Built target secondtst_NONE
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 0
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:323 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_INT_CPU_TIME
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_INT_CPU_TIME
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_INT_CPU_TIME.dir/all
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_CPU_TIME.dir/build.make CMakeFiles/secondtst_INT_CPU_TIME.dir/depend
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_CPU_TIME.dir/depend.internal".
+        Scanning dependencies of target secondtst_INT_CPU_TIME
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_CPU_TIME.dir/build.make CMakeFiles/secondtst_INT_CPU_TIME.dir/build
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[4]: Nothing to be done for 'CMakeFiles/secondtst_INT_CPU_TIME.dir/build'.
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [100%] Built target secondtst_INT_CPU_TIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 0
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:324 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_EXT_ETIME
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_EXT_ETIME
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_EXT_ETIME.dir/all
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME.dir/build.make CMakeFiles/secondtst_EXT_ETIME.dir/depend
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME.dir/depend.internal".
+        Scanning dependencies of target secondtst_EXT_ETIME
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME.dir/build.make CMakeFiles/secondtst_EXT_ETIME.dir/build
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Linking Fortran executable secondtst_EXT_ETIME
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_EXT_ETIME.dir/link.txt --verbose=1
+        /usr/bin/ld: CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o: in function `second_':
+        second_EXT_ETIME.f:(.text+0x10): undefined reference to `etime_'
+        collect2: error: ld returned 1 exit status
+        /usr/bin/gfortran CMakeFiles/secondtst_EXT_ETIME.dir/second_EXT_ETIME.f.o CMakeFiles/secondtst_EXT_ETIME.dir/secondtst.f.o -o secondtst_EXT_ETIME
+        gmake[4]: *** [CMakeFiles/secondtst_EXT_ETIME.dir/build.make:117: secondtst_EXT_ETIME] Error 1
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[3]: *** [CMakeFiles/Makefile2:152: CMakeFiles/secondtst_EXT_ETIME.dir/all] Error 2
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[2]: *** [CMakeFiles/Makefile2:159: CMakeFiles/secondtst_EXT_ETIME.dir/rule] Error 2
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: *** [Makefile:140: secondtst_EXT_ETIME] Error 2
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:325 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_EXT_ETIME_
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_EXT_ETIME_
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_EXT_ETIME_.dir/all
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME_.dir/build.make CMakeFiles/secondtst_EXT_ETIME_.dir/depend
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_EXT_ETIME_.dir/depend.internal".
+        Scanning dependencies of target secondtst_EXT_ETIME_
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_EXT_ETIME_.dir/build.make CMakeFiles/secondtst_EXT_ETIME_.dir/build
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [ 33%] Linking Fortran executable secondtst_EXT_ETIME_
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/secondtst_EXT_ETIME_.dir/link.txt --verbose=1
+        /usr/bin/ld: CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o: in function `second_':
+        second_EXT_ETIME_.f:(.text+0x10): undefined reference to `etime__'
+        collect2: error: ld returned 1 exit status
+        /usr/bin/gfortran CMakeFiles/secondtst_EXT_ETIME_.dir/second_EXT_ETIME_.f.o CMakeFiles/secondtst_EXT_ETIME_.dir/secondtst.f.o -o secondtst_EXT_ETIME_
+        gmake[4]: *** [CMakeFiles/secondtst_EXT_ETIME_.dir/build.make:117: secondtst_EXT_ETIME_] Error 1
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[3]: *** [CMakeFiles/Makefile2:184: CMakeFiles/secondtst_EXT_ETIME_.dir/all] Error 2
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[2]: *** [CMakeFiles/Makefile2:191: CMakeFiles/secondtst_EXT_ETIME_.dir/rule] Error 2
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: *** [Makefile:153: secondtst_EXT_ETIME_] Error 2
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "build-netlib/_deps/reference_lapack-src/CMAKE/CheckTimeFunction.cmake:10 (try_compile)"
+      - "build-netlib/_deps/reference_lapack-src/CMakeLists.txt:326 (CHECK_TIME_FUNCTION)"
+    directories:
+      source: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL"
+      binary: "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL"
+    buildResult:
+      variable: "RES"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile secondtst_INT_ETIME
+        gmake[1]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 secondtst_INT_ETIME
+        gmake[2]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -S/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL -B/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL --check-build-system CMakeFiles/Makefile.cmake 0
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 3
+        /usr/bin/gmake  -f CMakeFiles/Makefile2 CMakeFiles/secondtst_INT_ETIME.dir/all
+        gmake[3]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_ETIME.dir/build.make CMakeFiles/secondtst_INT_ETIME.dir/depend
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        cd /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL && /usr/local/bin/cmake -E cmake_depends "Unix Makefiles" /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-src/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/DependInfo.cmake
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/DependInfo.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/depend.internal".
+        Dependee "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/CMakeDirectoryInformation.cmake" is newer than depender "/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles/secondtst_INT_ETIME.dir/depend.internal".
+        Scanning dependencies of target secondtst_INT_ETIME
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/bin/gmake  -f CMakeFiles/secondtst_INT_ETIME.dir/build.make CMakeFiles/secondtst_INT_ETIME.dir/build
+        gmake[4]: Entering directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[4]: Nothing to be done for 'CMakeFiles/secondtst_INT_ETIME.dir/build'.
+        gmake[4]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        [100%] Built target secondtst_INT_ETIME
+        gmake[3]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        /usr/local/bin/cmake -E cmake_progress_start /home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL/CMakeFiles 0
+        gmake[2]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        gmake[1]: Leaving directory '/home/runner/work/theblas/theblas/build-netlib/_deps/reference_lapack-build/INSTALL'
+        
+      exitCode: 0
+...

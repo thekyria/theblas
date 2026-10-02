@@ -7,4 +7,4 @@
 add_test(theblas_test "/home/runner/work/theblas/theblas/build-netlib/tests/test_theblas")
 set_tests_properties(theblas_test PROPERTIES  _BACKTRACE_TRIPLES "/home/runner/work/theblas/theblas/tests/CMakeLists.txt;10;add_test;/home/runner/work/theblas/theblas/tests/CMakeLists.txt;0;")
 add_test(theblas_netlib_test "/home/runner/work/theblas/theblas/build-netlib/tests/test_theblas_netlib")
-set_tests_properties(theblas_netlib_test PROPERTIES  _BACKTRACE_TRIPLES "/home/runner/work/theblas/theblas/tests/CMakeLists.txt;19;add_test;/home/runner/work/theblas/theblas/tests/CMakeLists.txt;0;")
+set_tests_properties(theblas_netlib_test PROPERTIES  _BACKTRACE_TRIPLES "/home/runner/work/theblas/theblas/tests/CMakeLists.txt;23;add_test;/home/runner/work/theblas/theblas/tests/CMakeLists.txt;0;")
