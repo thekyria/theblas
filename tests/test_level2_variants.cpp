@@ -53,7 +53,7 @@ struct error_handler_guard {
 // NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void run_level2_coverage_variant_tests() {
     {
-        const auto max_int = std::numeric_limits<int>::max();
+        constexpr auto max_int = std::numeric_limits<int>::max();
         const auto n_value = static_cast<theblas::detail::index_t>(max_int);
         assert(theblas::detail::packed_size(0) == 0);
         assert(theblas::detail::packed_size(1) == 1);
@@ -689,7 +689,7 @@ void run_level2_coverage_variant_tests() {
         theblas::sspr2('U', 1, 1.0F, sx.data(), 1, sy.data(), 0, spacked.data());
         expect_recorded_error("SSPR2", 7);
 
-        const int max_int = std::numeric_limits<int>::max();
+        constexpr int max_int = std::numeric_limits<int>::max();
         theblas::dgbmv('N', 0, 0, max_int, 0, 1.0, nullptr, max_int, nullptr, 1, 0.0, nullptr, 1);
         expect_recorded_error("DGBMV", 8);
 
