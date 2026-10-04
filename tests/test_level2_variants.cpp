@@ -474,15 +474,20 @@ void run_level2_coverage_variant_tests() {
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         std::array<float, 1> x = {2.0F};
         std::array<float, 1> y = {3.0F};
         std::array<float, 1> a = {7.0F};
         theblas::sger(0, 1, 1.0F, x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::sger(1, 1, 0.0F, x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], 7.0F));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         using cf = std::complex<float>;
         std::array<cf, 1> x = {cf(2, 0)};
         std::array<cf, 1> y = {cf(3, 0)};
@@ -491,10 +496,13 @@ void run_level2_coverage_variant_tests() {
         theblas::cgeru(1, 1, cf(0, 0), x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::cgerc(0, 1, cf(1, 0), x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::cgerc(1, 1, cf(0, 0), x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], cf(7, 0)));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         std::array<float, 1> x = {2.0F};
         std::array<float, 1> y = {3.0F};
         std::array<float, 1> a = {7.0F};
@@ -502,10 +510,13 @@ void run_level2_coverage_variant_tests() {
         theblas::ssyr('U', 1, 0.0F, x.data(), 1, a.data(), 1);
         theblas::ssyr2('U', 0, 1.0F, x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::ssyr2('U', 1, 0.0F, x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], 7.0F));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         using cf = std::complex<float>;
         std::array<cf, 1> x = {cf(2, 1)};
         std::array<cf, 1> y = {cf(3, 1)};
@@ -514,10 +525,13 @@ void run_level2_coverage_variant_tests() {
         theblas::cher('U', 1, 0.0F, x.data(), 1, a.data(), 1);
         theblas::cher2('U', 0, cf(1, 0), x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::cher2('U', 1, cf(0, 0), x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], cf(7, 0)));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         std::array<float, 1> x = {2.0F};
         std::array<float, 1> y = {3.0F};
         std::array<float, 1> ap = {7.0F};
@@ -525,10 +539,13 @@ void run_level2_coverage_variant_tests() {
         theblas::sspr('U', 1, 0.0F, x.data(), 1, ap.data());
         theblas::sspr2('U', 0, 1.0F, x.data(), 1, y.data(), 1, ap.data());
         theblas::sspr2('U', 1, 0.0F, x.data(), 1, y.data(), 1, ap.data());
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(ap[0], 7.0F));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         using cf = std::complex<float>;
         std::array<cf, 1> x = {cf(2, 1)};
         std::array<cf, 1> y = {cf(3, 1)};
@@ -537,6 +554,7 @@ void run_level2_coverage_variant_tests() {
         theblas::chpr('U', 1, 0.0F, x.data(), 1, ap.data());
         theblas::chpr2('U', 0, cf(1, 0), x.data(), 1, y.data(), 1, ap.data());
         theblas::chpr2('U', 1, cf(0, 0), x.data(), 1, y.data(), 1, ap.data());
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(ap[0], cf(7, 0)));
     }
 
