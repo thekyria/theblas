@@ -623,6 +623,9 @@ void run_level2_coverage_variant_tests() {
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
+
         std::array<float, 1> a = {2.0F};
         std::array<float, 1> x = {1.0F};
         theblas::strmv('U', 'N', 'N', 0, a.data(), 1, x.data(), 1);
@@ -631,6 +634,7 @@ void run_level2_coverage_variant_tests() {
         theblas::stbsv('U', 'N', 'N', 0, 0, a.data(), 1, x.data(), 1);
         theblas::stpmv('U', 'N', 'N', 0, a.data(), x.data(), 1);
         theblas::stpsv('U', 'N', 'N', 0, a.data(), x.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(x[0], 1.0F));
     }
 
