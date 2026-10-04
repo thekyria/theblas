@@ -24,6 +24,7 @@ using detail::valid_uplo;
 
 namespace {
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int gemv_info(char trans, int m, int n, int lda, int incx, int incy) {
     if (!valid_trans(trans)) {
         return 1;
@@ -46,6 +47,7 @@ int gemv_info(char trans, int m, int n, int lda, int incx, int incy) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int symv_info(char uplo, int n, int lda, int incx, int incy) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -65,6 +67,7 @@ int symv_info(char uplo, int n, int lda, int incx, int incy) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int trmv_info(char uplo, char trans, char diag, int n, int lda, int incx) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -87,6 +90,7 @@ int trmv_info(char uplo, char trans, char diag, int n, int lda, int incx) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int ger_info(int m, int n, int incx, int incy, int lda) {
     if (m < 0) {
         return 1;
@@ -106,6 +110,7 @@ int ger_info(int m, int n, int incx, int incy, int lda) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int syr_info(char uplo, int n, int incx, int lda) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -122,6 +127,7 @@ int syr_info(char uplo, int n, int incx, int lda) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int syr2_info(char uplo, int n, int incx, int incy, int lda) {
     if (!valid_uplo(uplo)) {
         return 1;

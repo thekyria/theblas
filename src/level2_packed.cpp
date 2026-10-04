@@ -20,6 +20,7 @@ using detail::valid_uplo;
 
 namespace {
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int spmv_info(char uplo, int n, int incx, int incy) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -36,6 +37,7 @@ int spmv_info(char uplo, int n, int incx, int incy) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int tpmv_info(char uplo, char trans, char diag, int n, int incx) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -55,6 +57,7 @@ int tpmv_info(char uplo, char trans, char diag, int n, int incx) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int spr_info(char uplo, int n, int incx) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -68,6 +71,7 @@ int spr_info(char uplo, int n, int incx) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int spr2_info(char uplo, int n, int incx, int incy) {
     if (!valid_uplo(uplo)) {
         return 1;

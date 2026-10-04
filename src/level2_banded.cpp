@@ -20,6 +20,7 @@ using detail::valid_uplo;
 
 namespace {
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int gbmv_info(char trans, int m, int n, int kl, int ku, int lda, int incx, int incy) {
     if (!valid_trans(trans)) {
         return 1;
@@ -48,6 +49,7 @@ int gbmv_info(char trans, int m, int n, int kl, int ku, int lda, int incx, int i
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int sbmv_info(char uplo, int n, int k, int lda, int incx, int incy) {
     if (!valid_uplo(uplo)) {
         return 1;
@@ -70,6 +72,7 @@ int sbmv_info(char uplo, int n, int k, int lda, int incx, int incy) {
     return 0;
 }
 
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 int tbmv_info(char uplo, char trans, char diag, int n, int k, int lda, int incx) {
     if (!valid_uplo(uplo)) {
         return 1;
