@@ -7,6 +7,8 @@
 
 namespace theblas {
 
+using detail::band_end;
+using detail::band_row;
 using detail::conj_val;
 using detail::idx;
 using detail::index_t;
@@ -139,10 +141,10 @@ void gbmv_impl(const char *routine, char trans, int m, int n, int kl, int ku, T 
         for (int j = 0; j < n; ++j) {
             T temp = alpha * x[jx];
             int i_start = std::max(0, j - ku);
-            int i_end = std::min(m - 1, j + kl);
+            int i_end = band_end(j, kl, m - 1);
             index_t iy = start_index(leny, incy) + offset(i_start, incy);
             for (int i = i_start; i <= i_end; ++i) {
-                y[iy] += temp * a[idx(ku + i - j, j, lda)];
+                y[iy] += temp * a[idx(band_row(ku, i, j), j, lda)];
                 iy += incy;
             }
             jx += incx;
@@ -152,10 +154,10 @@ void gbmv_impl(const char *routine, char trans, int m, int n, int kl, int ku, T 
         for (int j = 0; j < n; ++j) {
             T temp = T(0);
             int i_start = std::max(0, j - ku);
-            int i_end = std::min(m - 1, j + kl);
+            int i_end = band_end(j, kl, m - 1);
             index_t ix = start_index(lenx, incx) + offset(i_start, incx);
             for (int i = i_start; i <= i_end; ++i) {
-                temp += a[idx(ku + i - j, j, lda)] * x[ix];
+                temp += a[idx(band_row(ku, i, j), j, lda)] * x[ix];
                 ix += incx;
             }
             y[jy] += alpha * temp;
@@ -167,10 +169,10 @@ void gbmv_impl(const char *routine, char trans, int m, int n, int kl, int ku, T 
         for (int j = 0; j < n; ++j) {
             T temp = T(0);
             int i_start = std::max(0, j - ku);
-            int i_end = std::min(m - 1, j + kl);
+            int i_end = band_end(j, kl, m - 1);
             index_t ix = start_index(lenx, incx) + offset(i_start, incx);
             for (int i = i_start; i <= i_end; ++i) {
-                temp += conj_val(a[idx(ku + i - j, j, lda)]) * x[ix];
+                temp += conj_val(a[idx(band_row(ku, i, j), j, lda)]) * x[ix];
                 ix += incx;
             }
             y[jy] += alpha * temp;
@@ -244,7 +246,7 @@ void sbmv_impl(const char *routine, char uplo, int n, int k, T alpha, const T *a
             y[jy] += temp1 * a[idx(0, j, lda)];
             index_t ix = jx;
             index_t iy = jy;
-            int i_end = std::min(n - 1, j + k);
+            int i_end = band_end(j, k, n - 1);
             for (int i = j + 1; i <= i_end; ++i) {
                 ix += incx;
                 iy += incy;
@@ -325,7 +327,7 @@ void hbmv_impl(const char *routine, char uplo, int n, int k, std::complex<T> alp
             y[jy] += temp1 * T(a[idx(0, j, lda)].real());
             index_t ix = jx;
             index_t iy = jy;
-            int i_end = std::min(n - 1, j + k);
+            int i_end = band_end(j, k, n - 1);
             for (int i = j + 1; i <= i_end; ++i) {
                 ix += incx;
                 iy += incy;
@@ -384,7 +386,7 @@ void tbmv_impl(const char *routine, char uplo, char trans, char diag, int n, int
             for (int j = n - 1; j >= 0; --j) {
                 if (x[jx] != T(0)) {
                     T temp = x[jx];
-                    int i_end = std::min(n - 1, j + k);
+                    int i_end = band_end(j, k, n - 1);
                     index_t ix = start_index(n, incx) + offset(i_end, incx);
                     for (int i = i_end; i > j; --i) {
                         x[ix] += temp * a[idx(i - j, j, lda)];
@@ -426,7 +428,7 @@ void tbmv_impl(const char *routine, char uplo, char trans, char diag, int n, int
                     T aval = conj ? conj_val(a[idx(0, j, lda)]) : a[idx(0, j, lda)];
                     temp *= aval;
                 }
-                int i_end = std::min(n - 1, j + k);
+                int i_end = band_end(j, k, n - 1);
                 index_t ix = jx;
                 for (int i = j + 1; i <= i_end; ++i) {
                     ix += incx;
@@ -485,7 +487,7 @@ void tbsv_impl(const char *routine, char uplo, char trans, char diag, int n, int
                     x[jx] /= a[idx(0, j, lda)];
                 }
                 T temp = x[jx];
-                int i_end = std::min(n - 1, j + k);
+                int i_end = band_end(j, k, n - 1);
                 index_t ix = jx;
                 for (int i = j + 1; i <= i_end; ++i) {
                     ix += incx;
@@ -518,7 +520,7 @@ void tbsv_impl(const char *routine, char uplo, char trans, char diag, int n, int
             index_t jx = start_index(n, incx) + offset(n - 1, incx);
             for (int j = n - 1; j >= 0; --j) {
                 T temp = x[jx];
-                int i_end = std::min(n - 1, j + k);
+                int i_end = band_end(j, k, n - 1);
                 index_t ix = start_index(n, incx) + offset(i_end, incx);
                 for (int i = i_end; i > j; --i) {
                     T aval = conj ? conj_val(a[idx(i - j, j, lda)]) : a[idx(i - j, j, lda)];

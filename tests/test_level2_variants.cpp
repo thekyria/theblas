@@ -64,6 +64,19 @@ void run_level2_coverage_variant_tests() {
         }
     }
 
+    {
+        constexpr auto max_int = std::numeric_limits<int>::max();
+        assert(theblas::detail::band_row(1, 0, 1) == 0);
+        assert(theblas::detail::band_row(1, 2, 1) == 2);
+        assert(theblas::detail::band_row(max_int - 1, 2, 2) == max_int - 1);
+        assert(theblas::detail::band_row(max_int - 1, 0, 3) == max_int - 4);
+        assert(theblas::detail::band_end(1, 1, 3) == 2);
+        assert(theblas::detail::band_end(3, 1, 3) == 3);
+        assert(theblas::detail::band_end(2, max_int - 1, 3) == 3);
+        assert(theblas::detail::band_end(0, max_int, 3) == 3);
+        assert(theblas::detail::band_end(3, 0, -1) == -1);
+    }
+
     /* --- remaining band-matrix precision variants --- */
     {
         // A = [[1, 2], [3, 4]] in general band storage; y = A^T * [1, 1].

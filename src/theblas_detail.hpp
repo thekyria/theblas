@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <complex>
 #include <cstddef>
 
@@ -19,6 +20,14 @@ inline index_t packed_size(int n) {
     const index_t n_value = static_cast<index_t>(n);
     const index_t next_half = n_value / 2 + 1;
     return (n_value % 2 == 0) ? (n_value / 2) * (n_value + 1) : n_value * next_half;
+}
+
+inline int band_row(int diag, int i, int j) {
+    return diag + (i - j);
+}
+
+inline int band_end(int j, int bandwidth, int last) {
+    return j + std::min(bandwidth, last - j);
 }
 
 inline index_t start_index(int n, int inc) {
