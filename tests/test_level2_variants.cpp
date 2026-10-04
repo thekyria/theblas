@@ -1,15 +1,69 @@
 #include "theblas/theblas.h"
 
 #include "test_support.hpp"
+#include "../src/theblas_detail.hpp"
 
 #include <array>
 #include <cassert>
 #include <complex>
+#include <limits>
+#include <string_view>
 
 namespace theblas::test {
 
+namespace {
+
+struct recorded_error {
+    const char *routine = nullptr;
+    int param = 0;
+    int count = 0;
+};
+
+recorded_error g_recorded_error;
+
+void reset_recorded_error() {
+    g_recorded_error = {};
+}
+
+void record_error(const char *routine, int param) {
+    g_recorded_error.routine = routine;
+    g_recorded_error.param = param;
+    ++g_recorded_error.count;
+}
+
+void expect_recorded_error(std::string_view routine, int param) {
+    assert(g_recorded_error.count == 1);
+    assert(g_recorded_error.routine != nullptr);
+    assert(std::string_view(g_recorded_error.routine) == routine);
+    assert(g_recorded_error.param == param);
+    reset_recorded_error();
+}
+
+struct error_handler_guard {
+    explicit error_handler_guard(theblas::error_handler_t handler)
+        : previous(theblas::set_error_handler(handler)) {}
+
+    ~error_handler_guard() { theblas::set_error_handler(previous); }
+
+    theblas::error_handler_t previous;
+};
+
+} // namespace
+
 // NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void run_level2_coverage_variant_tests() {
+    {
+        constexpr auto max_int = std::numeric_limits<int>::max();
+        const auto n_value = static_cast<theblas::detail::index_t>(max_int);
+        assert(theblas::detail::packed_size(0) == 0);
+        assert(theblas::detail::packed_size(1) == 1);
+        assert(theblas::detail::packed_size(3) == 6);
+        if (std::numeric_limits<theblas::detail::index_t>::max() > max_int) {
+            assert(theblas::detail::packed_size(max_int) ==
+                   n_value * (n_value / 2 + 1));
+        }
+    }
+
     /* --- remaining band-matrix precision variants --- */
     {
         // A = [[1, 2], [3, 4]] in general band storage; y = A^T * [1, 1].
@@ -27,8 +81,7 @@ void run_level2_coverage_variant_tests() {
         std::array<cf, 2> ab = {cf(1, 1), cf(2, -1)};
         std::array<cf, 2> x = {cf(1, 0), cf(1, 0)};
         std::array<cf, 2> y = {cf(0, 0), cf(0, 0)};
-        theblas::cgbmv('C', 2, 2, 0, 0, cf(1, 0), ab.data(), 1, x.data(), 1, cf(0, 0),
-                       y.data(), 1);
+        theblas::cgbmv('C', 2, 2, 0, 0, cf(1, 0), ab.data(), 1, x.data(), 1, cf(0, 0), y.data(), 1);
         assert(almost_equal(y[0], cf(1, -1)));
         assert(almost_equal(y[1], cf(2, 1)));
     }
@@ -38,8 +91,7 @@ void run_level2_coverage_variant_tests() {
         std::array<cd, 2> ab = {cd(2, 0), cd(3, 0)};
         std::array<cd, 2> x = {cd(1, 0), cd(2, 0)};
         std::array<cd, 2> y = {cd(0, 0), cd(0, 0)};
-        theblas::zgbmv('N', 2, 2, 0, 0, cd(1, 0), ab.data(), 1, x.data(), 1, cd(0, 0),
-                       y.data(), 1);
+        theblas::zgbmv('N', 2, 2, 0, 0, cd(1, 0), ab.data(), 1, x.data(), 1, cd(0, 0), y.data(), 1);
         assert(almost_equal(y[0], cd(2, 0)));
         assert(almost_equal(y[1], cd(6, 0)));
     }
@@ -60,8 +112,7 @@ void run_level2_coverage_variant_tests() {
         std::array<cd, 4> ab = {cd(2, 0), cd(1, -1), cd(3, 0), cd(0, 0)};
         std::array<cd, 2> x = {cd(1, 0), cd(1, 0)};
         std::array<cd, 2> y = {cd(0, 0), cd(0, 0)};
-        theblas::zhbmv('L', 2, 1, cd(1, 0), ab.data(), 2, x.data(), 1, cd(0, 0), y.data(),
-                       1);
+        theblas::zhbmv('L', 2, 1, cd(1, 0), ab.data(), 2, x.data(), 1, cd(0, 0), y.data(), 1);
         assert(almost_equal(y[0], cd(3, 1)));
         assert(almost_equal(y[1], cd(4, -1)));
     }
@@ -423,15 +474,20 @@ void run_level2_coverage_variant_tests() {
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         std::array<float, 1> x = {2.0F};
         std::array<float, 1> y = {3.0F};
         std::array<float, 1> a = {7.0F};
         theblas::sger(0, 1, 1.0F, x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::sger(1, 1, 0.0F, x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], 7.0F));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         using cf = std::complex<float>;
         std::array<cf, 1> x = {cf(2, 0)};
         std::array<cf, 1> y = {cf(3, 0)};
@@ -440,10 +496,13 @@ void run_level2_coverage_variant_tests() {
         theblas::cgeru(1, 1, cf(0, 0), x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::cgerc(0, 1, cf(1, 0), x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::cgerc(1, 1, cf(0, 0), x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], cf(7, 0)));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         std::array<float, 1> x = {2.0F};
         std::array<float, 1> y = {3.0F};
         std::array<float, 1> a = {7.0F};
@@ -451,10 +510,13 @@ void run_level2_coverage_variant_tests() {
         theblas::ssyr('U', 1, 0.0F, x.data(), 1, a.data(), 1);
         theblas::ssyr2('U', 0, 1.0F, x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::ssyr2('U', 1, 0.0F, x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], 7.0F));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         using cf = std::complex<float>;
         std::array<cf, 1> x = {cf(2, 1)};
         std::array<cf, 1> y = {cf(3, 1)};
@@ -463,10 +525,13 @@ void run_level2_coverage_variant_tests() {
         theblas::cher('U', 1, 0.0F, x.data(), 1, a.data(), 1);
         theblas::cher2('U', 0, cf(1, 0), x.data(), 1, y.data(), 1, a.data(), 1);
         theblas::cher2('U', 1, cf(0, 0), x.data(), 1, y.data(), 1, a.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(a[0], cf(7, 0)));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         std::array<float, 1> x = {2.0F};
         std::array<float, 1> y = {3.0F};
         std::array<float, 1> ap = {7.0F};
@@ -474,10 +539,13 @@ void run_level2_coverage_variant_tests() {
         theblas::sspr('U', 1, 0.0F, x.data(), 1, ap.data());
         theblas::sspr2('U', 0, 1.0F, x.data(), 1, y.data(), 1, ap.data());
         theblas::sspr2('U', 1, 0.0F, x.data(), 1, y.data(), 1, ap.data());
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(ap[0], 7.0F));
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         using cf = std::complex<float>;
         std::array<cf, 1> x = {cf(2, 1)};
         std::array<cf, 1> y = {cf(3, 1)};
@@ -486,6 +554,7 @@ void run_level2_coverage_variant_tests() {
         theblas::chpr('U', 1, 0.0F, x.data(), 1, ap.data());
         theblas::chpr2('U', 0, cf(1, 0), x.data(), 1, y.data(), 1, ap.data());
         theblas::chpr2('U', 1, cf(0, 0), x.data(), 1, y.data(), 1, ap.data());
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(ap[0], cf(7, 0)));
     }
 
@@ -572,6 +641,9 @@ void run_level2_coverage_variant_tests() {
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
+
         std::array<float, 1> a = {2.0F};
         std::array<float, 1> x = {1.0F};
         theblas::strmv('U', 'N', 'N', 0, a.data(), 1, x.data(), 1);
@@ -580,9 +652,256 @@ void run_level2_coverage_variant_tests() {
         theblas::stbsv('U', 'N', 'N', 0, 0, a.data(), 1, x.data(), 1);
         theblas::stpmv('U', 'N', 'N', 0, a.data(), x.data(), 1);
         theblas::stpsv('U', 'N', 'N', 0, a.data(), x.data(), 1);
+        assert(g_recorded_error.count == 0);
         assert(almost_equal(x[0], 1.0F));
     }
-}
 
+    {
+        error_handler_guard guard(&record_error);
+
+        std::array<double, 4> dense = {1.0, 0.0, 0.0, 1.0};
+        std::array<double, 2> dx = {2.0, 3.0};
+        std::array<double, 2> dy = {4.0, 5.0};
+        std::array<float, 4> sf_dense = {1.0F, 0.0F, 0.0F, 1.0F};
+        std::array<float, 2> sx = {2.0F, 3.0F};
+        std::array<float, 2> sy = {4.0F, 5.0F};
+        std::array<std::complex<float>, 2> cx = {std::complex<float>(1.0F, 0.0F),
+                                                 std::complex<float>(2.0F, 0.0F)};
+        std::array<std::complex<double>, 4> cz_dense = {
+            std::complex<double>(1.0, 0.0), std::complex<double>(0.0, 0.0),
+            std::complex<double>(0.0, 0.0), std::complex<double>(1.0, 0.0)};
+        std::array<std::complex<double>, 2> czx = {std::complex<double>(1.0, 0.0),
+                                                   std::complex<double>(2.0, 0.0)};
+
+        reset_recorded_error();
+        theblas::dgemv('X', 1, 1, 1.0, dense.data(), 1, dx.data(), 1, 0.0, dy.data(), 1);
+        expect_recorded_error("DGEMV", 1);
+
+        theblas::ssymv('U', 1, 1.0F, sf_dense.data(), 0, sx.data(), 1, 0.0F, sy.data(), 1);
+        expect_recorded_error("SSYMV", 5);
+
+        theblas::ztrsv('U', 'N', 'N', 1, cz_dense.data(), 0, czx.data(), 1);
+        expect_recorded_error("ZTRSV", 6);
+
+        theblas::dger(1, 1, 1.0, dx.data(), 0, dy.data(), 1, dense.data(), 1);
+        expect_recorded_error("DGER", 5);
+
+        std::array<double, 3> band = {0.0, 1.0, 0.0};
+        theblas::dgbmv('N', 1, 1, -1, 0, 1.0, band.data(), 1, dx.data(), 1, 0.0, dy.data(), 1);
+        expect_recorded_error("DGBMV", 4);
+
+        std::array<float, 2> sband = {1.0F, 0.0F};
+        theblas::ssbmv('U', 1, 0, 1.0F, sband.data(), 0, sx.data(), 1, 0.0F, sy.data(), 1);
+        expect_recorded_error("SSBMV", 6);
+
+        std::array<std::complex<float>, 2> cband = {std::complex<float>(1.0F, 0.0F),
+                                                    std::complex<float>(0.0F, 0.0F)};
+        theblas::ctbsv('L', 'N', 'N', 1, 0, cband.data(), 0, cx.data(), 1);
+        expect_recorded_error("CTBSV", 7);
+
+        std::array<double, 1> packed = {1.0};
+        theblas::dspmv('L', -1, 1.0, packed.data(), dx.data(), 1, 0.0, dy.data(), 1);
+        expect_recorded_error("DSPMV", 2);
+
+        std::array<std::complex<double>, 1> zpacked = {std::complex<double>(1.0, 0.0)};
+        theblas::ztpmv('L', 'N', 'N', 1, zpacked.data(), czx.data(), 0);
+        expect_recorded_error("ZTPMV", 7);
+
+        std::array<float, 1> spacked = {1.0F};
+        theblas::sspr2('U', 1, 1.0F, sx.data(), 1, sy.data(), 0, spacked.data());
+        expect_recorded_error("SSPR2", 7);
+
+        constexpr int max_int = std::numeric_limits<int>::max();
+        theblas::dgbmv('N', 0, 0, max_int, 0, 1.0, nullptr, max_int, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 8);
+
+        theblas::dsbmv('U', 0, max_int, 1.0, nullptr, max_int, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 6);
+
+        theblas::dtbmv('U', 'N', 'N', 0, max_int, nullptr, max_int, nullptr, 1);
+        expect_recorded_error("DTBMV", 7);
+    }
+
+    {
+        error_handler_guard guard(&record_error);
+        std::array<double, 4> dense = {1.0, 0.0, 0.0, 1.0};
+        std::array<double, 1> packed = {1.0};
+        std::array<std::complex<double>, 1> zpacked = {std::complex<double>(1.0, 0.0)};
+
+        theblas::sgemv('N', -1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 2);
+        theblas::sgemv('N', 1, -1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 3);
+        theblas::sgemv('N', 1, 1, 1.0F, nullptr, 0, nullptr, 1, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 6);
+        theblas::sgemv('N', 1, 1, 1.0F, nullptr, 1, nullptr, 0, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 8);
+        theblas::sgemv('N', 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 0);
+        expect_recorded_error("SGEMV", 11);
+
+        theblas::dsymv('X', 1, 1.0, dense.data(), 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSYMV", 1);
+        theblas::dsymv('U', -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSYMV", 2);
+        theblas::dsymv('U', 1, 1.0, dense.data(), 1, nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DSYMV", 7);
+        theblas::dsymv('U', 1, 1.0, dense.data(), 1, nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DSYMV", 10);
+
+        theblas::dtrmv('X', 'N', 'N', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 1);
+        theblas::dtrmv('U', 'X', 'N', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 2);
+        theblas::dtrmv('U', 'N', 'X', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 3);
+        theblas::dtrmv('U', 'N', 'N', -1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 4);
+        theblas::dtrmv('U', 'N', 'N', 1, dense.data(), 0, nullptr, 1);
+        expect_recorded_error("DTRMV", 6);
+        theblas::dtrmv('U', 'N', 'N', 1, dense.data(), 1, nullptr, 0);
+        expect_recorded_error("DTRMV", 8);
+        theblas::dtrsv('X', 'N', 'N', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRSV", 1);
+
+        theblas::dger(-1, 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DGER", 1);
+        theblas::dger(1, -1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DGER", 2);
+        theblas::dger(1, 1, 1.0, nullptr, 1, nullptr, 0, nullptr, 1);
+        expect_recorded_error("DGER", 7);
+        theblas::dger(1, 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DGER", 9);
+        theblas::zgeru(-1, 1, {}, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("ZGERU", 1);
+        theblas::zgerc(-1, 1, {}, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("ZGERC", 1);
+
+        theblas::dsyr('X', 1, 1.0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR", 1);
+        theblas::dsyr('U', -1, 1.0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR", 2);
+        theblas::dsyr('U', 1, 1.0, nullptr, 0, nullptr, 1);
+        expect_recorded_error("DSYR", 5);
+        theblas::dsyr('U', 1, 1.0, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DSYR", 7);
+        theblas::cher('X', 1, 1.0F, nullptr, 1, nullptr, 1);
+        expect_recorded_error("CHER", 1);
+
+        theblas::dsyr2('X', 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR2", 1);
+        theblas::dsyr2('U', -1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR2", 2);
+        theblas::dsyr2('U', 1, 1.0, nullptr, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR2", 5);
+        theblas::dsyr2('U', 1, 1.0, nullptr, 1, nullptr, 0, nullptr, 1);
+        expect_recorded_error("DSYR2", 7);
+        theblas::dsyr2('U', 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DSYR2", 9);
+        theblas::cher2('X', 1, {}, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("CHER2", 1);
+
+        theblas::dgbmv('X', 1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 1);
+        theblas::dgbmv('N', -1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 2);
+        theblas::dgbmv('N', 1, -1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 3);
+        theblas::dgbmv('N', 1, 1, 0, -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 5);
+        theblas::dgbmv('N', 1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 10);
+        theblas::dgbmv('N', 1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DGBMV", 13);
+
+        theblas::dsbmv('X', 1, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 1);
+        theblas::dsbmv('U', -1, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 2);
+        theblas::dsbmv('U', 1, -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 3);
+        theblas::dsbmv('U', 1, 0, 1.0, nullptr, 1, nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 8);
+        theblas::dsbmv('U', 1, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DSBMV", 11);
+        theblas::zhbmv('X', 1, 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
+        expect_recorded_error("ZHBMV", 1);
+
+        theblas::dtbmv('X', 'N', 'N', 1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 1);
+        theblas::dtbmv('U', 'X', 'N', 1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 2);
+        theblas::dtbmv('U', 'N', 'X', 1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 3);
+        theblas::dtbmv('U', 'N', 'N', -1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 4);
+        theblas::dtbmv('U', 'N', 'N', 1, -1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 5);
+        theblas::dtbmv('U', 'N', 'N', 1, 0, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DTBMV", 9);
+
+        theblas::dspmv('X', 1, 1.0, packed.data(), nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSPMV", 1);
+        theblas::dspmv('U', 1, 1.0, packed.data(), nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DSPMV", 6);
+        theblas::dspmv('U', 1, 1.0, packed.data(), nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DSPMV", 9);
+        theblas::ztpmv('X', 'N', 'N', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 1);
+        theblas::ztpmv('U', 'X', 'N', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 2);
+        theblas::ztpmv('U', 'N', 'X', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 3);
+        theblas::ztpmv('U', 'N', 'N', -1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 4);
+        theblas::ztpsv('X', 'N', 'N', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPSV", 1);
+
+        theblas::dspr('X', 1, 1.0, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR", 1);
+        theblas::dspr('U', -1, 1.0, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR", 2);
+        theblas::dspr('U', 1, 1.0, nullptr, 0, nullptr);
+        expect_recorded_error("DSPR", 5);
+        theblas::zhpr('X', 1, 1.0, nullptr, 1, nullptr);
+        expect_recorded_error("ZHPR", 1);
+        theblas::dspr2('X', 1, 1.0, nullptr, 1, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR2", 1);
+        theblas::dspr2('U', -1, 1.0, nullptr, 1, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR2", 2);
+        theblas::dspr2('U', 1, 1.0, nullptr, 0, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR2", 5);
+        theblas::zhpr2('X', 1, {}, nullptr, 1, nullptr, 1, nullptr);
+        expect_recorded_error("ZHPR2", 1);
+    }
+
+    {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
+        theblas::dsymv('U', 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        theblas::chemv('U', 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
+        theblas::dgbmv('N', 0, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        theblas::dsbmv('U', 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        theblas::zhbmv('U', 0, 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
+        theblas::dspmv('U', 0, 1.0, nullptr, nullptr, 1, 0.0, nullptr, 1);
+        theblas::zhpmv('U', 0, {}, nullptr, nullptr, 1, {}, nullptr, 1);
+        theblas::dtpmv('U', 'N', 'N', 0, nullptr, nullptr, 1);
+        assert(g_recorded_error.count == 0);
+    }
+
+    {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
+
+        std::array<double, 4> a = {1.0, 0.0, 0.0, 1.0};
+        std::array<double, 2> x = {2.0, 3.0};
+        std::array<double, 2> y = {4.0, 5.0};
+        theblas::dgemv('N', 2, 2, 1.0, a.data(), 2, x.data(), 1, 1.0, y.data(), 1);
+        std::array<double, 1> band = {1.0};
+        theblas::dgbmv('N', 1, 1, 0, 0, 1.0, band.data(), 1, x.data(), 1, 0.0, y.data(), 1);
+        std::array<double, 1> packed = {1.0};
+        theblas::dspmv('U', 1, 1.0, packed.data(), x.data(), 1, 0.0, y.data(), 1);
+        assert(g_recorded_error.count == 0);
+    }
+}
 
 } // namespace theblas::test

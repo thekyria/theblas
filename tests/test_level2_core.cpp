@@ -8,6 +8,16 @@
 
 namespace theblas::test {
 
+namespace {
+
+int unexpected_error_count = 0;
+
+void record_unexpected_error(const char *, int) {
+    ++unexpected_error_count;
+}
+
+} // namespace
+
 // NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void run_level2_core_tests() {
     /* ================================================================
@@ -63,7 +73,11 @@ void run_level2_core_tests() {
     // gemv edge case: m=0
     {
         std::array<float, 1> y = {99.0F};
+        unexpected_error_count = 0;
+        const auto previous_handler = theblas::set_error_handler(&record_unexpected_error);
         theblas::sgemv('N', 0, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, y.data(), 1);
+        theblas::set_error_handler(previous_handler);
+        assert(unexpected_error_count == 0);
         assert(almost_equal(y[0], 99.0F)); // no-op
     }
 
