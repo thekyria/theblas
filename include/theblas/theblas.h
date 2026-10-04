@@ -1159,10 +1159,11 @@ void zhpr2(char uplo, int n, std::complex<double> alpha, const std::complex<doub
  *
  *  Matrix element \f$a(i,j)\f$ is stored at offset \f$i+j\cdot lda\f$.
  *  Leading dimensions must be at least the number of stored rows (and at least one).
- *  `trans` accepts 'N', 'T', or 'C'; `uplo` accepts 'U' or 'L'; `diag` accepts
- *  'U' or 'N'; and `side` accepts 'L' or 'R'. Symmetric and Hermitian rank updates
- *  modify only the triangle selected by `uplo`. Invalid arguments are reported to
- *  the configured error handler using Netlib parameter numbering.
+ *  `trans` accepts 'N', 'T', or 'C' for matrix multiply and triangular operations;
+ *  symmetric rank updates accept 'N' or 'T', while Hermitian rank updates accept 'N'
+ *  or 'C'. `uplo` accepts 'U' or 'L'; `diag` accepts 'U' or 'N'; `side` accepts 'L'
+ *  or 'R'. Rank updates modify only the triangle selected by `uplo`. Invalid arguments
+ *  are reported to the configured error handler using Netlib parameter numbering.
  *
  *  A zero row or column dimension is a quick return. Rank-k routines with `k == 0`
  *  apply `beta` to the selected output triangle. Triangular matrix operations honor

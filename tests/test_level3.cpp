@@ -272,7 +272,9 @@ void run_level3_tests() {
     expect_error(2, "ZHEMM",
                  [] { zhemm('L', 'X', 1, 1, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1); });
     expect_error(7, "DSYRK", [] { dsyrk('U', 'N', 2, 1, 1.0, nullptr, 1, 0.0, nullptr, 2); });
+    expect_error(2, "SSYRK", [] { ssyrk('U', 'C', 1, 1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
     expect_error(10, "CHERK", [] { cherk('U', 'N', 2, 1, 1.0F, nullptr, 2, 0.0F, nullptr, 1); });
+    expect_error(2, "CHERK", [] { cherk('U', 'T', 1, 1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
     expect_error(9, "SSYR2K",
                  [] { ssyr2k('U', 'N', 2, 1, 1.0F, nullptr, 2, nullptr, 1, 0.0F, nullptr, 2); });
     expect_error(12, "ZHER2K",

@@ -29,6 +29,11 @@ template <typename T> T op_value(const T *a, int lda, char trans, int row, int c
     return tr == 'C' ? conj_val(value) : value;
 }
 
+bool valid_rank_trans(char trans, bool hermitian) {
+    const char upper = to_upper(trans);
+    return upper == 'N' || (hermitian ? upper == 'C' : upper == 'T');
+}
+
 template <typename T> T real_diagonal(T value) {
     return value;
 }
@@ -166,7 +171,7 @@ void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar 
         report_error(routine, 1);
         return;
     }
-    if (!valid_trans(trans)) {
+    if (!valid_rank_trans(trans, hermitian)) {
         report_error(routine, 2);
         return;
     }
@@ -218,7 +223,7 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
         report_error(routine, 1);
         return;
     }
-    if (!valid_trans(trans)) {
+    if (!valid_rank_trans(trans, hermitian)) {
         report_error(routine, 2);
         return;
     }
