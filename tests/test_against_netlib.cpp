@@ -8,6 +8,8 @@
 #include <cassert>
 #include <complex>
 
+void run_level3_netlib_tests();
+
 namespace {
 
 using theblas::test::almost_equal;
@@ -428,5 +430,6 @@ int main() {
         expect_equal(ap1, ap2);
     }
 
+    run_level3_netlib_tests();
     return 0;
 }

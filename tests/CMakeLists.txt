@@ -3,7 +3,8 @@ add_executable(
 	test_main.cpp
 	test_level1.cpp
 	test_level2_core.cpp
-	test_level2_variants.cpp)
+	test_level2_variants.cpp
+	test_level3.cpp)
 
 target_link_libraries(test_theblas PRIVATE theblas)
 
@@ -16,7 +17,10 @@ endif()
 add_test(NAME theblas_test COMMAND test_theblas)
 
 if(THEBLAS_TEST_AGAINST_NETLIB)
-	add_executable(test_theblas_netlib test_against_netlib.cpp)
+	add_executable(
+		test_theblas_netlib
+		test_against_netlib.cpp
+		test_level3_netlib.cpp)
 	target_include_directories(test_theblas_netlib
 	                           PRIVATE ${reference_lapack_SOURCE_DIR}/CBLAS/include
 	                                   ${reference_lapack_BINARY_DIR}/include)
