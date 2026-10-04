@@ -853,6 +853,8 @@ void run_level2_coverage_variant_tests() {
     }
 
     {
+        error_handler_guard guard(&record_error);
+        reset_recorded_error();
         theblas::dsymv('U', 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
         theblas::chemv('U', 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
         theblas::dgbmv('N', 0, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
@@ -861,6 +863,7 @@ void run_level2_coverage_variant_tests() {
         theblas::dspmv('U', 0, 1.0, nullptr, nullptr, 1, 0.0, nullptr, 1);
         theblas::zhpmv('U', 0, {}, nullptr, nullptr, 1, {}, nullptr, 1);
         theblas::dtpmv('U', 'N', 'N', 0, nullptr, nullptr, 1);
+        assert(g_recorded_error.count == 0);
     }
 
     {
