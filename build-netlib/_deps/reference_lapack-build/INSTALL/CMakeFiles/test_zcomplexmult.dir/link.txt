@@ -1,1 +1,0 @@
-/usr/bin/gfortran CMakeFiles/test_zcomplexmult.dir/test_zcomplexmult.f.o -o test_zcomplexmult
