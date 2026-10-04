@@ -643,13 +643,8 @@ void run_level2_coverage_variant_tests() {
         std::array<float, 4> sf_dense = {1.0F, 0.0F, 0.0F, 1.0F};
         std::array<float, 2> sx = {2.0F, 3.0F};
         std::array<float, 2> sy = {4.0F, 5.0F};
-        std::array<std::complex<float>, 4> cf_dense = {
-            std::complex<float>(1.0F, 0.0F), std::complex<float>(0.0F, 0.0F),
-            std::complex<float>(0.0F, 0.0F), std::complex<float>(1.0F, 0.0F)};
         std::array<std::complex<float>, 2> cx = {std::complex<float>(1.0F, 0.0F),
                                                  std::complex<float>(2.0F, 0.0F)};
-        std::array<std::complex<float>, 2> cy = {std::complex<float>(3.0F, 0.0F),
-                                                 std::complex<float>(4.0F, 0.0F)};
         std::array<std::complex<double>, 4> cz_dense = {
             std::complex<double>(1.0, 0.0), std::complex<double>(0.0, 0.0),
             std::complex<double>(0.0, 0.0), std::complex<double>(1.0, 0.0)};
