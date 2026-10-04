@@ -702,6 +702,169 @@ void run_level2_coverage_variant_tests() {
 
     {
         error_handler_guard guard(&record_error);
+        std::array<double, 4> dense = {1.0, 0.0, 0.0, 1.0};
+        std::array<double, 1> packed = {1.0};
+        std::array<std::complex<double>, 1> zpacked = {std::complex<double>(1.0, 0.0)};
+
+        theblas::sgemv('N', -1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 2);
+        theblas::sgemv('N', 1, -1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 3);
+        theblas::sgemv('N', 1, 1, 1.0F, nullptr, 0, nullptr, 1, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 6);
+        theblas::sgemv('N', 1, 1, 1.0F, nullptr, 1, nullptr, 0, 0.0F, nullptr, 1);
+        expect_recorded_error("SGEMV", 8);
+        theblas::sgemv('N', 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 0);
+        expect_recorded_error("SGEMV", 11);
+
+        theblas::dsymv('X', 1, 1.0, dense.data(), 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSYMV", 1);
+        theblas::dsymv('U', -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSYMV", 2);
+        theblas::dsymv('U', 1, 1.0, dense.data(), 1, nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DSYMV", 7);
+        theblas::dsymv('U', 1, 1.0, dense.data(), 1, nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DSYMV", 10);
+
+        theblas::dtrmv('X', 'N', 'N', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 1);
+        theblas::dtrmv('U', 'X', 'N', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 2);
+        theblas::dtrmv('U', 'N', 'X', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 3);
+        theblas::dtrmv('U', 'N', 'N', -1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTRMV", 4);
+        theblas::dtrmv('U', 'N', 'N', 1, dense.data(), 0, nullptr, 1);
+        expect_recorded_error("DTRMV", 6);
+        theblas::dtrmv('U', 'N', 'N', 1, dense.data(), 1, nullptr, 0);
+        expect_recorded_error("DTRMV", 8);
+        theblas::dtrsv('X', 'N', 'N', 1, dense.data(), 1, nullptr, 1);
+        expect_recorded_error("DTRSV", 1);
+
+        theblas::dger(-1, 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DGER", 1);
+        theblas::dger(1, -1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DGER", 2);
+        theblas::dger(1, 1, 1.0, nullptr, 1, nullptr, 0, nullptr, 1);
+        expect_recorded_error("DGER", 7);
+        theblas::dger(1, 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DGER", 9);
+        theblas::zgeru(-1, 1, {}, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("ZGERU", 1);
+        theblas::zgerc(-1, 1, {}, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("ZGERC", 1);
+
+        theblas::dsyr('X', 1, 1.0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR", 1);
+        theblas::dsyr('U', -1, 1.0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR", 2);
+        theblas::dsyr('U', 1, 1.0, nullptr, 0, nullptr, 1);
+        expect_recorded_error("DSYR", 5);
+        theblas::dsyr('U', 1, 1.0, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DSYR", 7);
+        theblas::cher('X', 1, 1.0F, nullptr, 1, nullptr, 1);
+        expect_recorded_error("CHER", 1);
+
+        theblas::dsyr2('X', 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR2", 1);
+        theblas::dsyr2('U', -1, 1.0, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR2", 2);
+        theblas::dsyr2('U', 1, 1.0, nullptr, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DSYR2", 5);
+        theblas::dsyr2('U', 1, 1.0, nullptr, 1, nullptr, 0, nullptr, 1);
+        expect_recorded_error("DSYR2", 7);
+        theblas::dsyr2('U', 1, 1.0, nullptr, 1, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DSYR2", 9);
+        theblas::cher2('X', 1, {}, nullptr, 1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("CHER2", 1);
+
+        theblas::dgbmv('X', 1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 1);
+        theblas::dgbmv('N', -1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 2);
+        theblas::dgbmv('N', 1, -1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 3);
+        theblas::dgbmv('N', 1, 1, 0, -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 5);
+        theblas::dgbmv('N', 1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 10);
+        theblas::dgbmv('N', 1, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DGBMV", 13);
+
+        theblas::dsbmv('X', 1, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 1);
+        theblas::dsbmv('U', -1, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 2);
+        theblas::dsbmv('U', 1, -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 3);
+        theblas::dsbmv('U', 1, 0, 1.0, nullptr, 1, nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 8);
+        theblas::dsbmv('U', 1, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DSBMV", 11);
+        theblas::zhbmv('X', 1, 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
+        expect_recorded_error("ZHBMV", 1);
+
+        theblas::dtbmv('X', 'N', 'N', 1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 1);
+        theblas::dtbmv('U', 'X', 'N', 1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 2);
+        theblas::dtbmv('U', 'N', 'X', 1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 3);
+        theblas::dtbmv('U', 'N', 'N', -1, 0, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 4);
+        theblas::dtbmv('U', 'N', 'N', 1, -1, nullptr, 1, nullptr, 1);
+        expect_recorded_error("DTBMV", 5);
+        theblas::dtbmv('U', 'N', 'N', 1, 0, nullptr, 1, nullptr, 0);
+        expect_recorded_error("DTBMV", 9);
+
+        theblas::dspmv('X', 1, 1.0, packed.data(), nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSPMV", 1);
+        theblas::dspmv('U', 1, 1.0, packed.data(), nullptr, 0, 0.0, nullptr, 1);
+        expect_recorded_error("DSPMV", 6);
+        theblas::dspmv('U', 1, 1.0, packed.data(), nullptr, 1, 0.0, nullptr, 0);
+        expect_recorded_error("DSPMV", 9);
+        theblas::ztpmv('X', 'N', 'N', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 1);
+        theblas::ztpmv('U', 'X', 'N', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 2);
+        theblas::ztpmv('U', 'N', 'X', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 3);
+        theblas::ztpmv('U', 'N', 'N', -1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPMV", 4);
+        theblas::ztpsv('X', 'N', 'N', 1, zpacked.data(), nullptr, 1);
+        expect_recorded_error("ZTPSV", 1);
+
+        theblas::dspr('X', 1, 1.0, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR", 1);
+        theblas::dspr('U', -1, 1.0, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR", 2);
+        theblas::dspr('U', 1, 1.0, nullptr, 0, nullptr);
+        expect_recorded_error("DSPR", 5);
+        theblas::zhpr('X', 1, 1.0, nullptr, 1, nullptr);
+        expect_recorded_error("ZHPR", 1);
+        theblas::dspr2('X', 1, 1.0, nullptr, 1, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR2", 1);
+        theblas::dspr2('U', -1, 1.0, nullptr, 1, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR2", 2);
+        theblas::dspr2('U', 1, 1.0, nullptr, 0, nullptr, 1, nullptr);
+        expect_recorded_error("DSPR2", 5);
+        theblas::zhpr2('X', 1, {}, nullptr, 1, nullptr, 1, nullptr);
+        expect_recorded_error("ZHPR2", 1);
+    }
+
+    {
+        theblas::dsymv('U', 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        theblas::chemv('U', 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
+        theblas::dgbmv('N', 0, 1, 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        theblas::dsbmv('U', 0, 0, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1);
+        theblas::zhbmv('U', 0, 0, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1);
+        theblas::dspmv('U', 0, 1.0, nullptr, nullptr, 1, 0.0, nullptr, 1);
+        theblas::zhpmv('U', 0, {}, nullptr, nullptr, 1, {}, nullptr, 1);
+        theblas::dtpmv('U', 'N', 'N', 0, nullptr, nullptr, 1);
+    }
+
+    {
+        error_handler_guard guard(&record_error);
         reset_recorded_error();
 
         std::array<double, 4> a = {1.0, 0.0, 0.0, 1.0};
