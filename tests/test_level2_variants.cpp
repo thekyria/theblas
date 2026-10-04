@@ -1,10 +1,12 @@
 #include "theblas/theblas.h"
 
 #include "test_support.hpp"
+#include "../src/theblas_detail.hpp"
 
 #include <array>
 #include <cassert>
 #include <complex>
+#include <limits>
 #include <string_view>
 
 namespace theblas::test {
@@ -50,6 +52,18 @@ struct error_handler_guard {
 
 // NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void run_level2_coverage_variant_tests() {
+    {
+        const auto max_int = std::numeric_limits<int>::max();
+        const auto n_value = static_cast<theblas::detail::index_t>(max_int);
+        assert(theblas::detail::packed_size(0) == 0);
+        assert(theblas::detail::packed_size(1) == 1);
+        assert(theblas::detail::packed_size(3) == 6);
+        if (std::numeric_limits<theblas::detail::index_t>::max() > max_int) {
+            assert(theblas::detail::packed_size(max_int) ==
+                   n_value * (n_value / 2 + 1));
+        }
+    }
+
     /* --- remaining band-matrix precision variants --- */
     {
         // A = [[1, 2], [3, 4]] in general band storage; y = A^T * [1, 1].
@@ -679,6 +693,16 @@ void run_level2_coverage_variant_tests() {
         std::array<float, 1> spacked = {1.0F};
         theblas::sspr2('U', 1, 1.0F, sx.data(), 1, sy.data(), 0, spacked.data());
         expect_recorded_error("SSPR2", 7);
+
+        const int max_int = std::numeric_limits<int>::max();
+        theblas::dgbmv('N', 0, 0, max_int, 0, 1.0, nullptr, max_int, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DGBMV", 8);
+
+        theblas::dsbmv('U', 0, max_int, 1.0, nullptr, max_int, nullptr, 1, 0.0, nullptr, 1);
+        expect_recorded_error("DSBMV", 6);
+
+        theblas::dtbmv('U', 'N', 'N', 0, max_int, nullptr, max_int, nullptr, 1);
+        expect_recorded_error("DTBMV", 7);
     }
 
     {

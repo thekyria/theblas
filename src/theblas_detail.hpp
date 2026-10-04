@@ -16,7 +16,9 @@ inline index_t idx(int i, int j, int ld) {
 }
 
 inline index_t packed_size(int n) {
-    return static_cast<index_t>(n) * static_cast<index_t>(n + 1) / 2;
+    const index_t n_value = static_cast<index_t>(n);
+    const index_t next_half = n_value / 2 + 1;
+    return (n_value % 2 == 0) ? (n_value / 2) * (n_value + 1) : n_value * next_half;
 }
 
 inline index_t start_index(int n, int inc) {

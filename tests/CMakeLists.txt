@@ -7,6 +7,12 @@ add_executable(
 
 target_link_libraries(test_theblas PRIVATE theblas)
 
+if(MSVC)
+	target_compile_options(test_theblas PRIVATE /UNDEBUG)
+else()
+	target_compile_options(test_theblas PRIVATE -UNDEBUG)
+endif()
+
 add_test(NAME theblas_test COMMAND test_theblas)
 
 if(THEBLAS_TEST_AGAINST_NETLIB)
@@ -16,6 +22,10 @@ if(THEBLAS_TEST_AGAINST_NETLIB)
 	                                   ${reference_lapack_BINARY_DIR}/include)
 	target_link_libraries(test_theblas_netlib PRIVATE theblas
 	                                                 ${THEBLAS_NETLIB_CBLAS_TARGET})
-	target_link_libraries(test_theblas_netlib PRIVATE gfortran)
+	if(MSVC)
+		target_compile_options(test_theblas_netlib PRIVATE /UNDEBUG)
+	else()
+		target_compile_options(test_theblas_netlib PRIVATE -UNDEBUG)
+	endif()
 	add_test(NAME theblas_netlib_test COMMAND test_theblas_netlib)
 endif()

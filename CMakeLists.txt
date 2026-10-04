@@ -27,6 +27,10 @@ option(THEBLAS_TEST_AGAINST_NETLIB
        "Build optional CBLAS-based comparisons against Reference-LAPACK/Netlib BLAS"
        OFF)
 
+if(THEBLAS_TEST_AGAINST_NETLIB)
+  enable_language(Fortran)
+endif()
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 include(CheckIPOSupported)

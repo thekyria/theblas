@@ -36,7 +36,7 @@ int gbmv_info(char trans, int m, int n, int kl, int ku, int lda, int incx, int i
     if (ku < 0) {
         return 5;
     }
-    if (lda < kl + ku + 1) {
+    if (lda <= kl || lda - kl <= ku) {
         return 8;
     }
     if (incx == 0) {
@@ -58,7 +58,7 @@ int sbmv_info(char uplo, int n, int k, int lda, int incx, int incy) {
     if (k < 0) {
         return 3;
     }
-    if (lda < k + 1) {
+    if (lda <= k) {
         return 6;
     }
     if (incx == 0) {
@@ -86,7 +86,7 @@ int tbmv_info(char uplo, char trans, char diag, int n, int k, int lda, int incx)
     if (k < 0) {
         return 5;
     }
-    if (lda < k + 1) {
+    if (lda <= k) {
         return 7;
     }
     if (incx == 0) {
