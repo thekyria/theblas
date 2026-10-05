@@ -205,6 +205,24 @@ void run_level3_netlib_tests() {
         });
     compare_side_matrix<cf>(
         [](char side, char ul, const cf *a, const cf *b, cf *c) {
+            theblas::csymm(side, ul, 2, 2, cf(1.25F, -0.5F), a, 2, b, 3, cf(0.5F, 0.25F), c, 3);
+        },
+        [](char side, char ul, const cf *a, const cf *b, cf *c) {
+            const cf alpha(1.25F, -0.5F), beta(0.5F, 0.25F);
+            cblas_csymm(CblasColMajor, matrix_side(side), triangle(ul), 2, 2, &alpha, a, 2, b, 3,
+                        &beta, c, 3);
+        });
+    compare_side_matrix<cd>(
+        [](char side, char ul, const cd *a, const cd *b, cd *c) {
+            theblas::zsymm(side, ul, 2, 2, cd(1.25, -0.5), a, 2, b, 3, cd(0.5, 0.25), c, 3);
+        },
+        [](char side, char ul, const cd *a, const cd *b, cd *c) {
+            const cd alpha(1.25, -0.5), beta(0.5, 0.25);
+            cblas_zsymm(CblasColMajor, matrix_side(side), triangle(ul), 2, 2, &alpha, a, 2, b, 3,
+                        &beta, c, 3);
+        });
+    compare_side_matrix<cf>(
+        [](char side, char ul, const cf *a, const cf *b, cf *c) {
             theblas::chemm(side, ul, 2, 2, cf(1.25F, -0.5F), a, 2, b, 3, cf(0.5F, 0.25F), c, 3);
         },
         [](char side, char ul, const cf *a, const cf *b, cf *c) {
@@ -237,6 +255,26 @@ void run_level3_netlib_tests() {
                                            a, 3, 0.5, c, 3);
                            },
                            {'N', 'T'});
+    compare_rank_k<cf>(
+        [](char ul, char tr, const cf *a, cf *c) {
+            theblas::csyrk(ul, tr, 2, 2, cf(1.25F, -0.5F), a, 3, cf(0.5F, 0.25F), c, 3);
+        },
+        [](char ul, char tr, const cf *a, cf *c) {
+            const cf alpha(1.25F, -0.5F), beta(0.5F, 0.25F);
+            cblas_csyrk(CblasColMajor, triangle(ul), transpose(tr), 2, 2, &alpha, a, 3, &beta, c,
+                        3);
+        },
+        {'N', 'T'});
+    compare_rank_k<cd>(
+        [](char ul, char tr, const cd *a, cd *c) {
+            theblas::zsyrk(ul, tr, 2, 2, cd(1.25, -0.5), a, 3, cd(0.5, 0.25), c, 3);
+        },
+        [](char ul, char tr, const cd *a, cd *c) {
+            const cd alpha(1.25, -0.5), beta(0.5, 0.25);
+            cblas_zsyrk(CblasColMajor, triangle(ul), transpose(tr), 2, 2, &alpha, a, 3, &beta, c,
+                        3);
+        },
+        {'N', 'T'});
     compare_rank_k<cf>([](char ul, char tr, const cf *a,
                           cf *c) { theblas::cherk(ul, tr, 2, 2, 1.25F, a, 3, 0.5F, c, 3); },
                        [](char ul, char tr, const cf *a, cf *c) {
@@ -268,6 +306,26 @@ void run_level3_netlib_tests() {
         [](char ul, char tr, const double *a, const double *b, double *c) {
             cblas_dsyr2k(CblasColMajor, triangle(ul), transpose(tr), 2, 2, 1.25, a, 3, b, 3, 0.5, c,
                          3);
+        },
+        {'N', 'T'});
+    compare_rank_2k<cf>(
+        [](char ul, char tr, const cf *a, const cf *b, cf *c) {
+            theblas::csyr2k(ul, tr, 2, 2, cf(1.25F, -0.5F), a, 3, b, 3, cf(0.5F, 0.25F), c, 3);
+        },
+        [](char ul, char tr, const cf *a, const cf *b, cf *c) {
+            const cf alpha(1.25F, -0.5F), beta(0.5F, 0.25F);
+            cblas_csyr2k(CblasColMajor, triangle(ul), transpose(tr), 2, 2, &alpha, a, 3, b, 3,
+                         &beta, c, 3);
+        },
+        {'N', 'T'});
+    compare_rank_2k<cd>(
+        [](char ul, char tr, const cd *a, const cd *b, cd *c) {
+            theblas::zsyr2k(ul, tr, 2, 2, cd(1.25, -0.5), a, 3, b, 3, cd(0.5, 0.25), c, 3);
+        },
+        [](char ul, char tr, const cd *a, const cd *b, cd *c) {
+            const cd alpha(1.25, -0.5), beta(0.5, 0.25);
+            cblas_zsyr2k(CblasColMajor, triangle(ul), transpose(tr), 2, 2, &alpha, a, 3, b, 3,
+                         &beta, c, 3);
         },
         {'N', 'T'});
     compare_rank_2k<cf>(

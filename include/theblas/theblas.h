@@ -1221,6 +1221,14 @@ void ssymm(char side, char uplo, int m, int n, float alpha, const float *a, int 
 /** @copydoc ssymm */
 void dsymm(char side, char uplo, int m, int n, double alpha, const double *a, int lda,
            const double *b, int ldb, double beta, double *c, int ldc);
+/** @copydoc ssymm */
+void csymm(char side, char uplo, int m, int n, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+           std::complex<float> beta, std::complex<float> *c, int ldc);
+/** @copydoc ssymm */
+void zsymm(char side, char uplo, int m, int n, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+           std::complex<double> beta, std::complex<double> *c, int ldc);
 /**
  * @brief Hermitian matrix multiply: C ← alpha·A·B + beta·C or C ← alpha·B·A + beta·C.
  * @param side 'L' for A·B, 'R' for B·A.
@@ -1263,6 +1271,26 @@ void ssyrk(char uplo, char trans, int n, int k, float alpha, const float *a, int
 void dsyrk(char uplo, char trans, int n, int k, double alpha, const double *a, int lda, double beta,
            double *c, int ldc);
 /**
+ * @brief Complex symmetric rank-k update: C ← alpha·op(A)·op(A)ᵀ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A ('N' or 'T').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Complex product multiplier.
+ * @param a Input matrix A.
+ * @param lda Leading dimension of A.
+ * @param beta Complex existing C multiplier.
+ * @param c Input/output symmetric matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void csyrk(char uplo, char trans, int n, int k, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, std::complex<float> beta, std::complex<float> *c,
+           int ldc);
+/** @copydoc csyrk */
+void zsyrk(char uplo, char trans, int n, int k, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, std::complex<double> beta,
+           std::complex<double> *c, int ldc);
+/**
  * @brief Hermitian rank-k update: C ← alpha·op(A)·op(A)ᴴ + beta·C.
  * @param uplo Triangle of C to update.
  * @param trans Operation applied to A ('N' or 'C').
@@ -1301,6 +1329,28 @@ void ssyr2k(char uplo, char trans, int n, int k, float alpha, const float *a, in
 /** @copydoc ssyr2k */
 void dsyr2k(char uplo, char trans, int n, int k, double alpha, const double *a, int lda,
             const double *b, int ldb, double beta, double *c, int ldc);
+/**
+ * @brief Complex symmetric rank-2k update: C ← alpha·op(A)·op(B)ᵀ + alpha·op(B)·op(A)ᵀ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A and B ('N' or 'T').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Complex product multiplier.
+ * @param a First input matrix.
+ * @param lda Leading dimension of A.
+ * @param b Second input matrix.
+ * @param ldb Leading dimension of B.
+ * @param beta Complex existing C multiplier.
+ * @param c Input/output symmetric matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void csyr2k(char uplo, char trans, int n, int k, std::complex<float> alpha,
+            const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+            std::complex<float> beta, std::complex<float> *c, int ldc);
+/** @copydoc csyr2k */
+void zsyr2k(char uplo, char trans, int n, int k, std::complex<double> alpha,
+            const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+            std::complex<double> beta, std::complex<double> *c, int ldc);
 /**
  * @brief Hermitian rank-2k update with complex alpha and real beta.
  * @param uplo Triangle of C to update.

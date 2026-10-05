@@ -32,6 +32,8 @@ template <typename T, typename Gemm> void test_gemm(Gemm gemm) {
     gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(1), c.data(), 2);
     for (const T value : c)
         assert(almost_equal(value, T(7)));
+    gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(1), nullptr, 2);
+    gemm('N', 'N', 2, 2, 0, T(1), nullptr, 2, nullptr, 1, T(1), nullptr, 2);
     gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(0), c.data(), 2);
     for (const T value : c)
         assert(almost_equal(value, T(0)));
@@ -54,6 +56,7 @@ template <typename T, typename Symm> void test_symm(Symm symm) {
     const std::array<T, 4> a = {T(2), T(0), T(1), T(3)};
     const std::array<T, 4> identity = {T(1), T(0), T(0), T(1)};
     std::array<T, 4> c{};
+    symm('L', 'U', 2, 2, T(0), nullptr, 2, nullptr, 2, T(1), nullptr, 2);
     symm('L', 'U', 2, 2, T(1), a.data(), 2, identity.data(), 2, T(0), c.data(), 2);
     assert(almost_equal(c[0], T(2)));
     assert(almost_equal(c[1], T(1)));
@@ -71,6 +74,8 @@ template <typename T, typename Syrk> void test_syrk(Syrk syrk) {
     assert(almost_equal(c[1], T(9)));
 
     c.fill(T(4));
+    syrk('L', 'N', 2, 2, T(0), nullptr, 2, T(1), nullptr, 2);
+    syrk('L', 'N', 2, 0, T(1), nullptr, 2, T(1), nullptr, 2);
     syrk('L', 'N', 2, 0, T(1), nullptr, 2, T(1), c.data(), 2);
     for (const T value : c)
         assert(almost_equal(value, T(4)));
@@ -83,6 +88,8 @@ template <typename T, typename Syrk> void test_syrk(Syrk syrk) {
 template <typename T, typename Syr2k> void test_syr2k(Syr2k syr2k) {
     const std::array<T, 4> identity = {T(1), T(0), T(0), T(1)};
     std::array<T, 4> c{};
+    syr2k('L', 'N', 2, 2, T(0), nullptr, 2, nullptr, 2, T(1), nullptr, 2);
+    syr2k('L', 'N', 2, 0, T(1), nullptr, 2, nullptr, 1, T(1), nullptr, 2);
     syr2k('L', 'N', 2, 2, T(1), identity.data(), 2, identity.data(), 2, T(0), c.data(), 2);
     assert(almost_equal(c[0], T(2)));
     assert(almost_equal(c[1], T(0)));
@@ -204,6 +211,30 @@ template <typename T> void test_complex_routines() {
             cgemm(ta, tb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
         } else {
             zgemm(ta, tb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+        }
+    });
+    test_symm<T>([](char side, char uplo, int m, int n, T alpha, const T *a, int lda, const T *b,
+                    int ldb, T beta, T *c, int ldc) {
+        if constexpr (std::is_same_v<R, float>) {
+            csymm(side, uplo, m, n, alpha, a, lda, b, ldb, beta, c, ldc);
+        } else {
+            zsymm(side, uplo, m, n, alpha, a, lda, b, ldb, beta, c, ldc);
+        }
+    });
+    test_syrk<T>([](char uplo, char trans, int n, int k, T alpha, const T *a, int lda, T beta, T *c,
+                    int ldc) {
+        if constexpr (std::is_same_v<R, float>) {
+            csyrk(uplo, trans, n, k, alpha, a, lda, beta, c, ldc);
+        } else {
+            zsyrk(uplo, trans, n, k, alpha, a, lda, beta, c, ldc);
+        }
+    });
+    test_syr2k<T>([](char uplo, char trans, int n, int k, T alpha, const T *a, int lda, const T *b,
+                     int ldb, T beta, T *c, int ldc) {
+        if constexpr (std::is_same_v<R, float>) {
+            csyr2k(uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+        } else {
+            zsyr2k(uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
         }
     });
     test_trmm<T>([](char side, char uplo, char trans, char diag, int m, int n, T alpha, const T *a,

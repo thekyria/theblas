@@ -98,6 +98,8 @@ void gemm_impl(const char *routine, char transa, char transb, int m, int n, int 
     if (m == 0 || n == 0)
         return;
     if (alpha == T(0) || k == 0) {
+        if (beta == T(1))
+            return;
         scale_matrix(m, n, beta, c, ldc);
         return;
     }
@@ -143,6 +145,8 @@ void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha,
     if (m == 0 || n == 0)
         return;
     if (alpha == T(0)) {
+        if (beta == T(1))
+            return;
         scale_matrix(m, n, beta, c, ldc);
         return;
     }
@@ -193,6 +197,8 @@ void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar 
         return;
     }
     if (n == 0)
+        return;
+    if ((alpha == Scalar(0) || k == 0) && beta == Scalar(1))
         return;
     for (int j = 0; j < n; ++j) {
         const int ibegin = to_upper(uplo) == 'U' ? 0 : j;
@@ -250,6 +256,8 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
         return;
     }
     if (n == 0)
+        return;
+    if ((alpha == ScalarAlpha(0) || k == 0) && beta == ScalarBeta(1))
         return;
     for (int j = 0; j < n; ++j) {
         const int ibegin = to_upper(uplo) == 'U' ? 0 : j;
@@ -446,14 +454,22 @@ THEBLAS_GEMM(cgemm, "CGEMM", std::complex<float>)
 THEBLAS_GEMM(zgemm, "ZGEMM", std::complex<double>)
 THEBLAS_SYMM(ssymm, "SSYMM", float, false)
 THEBLAS_SYMM(dsymm, "DSYMM", double, false)
+THEBLAS_SYMM(csymm, "CSYMM", std::complex<float>, false)
+THEBLAS_SYMM(zsymm, "ZSYMM", std::complex<double>, false)
 THEBLAS_SYMM(chemm, "CHEMM", std::complex<float>, true)
 THEBLAS_SYMM(zhemm, "ZHEMM", std::complex<double>, true)
 THEBLAS_SYRK(ssyrk, "SSYRK", float, float, false)
 THEBLAS_SYRK(dsyrk, "DSYRK", double, double, false)
+THEBLAS_SYRK(csyrk, "CSYRK", std::complex<float>, std::complex<float>, false)
+THEBLAS_SYRK(zsyrk, "ZSYRK", std::complex<double>, std::complex<double>, false)
 THEBLAS_SYRK(cherk, "CHERK", std::complex<float>, float, true)
 THEBLAS_SYRK(zherk, "ZHERK", std::complex<double>, double, true)
 THEBLAS_SYR2K(ssyr2k, "SSYR2K", float, float, float, false)
 THEBLAS_SYR2K(dsyr2k, "DSYR2K", double, double, double, false)
+THEBLAS_SYR2K(csyr2k, "CSYR2K", std::complex<float>, std::complex<float>, std::complex<float>,
+              false)
+THEBLAS_SYR2K(zsyr2k, "ZSYR2K", std::complex<double>, std::complex<double>, std::complex<double>,
+              false)
 THEBLAS_SYR2K(cher2k, "CHER2K", std::complex<float>, std::complex<float>, float, true)
 THEBLAS_SYR2K(zher2k, "ZHER2K", std::complex<double>, std::complex<double>, double, true)
 THEBLAS_TRMM(strmm, "STRMM", float)
