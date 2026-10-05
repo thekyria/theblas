@@ -34,24 +34,28 @@ bool valid_rank_trans(char trans, bool hermitian) {
     return upper == 'N' || (hermitian ? upper == 'C' : upper == 'T');
 }
 
-template <typename T> T real_diagonal(T value) {
-    return value;
-}
-
 template <typename T> std::complex<T> real_diagonal(std::complex<T> value) {
     return {value.real(), T(0)};
 }
 
-template <typename T>
-T symmetric_value(const T *a, int lda, char uplo, int row, int col, bool hermitian) {
+template <typename T, bool Hermitian>
+T symmetric_value(const T *a, int lda, char uplo, int row, int col) {
     if (row == col) {
-        return hermitian ? real_diagonal(a[idx(row, col, lda)]) : a[idx(row, col, lda)];
+        if constexpr (Hermitian) {
+            return real_diagonal(a[idx(row, col, lda)]);
+        } else {
+            return a[idx(row, col, lda)];
+        }
     }
     if (to_upper(uplo) == 'U' ? row < col : row > col) {
         return a[idx(row, col, lda)];
     }
     const T value = a[idx(col, row, lda)];
-    return hermitian ? conj_val(value) : value;
+    if constexpr (Hermitian) {
+        return conj_val(value);
+    } else {
+        return value;
+    }
 }
 
 template <typename T> void scale_matrix(int m, int n, T beta, T *c, int ldc) {
@@ -134,9 +138,9 @@ int side_matrix_info(char side, char uplo, int m, int n, int lda, int ldb, int l
     return 0;
 }
 
-template <typename T>
+template <typename T, bool Hermitian>
 void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha, const T *a,
-               int lda, const T *b, int ldb, T beta, T *c, int ldc, bool hermitian) {
+               int lda, const T *b, int ldb, T beta, T *c, int ldc) {
     const int info = side_matrix_info(side, uplo, m, n, lda, ldb, ldc);
     if (info != 0) {
         report_error(routine, info);
@@ -157,9 +161,10 @@ void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha,
             const int order = left ? m : n;
             for (int l = 0; l < order; ++l) {
                 if (left) {
-                    sum += symmetric_value(a, lda, uplo, i, l, hermitian) * b[idx(l, j, ldb)];
+                    sum += symmetric_value<T, Hermitian>(a, lda, uplo, i, l) * b[idx(l, j, ldb)];
                 } else {
-                    sum += b[idx(i, l, ldb)] * symmetric_value(a, lda, uplo, l, j, hermitian);
+                    sum += b[idx(i, l, ldb)] *
+                          symmetric_value<T, Hermitian>(a, lda, uplo, l, j);
                 }
             }
             auto &value = c[idx(i, j, ldc)];
@@ -168,14 +173,14 @@ void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha,
     }
 }
 
-template <typename T, typename Scalar>
+template <typename T, typename Scalar, bool Hermitian>
 void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar alpha, const T *a,
-               int lda, Scalar beta, T *c, int ldc, bool hermitian) {
+               int lda, Scalar beta, T *c, int ldc) {
     if (!valid_uplo(uplo)) {
         report_error(routine, 1);
         return;
     }
-    if (!valid_rank_trans(trans, hermitian)) {
+    if (!valid_rank_trans(trans, Hermitian)) {
         report_error(routine, 2);
         return;
     }
@@ -207,29 +212,34 @@ void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar 
             T sum = T(0);
             if (alpha != Scalar(0)) {
                 for (int l = 0; l < k; ++l) {
-                    sum += op_value(a, lda, trans, i, l) *
-                           (hermitian ? conj_val(op_value(a, lda, trans, j, l))
-                                      : op_value(a, lda, trans, j, l));
+                    if constexpr (Hermitian) {
+                        sum += op_value(a, lda, trans, i, l) *
+                               conj_val(op_value(a, lda, trans, j, l));
+                    } else {
+                        sum += op_value(a, lda, trans, i, l) *
+                               op_value(a, lda, trans, j, l);
+                    }
                 }
             }
             auto &value = c[idx(i, j, ldc)];
             value = static_cast<T>(alpha) * sum +
                     (beta == Scalar(0) ? T(0) : static_cast<T>(beta) * value);
-            if (hermitian && i == j)
-                value = real_diagonal(value);
+            if constexpr (Hermitian) {
+                if (i == j)
+                    value = real_diagonal(value);
+            }
         }
     }
 }
 
-template <typename T, typename ScalarAlpha, typename ScalarBeta>
+template <typename T, typename ScalarAlpha, typename ScalarBeta, bool Hermitian>
 void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, ScalarAlpha alpha,
-                const T *a, int lda, const T *b, int ldb, ScalarBeta beta, T *c, int ldc,
-                bool hermitian) {
+                const T *a, int lda, const T *b, int ldb, ScalarBeta beta, T *c, int ldc) {
     if (!valid_uplo(uplo)) {
         report_error(routine, 1);
         return;
     }
-    if (!valid_rank_trans(trans, hermitian)) {
+    if (!valid_rank_trans(trans, Hermitian)) {
         report_error(routine, 2);
         return;
     }
@@ -270,7 +280,7 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
                     const T aj = op_value(a, lda, trans, j, l);
                     const T bi = op_value(b, ldb, trans, i, l);
                     const T bj = op_value(b, ldb, trans, j, l);
-                    if (hermitian) {
+                    if constexpr (Hermitian) {
                         const T complex_alpha = static_cast<T>(alpha);
                         sum += complex_alpha * ai * conj_val(bj) +
                                conj_val(complex_alpha) * bi * conj_val(aj);
@@ -280,10 +290,16 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
                 }
             }
             auto &value = c[idx(i, j, ldc)];
-            value = (hermitian ? sum : static_cast<T>(alpha) * sum) +
-                    (beta == ScalarBeta(0) ? T(0) : static_cast<T>(beta) * value);
-            if (hermitian && i == j)
-                value = real_diagonal(value);
+            if constexpr (Hermitian) {
+                value = sum + (beta == ScalarBeta(0) ? T(0) : static_cast<T>(beta) * value);
+            } else {
+                value = static_cast<T>(alpha) * sum +
+                        (beta == ScalarBeta(0) ? T(0) : static_cast<T>(beta) * value);
+            }
+            if constexpr (Hermitian) {
+                if (i == j)
+                    value = real_diagonal(value);
+            }
         }
     }
 }
@@ -425,17 +441,18 @@ void trsm_impl(const char *routine, char side, char uplo, char trans, char diag,
 #define THEBLAS_SYMM(NAME, ROUTINE, TYPE, HERM)                                                    \
     void NAME(char side, char uplo, int m, int n, TYPE alpha, const TYPE *a, int lda,              \
               const TYPE *b, int ldb, TYPE beta, TYPE *c, int ldc) {                               \
-        symm_impl(ROUTINE, side, uplo, m, n, alpha, a, lda, b, ldb, beta, c, ldc, HERM);           \
+        symm_impl<TYPE, HERM>(ROUTINE, side, uplo, m, n, alpha, a, lda, b, ldb, beta, c, ldc);     \
     }
 #define THEBLAS_SYRK(NAME, ROUTINE, TYPE, SCALAR, HERM)                                            \
     void NAME(char uplo, char trans, int n, int k, SCALAR alpha, const TYPE *a, int lda,           \
               SCALAR beta, TYPE *c, int ldc) {                                                     \
-        syrk_impl(ROUTINE, uplo, trans, n, k, alpha, a, lda, beta, c, ldc, HERM);                  \
+        syrk_impl<TYPE, SCALAR, HERM>(ROUTINE, uplo, trans, n, k, alpha, a, lda, beta, c, ldc);    \
     }
 #define THEBLAS_SYR2K(NAME, ROUTINE, TYPE, ALPHA, BETA, HERM)                                      \
     void NAME(char uplo, char trans, int n, int k, ALPHA alpha, const TYPE *a, int lda,            \
               const TYPE *b, int ldb, BETA beta, TYPE *c, int ldc) {                               \
-        syr2k_impl(ROUTINE, uplo, trans, n, k, alpha, a, lda, b, ldb, beta, c, ldc, HERM);         \
+        syr2k_impl<TYPE, ALPHA, BETA, HERM>(ROUTINE, uplo, trans, n, k, alpha, a, lda, b, ldb,     \
+                                             beta, c, ldc);                                         \
     }
 #define THEBLAS_TRMM(NAME, ROUTINE, TYPE)                                                          \
     void NAME(char side, char uplo, char trans, char diag, int m, int n, TYPE alpha,               \

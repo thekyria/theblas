@@ -40,6 +40,10 @@ template <typename T, typename Gemm> void test_gemm(Gemm gemm) {
     gemm('N', 'N', 2, 2, 0, T(1), nullptr, 2, nullptr, 1, T(0), c.data(), 2);
     for (const T value : c)
         assert(almost_equal(value, T(0)));
+    c.fill(T(3));
+    gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(2), c.data(), 2);
+    for (const T value : c)
+        assert(almost_equal(value, T(6)));
     gemm('N', 'N', 0, 2, 1, T(1), nullptr, 1, nullptr, 1, T(0), nullptr, 1);
     gemm('N', 'N', 2, 0, 1, T(1), nullptr, 2, nullptr, 1, T(0), nullptr, 2);
 
@@ -62,6 +66,18 @@ template <typename T, typename Symm> void test_symm(Symm symm) {
     assert(almost_equal(c[1], T(1)));
     assert(almost_equal(c[2], T(1)));
     assert(almost_equal(c[3], T(3)));
+
+    c.fill(T(4));
+    symm('L', 'U', 2, 2, T(0), nullptr, 2, nullptr, 2, T(2), c.data(), 2);
+    for (const T value : c)
+        assert(almost_equal(value, T(8)));
+    const std::array<T, 4> lower = {T(2), T(1), T(0), T(3)};
+    symm('R', 'L', 2, 2, T(1), lower.data(), 2, identity.data(), 2, T(0), c.data(), 2);
+    assert(almost_equal(c[0], T(2)));
+    assert(almost_equal(c[1], T(1)));
+    assert(almost_equal(c[2], T(1)));
+    assert(almost_equal(c[3], T(3)));
+    symm('L', 'U', 0, 2, T(1), nullptr, 1, nullptr, 1, T(0), nullptr, 1);
 }
 
 template <typename T, typename Syrk> void test_syrk(Syrk syrk) {
@@ -83,6 +99,11 @@ template <typename T, typename Syrk> void test_syrk(Syrk syrk) {
     assert(almost_equal(c[0], T(0)));
     assert(almost_equal(c[1], T(0)));
     assert(almost_equal(c[3], T(0)));
+    c.fill(T(4));
+    syrk('U', 'N', 2, 1, T(0), nullptr, 2, T(2), c.data(), 2);
+    assert(almost_equal(c[0], T(8)));
+    assert(almost_equal(c[3], T(8)));
+    syrk('U', 'N', 0, 1, T(1), nullptr, 1, T(0), nullptr, 1);
 }
 
 template <typename T, typename Syr2k> void test_syr2k(Syr2k syr2k) {
@@ -95,6 +116,11 @@ template <typename T, typename Syr2k> void test_syr2k(Syr2k syr2k) {
     assert(almost_equal(c[1], T(0)));
     assert(almost_equal(c[2], T(0)));
     assert(almost_equal(c[3], T(2)));
+    c.fill(T(3));
+    syr2k('L', 'N', 2, 1, T(0), nullptr, 2, nullptr, 2, T(2), c.data(), 2);
+    assert(almost_equal(c[0], T(6)));
+    assert(almost_equal(c[3], T(6)));
+    syr2k('U', 'N', 0, 1, T(1), nullptr, 1, nullptr, 1, T(0), nullptr, 1);
 }
 
 template <typename T, typename Trmm> void test_trmm(Trmm trmm) {
@@ -108,16 +134,46 @@ template <typename T, typename Trmm> void test_trmm(Trmm trmm) {
     trmm('L', 'U', 'N', 'N', 2, 2, T(0), nullptr, 2, b.data(), 2);
     for (const T value : b)
         assert(almost_equal(value, T(0)));
+    trmm('L', 'U', 'N', 'N', 0, 1, T(1), nullptr, 1, nullptr, 1);
+    trmm('L', 'U', 'N', 'N', 1, 0, T(1), nullptr, 1, nullptr, 1);
+    b = {T(1), T(0), T(0), T(1)};
+    trmm('R', 'U', 'N', 'U', 2, 2, T(1), a.data(), 2, b.data(), 2);
+    assert(almost_equal(b[0], T(1)));
+    assert(almost_equal(b[1], T(0)));
+    assert(almost_equal(b[2], T(1)));
+    assert(almost_equal(b[3], T(1)));
 }
 
 template <typename T, typename Trsm> void test_trsm(Trsm trsm) {
     const std::array<T, 4> a = {T(2), T(0), T(1), T(3)};
+    const std::array<T, 4> lower = {T(2), T(1), T(0), T(3)};
     std::array<T, 4> b = {T(1), T(0), T(0), T(1)};
     trsm('L', 'U', 'N', 'N', 2, 2, T(1), a.data(), 2, b.data(), 2);
     assert(almost_equal(b[0], T(0.5)));
     assert(almost_equal(b[1], T(0)));
     assert(almost_equal(b[2], T(-1.0 / 6.0)));
     assert(almost_equal(b[3], T(1.0 / 3.0)));
+
+    b.fill(T(3));
+    trsm('L', 'U', 'N', 'N', 2, 2, T(0), nullptr, 2, b.data(), 2);
+    for (const T value : b)
+        assert(almost_equal(value, T(0)));
+
+    b = {T(1), T(2), T(0), T(0)};
+    trsm('L', 'L', 'N', 'U', 2, 1, T(1), lower.data(), 2, b.data(), 2);
+    assert(almost_equal(b[0], T(1)));
+    assert(almost_equal(b[1], T(1)));
+
+    b = {T(1), T(2), T(0), T(0)};
+    trsm('R', 'L', 'N', 'N', 1, 2, T(1), lower.data(), 2, b.data(), 1);
+    assert(almost_equal(b[0], T(1.0 / 6.0)));
+    assert(almost_equal(b[1], T(2.0 / 3.0)));
+
+    b = {T(1), T(2), T(0), T(0)};
+    trsm('R', 'U', 'N', 'N', 1, 2, T(1), a.data(), 2, b.data(), 1);
+    assert(almost_equal(b[0], T(0.5)));
+    assert(almost_equal(b[1], T(0.5)));
+    trsm('L', 'U', 'N', 'N', 0, 1, T(1), nullptr, 1, nullptr, 1);
 }
 
 template <typename T, typename Scalar, typename Herk> void test_herk(Herk herk) {
@@ -298,16 +354,61 @@ void run_level3_tests() {
     };
     expect_error(3, "SGEMM",
                  [] { sgemm('N', 'N', -1, 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(1, "DGEMM",
+                 [] { dgemm('X', 'N', 1, 1, 1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1); });
+    expect_error(2, "DGEMM",
+                 [] { dgemm('N', 'X', 1, 1, 1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1); });
+    expect_error(4, "DGEMM",
+                 [] { dgemm('N', 'N', 1, -1, 1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1); });
+    expect_error(5, "DGEMM",
+                 [] { dgemm('N', 'N', 1, 1, -1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 1); });
+    expect_error(8, "DGEMM",
+                 [] { dgemm('N', 'N', 1, 1, 1, 1.0, nullptr, 0, nullptr, 1, 0.0, nullptr, 1); });
+    expect_error(10, "DGEMM",
+                 [] { dgemm('N', 'N', 1, 1, 1, 1.0, nullptr, 1, nullptr, 0, 0.0, nullptr, 1); });
+    expect_error(13, "DGEMM",
+                 [] { dgemm('N', 'N', 1, 1, 1, 1.0, nullptr, 1, nullptr, 1, 0.0, nullptr, 0); });
     expect_error(1, "SSYMM",
                  [] { ssymm('X', 'U', 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(2, "SSYMM",
+                 [] { ssymm('L', 'X', 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(3, "SSYMM",
+                 [] { ssymm('L', 'U', -1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(4, "SSYMM",
+                 [] { ssymm('L', 'U', 1, -1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(7, "SSYMM",
+                 [] { ssymm('L', 'U', 2, 1, 1.0F, nullptr, 1, nullptr, 2, 0.0F, nullptr, 2); });
+    expect_error(9, "SSYMM",
+                 [] { ssymm('L', 'U', 2, 1, 1.0F, nullptr, 2, nullptr, 1, 0.0F, nullptr, 2); });
+    expect_error(12, "SSYMM",
+                 [] { ssymm('L', 'U', 2, 1, 1.0F, nullptr, 2, nullptr, 2, 0.0F, nullptr, 1); });
     expect_error(2, "ZHEMM",
                  [] { zhemm('L', 'X', 1, 1, {}, nullptr, 1, nullptr, 1, {}, nullptr, 1); });
+    expect_error(1, "SSYRK", [] { ssyrk('X', 'N', 1, 1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(3, "SSYRK", [] { ssyrk('U', 'N', -1, 1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(4, "SSYRK", [] { ssyrk('U', 'N', 1, -1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
     expect_error(7, "DSYRK", [] { dsyrk('U', 'N', 2, 1, 1.0, nullptr, 1, 0.0, nullptr, 2); });
     expect_error(2, "SSYRK", [] { ssyrk('U', 'C', 1, 1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
     expect_error(10, "CHERK", [] { cherk('U', 'N', 2, 1, 1.0F, nullptr, 2, 0.0F, nullptr, 1); });
     expect_error(2, "CHERK", [] { cherk('U', 'T', 1, 1, 1.0F, nullptr, 1, 0.0F, nullptr, 1); });
     expect_error(9, "SSYR2K",
                  [] { ssyr2k('U', 'N', 2, 1, 1.0F, nullptr, 2, nullptr, 1, 0.0F, nullptr, 2); });
+    expect_error(1, "SSYR2K",
+                 [] { ssyr2k('X', 'N', 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(2, "SSYR2K",
+                 [] { ssyr2k('U', 'X', 1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(3, "SSYR2K",
+                 [] { ssyr2k('U', 'N', -1, 1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(4, "SSYR2K",
+                 [] { ssyr2k('U', 'N', 1, -1, 1.0F, nullptr, 1, nullptr, 1, 0.0F, nullptr, 1); });
+    expect_error(7, "SSYR2K",
+                 [] { ssyr2k('U', 'N', 2, 1, 1.0F, nullptr, 1, nullptr, 2, 0.0F, nullptr, 2); });
+    expect_error(1, "STRMM", [] { strmm('X', 'U', 'N', 'N', 1, 1, 1.0F, nullptr, 1, nullptr, 1); });
+    expect_error(2, "STRMM", [] { strmm('L', 'X', 'N', 'N', 1, 1, 1.0F, nullptr, 1, nullptr, 1); });
+    expect_error(3, "STRMM", [] { strmm('L', 'U', 'X', 'N', 1, 1, 1.0F, nullptr, 1, nullptr, 1); });
+    expect_error(4, "STRMM", [] { strmm('L', 'U', 'N', 'X', 1, 1, 1.0F, nullptr, 1, nullptr, 1); });
+    expect_error(5, "STRMM", [] { strmm('L', 'U', 'N', 'N', -1, 1, 1.0F, nullptr, 1, nullptr, 1); });
+    expect_error(6, "STRMM", [] { strmm('L', 'U', 'N', 'N', 1, -1, 1.0F, nullptr, 1, nullptr, 1); });
     expect_error(12, "ZHER2K",
                  [] { zher2k('U', 'N', 2, 1, {}, nullptr, 2, nullptr, 2, 0.0, nullptr, 1); });
     expect_error(9, "CTRMM", [] { ctrmm('L', 'U', 'N', 'N', 2, 1, {}, nullptr, 1, nullptr, 2); });
