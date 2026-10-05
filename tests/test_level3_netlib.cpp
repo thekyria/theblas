@@ -242,7 +242,7 @@ void run_level3_netlib_tests() {
 
     compare_rank_k<float>(
         [](char ul, char tr, const float *a, float *c) {
-            theblas::ssyrk(ul, tr, 2, 2, 1.25F, a, tr == 'N' ? 3 : 3, 0.5F, c, 3);
+            theblas::ssyrk(ul, tr, 2, 2, 1.25F, a, 3, 0.5F, c, 3);
         },
         [](char ul, char tr, const float *a, float *c) {
             cblas_ssyrk(CblasColMajor, triangle(ul), transpose(tr), 2, 2, 1.25F, a, 3, 0.5F, c, 3);
