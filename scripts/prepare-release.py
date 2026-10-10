@@ -3,7 +3,7 @@
 
 Usage: prepare-release.py <VERSION>
 
-Called by semantic-release during the 'prepare' lifecycle step.
+Local maintainer helper: run from the repository root before opening a release PR.
 """
 import re
 import subprocess
@@ -93,8 +93,8 @@ def update_changelog(version: str, release_date: str, repo: str) -> None:
 
 
 def main() -> None:
-    if len(sys.argv) < 2:
-        print("Usage: prepare-release.py <VERSION>", file=sys.stderr)
+    if len(sys.argv) != 2 or not re.fullmatch(r"\d+\.\d+\.\d+", sys.argv[1]):
+        print("Usage: prepare-release.py <VERSION> (X.Y.Z)", file=sys.stderr)
         sys.exit(1)
 
     version = sys.argv[1]

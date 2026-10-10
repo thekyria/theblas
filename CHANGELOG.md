@@ -27,6 +27,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 
+- Releases now start from maintainer-pushed version tags, with vcpkg port updates
+  proposed as separate PRs. See [Maintainer Releases](CONTRIBUTING.md#maintainer-releases).
 - Level-1 and Level-2 internal indexing now uses `std::ptrdiff_t` helpers for matrix, banded,
   packed, and negative-stride offsets to avoid signed `int` overflow in large layouts.
 - Level-2 routines validate flags, dimensions, leading dimensions, and strides before

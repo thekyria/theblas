@@ -2,123 +2,210 @@ name: Release
 
 on:
   push:
-    branches: ["master"]
-    paths:
-      - "CMakeLists.txt"
+    tags: ["v*.*.*"]
 
-permissions:
-  contents: write
+permissions: {}
 
 concurrency:
-  group: release
+  group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
   release:
-    name: Create Release on Version Bump
+    name: Create Release from Tag
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: false
 
-      - name: Extract version from CMakeLists.txt
-        id: version
+      - name: Verify tag is on master
         run: |
-          VERSION=$(grep -oP 'VERSION\s+\K[0-9]+\.[0-9]+\.[0-9]+' CMakeLists.txt | head -1)
-          if [[ -z "${VERSION}" ]]; then
-            echo "::error::Could not extract version from CMakeLists.txt"
+          git fetch origin master:refs/remotes/origin/master
+          if ! git merge-base --is-ancestor HEAD origin/master; then
+            echo "::error::Tagged commit is not reachable from origin/master"
             exit 1
           fi
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-          echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate tag against CMake project version
+        id: version
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          content = Path("CMakeLists.txt").read_text(encoding="utf-8")
+          content = re.sub(r"#\[(=*)\[.*?\]\1\]", "", content, flags=re.DOTALL)
+          content = re.sub(r"#[^\n]*", "", content)
+          project = re.search(r"\bproject\s*\(\s*theblas\b([^)]*)\)", content, re.IGNORECASE)
+          version = re.search(r"\bVERSION\s+(\d+\.\d+\.\d+)(?=\s|$)", project[1], re.IGNORECASE) if project else None
+          tag = os.environ["TAG"]
+          if not version or not re.fullmatch(r"v\d+\.\d+\.\d+", tag) or tag[1:] != version[1]:
+              raise SystemExit("Tag must equal v<CMake project VERSION> (X.Y.Z)")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write(f"version={version[1]}\ntag={tag}\n")
+          PY
 
       - name: Check if release already exists
         id: release_check
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
-          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+          if gh api "repos/$GH_REPO/releases/tags/$TAG" >/dev/null 2>/tmp/release-check-error; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Release ${{ steps.version.outputs.tag }} already exists; skipping."
-          else
+            echo "Release $TAG already exists; skipping creation."
+          elif grep -q 'HTTP 404' /tmp/release-check-error; then
             echo "exists=false" >> "$GITHUB_OUTPUT"
+          else
+            cat /tmp/release-check-error >&2
+            exit 1
           fi
 
-      - name: Extract release notes and update files
+      - name: Extract committed release notes
         if: steps.release_check.outputs.exists == 'false'
-        run: python3 scripts/extract-changelog.py > /tmp/release-notes.md
-
-      - name: Update CHANGELOG.md and CMakeLists.txt
-        if: steps.release_check.outputs.exists == 'false'
-        run: python3 scripts/prepare-release.py ${{ steps.version.outputs.version }}
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: python3 scripts/extract-changelog.py "$VERSION" > /tmp/release-notes.md
 
       - name: Create GitHub Release
         if: steps.release_check.outputs.exists == 'false'
-        id: create_release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            --title "theblas ${{ steps.version.outputs.tag }}" \
-            --notes-file /tmp/release-notes.md \
-            --target master
+          gh release create "$TAG" --verify-tag \
+            --title "theblas $TAG" \
+            --notes-file /tmp/release-notes.md
+
+  update-port:
+    name: Open vcpkg Port Update PR
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
+      VERSION: ${{ needs.release.outputs.version }}
+      TAG: ${{ needs.release.outputs.tag }}
+      BRANCH: release/vcpkg-port-${{ needs.release.outputs.tag }}
+
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Check existing port PR and branch
+        id: port_check
+        run: |
+          PR_COUNT=$(gh pr list --head "$BRANCH" --base master --state all --json number --jq 'length')
+          if [[ "$PR_COUNT" != 0 ]]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Port PR for $TAG already exists; skipping."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+            REMOTE_BRANCH=$(git ls-remote --heads origin "refs/heads/$BRANCH")
+            if [[ -n "$REMOTE_BRANCH" ]]; then
+              echo "branch_exists=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "branch_exists=false" >> "$GITHUB_OUTPUT"
+              python3 - <<'PY'
+          import json
+          import os
+
+          def version_tuple(version):
+              return tuple(map(int, version.split(".")))
+
+          with open("ports/theblas/vcpkg.json") as manifest:
+              port_version = json.load(manifest)["version"]
+          with open("versions/baseline.json") as baseline:
+              baseline_version = json.load(baseline)["default"]["theblas"]["baseline"]
+          target = version_tuple(os.environ["VERSION"])
+          if any(version_tuple(v) > target for v in (port_version, baseline_version)):
+              print("A newer port version is already on master; skipping the older update.")
+              with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+                  output.write("skip=true\n")
+          PY
+            fi
+          fi
 
       - name: Update vcpkg port files
-        if: steps.release_check.outputs.exists == 'false'
+        if: steps.port_check.outputs.skip == 'false' && steps.port_check.outputs.branch_exists == 'false'
         run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          TAG="${{ steps.version.outputs.tag }}"
-          TARBALL_URL="https://github.com/${{ github.repository }}/archive/refs/tags/${TAG}.tar.gz"
+          git switch -c "$BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          TARBALL_URL="https://github.com/${GH_REPO}/archive/refs/tags/${TAG}.tar.gz"
 
-          curl -sL "${TARBALL_URL}" -o /tmp/theblas-${VERSION}.tar.gz
-          SHA512=$(sha512sum /tmp/theblas-${VERSION}.tar.gz | awk '{print $1}')
+          curl --fail --show-error --location --retry 3 "$TARBALL_URL" -o /tmp/theblas.tar.gz
+          SHA512=$(sha512sum /tmp/theblas.tar.gz | awk '{print $1}')
+          export SHA512
 
-          # Update SHA512 in portfile.cmake
-          sed -i "s|SHA512 [0-9a-f]*|SHA512 ${SHA512}|" ports/theblas/portfile.cmake
+          python3 - <<'PY'
+          import json
+          import os
+          import re
+          from pathlib import Path
 
-          # Update version in ports/theblas/vcpkg.json
-          sed -i "s|\"version\": \".*\"|\"version\": \"${VERSION}\"|" ports/theblas/vcpkg.json
+          portfile = Path("ports/theblas/portfile.cmake")
+          content, count = re.subn(r"(\bSHA512\s+)[0-9a-fA-F]+", lambda m: m[1] + os.environ["SHA512"], portfile.read_text())
+          if count != 1:
+              raise SystemExit("Expected exactly one SHA512 in portfile.cmake")
+          portfile.write_text(content)
+          manifest = Path("ports/theblas/vcpkg.json")
+          data = json.loads(manifest.read_text())
+          data["version"] = os.environ["VERSION"]
+          data.pop("port-version", None)
+          manifest.write_text(json.dumps(data, indent=2) + "\n")
+          PY
 
-          # Stage port changes to compute tree hash
           git add ports/theblas/
-          TREE_HASH=$(git write-tree --prefix=ports/theblas/)
+          git diff --cached --quiet || git commit -m "chore(vcpkg): update port for $TAG"
+          TREE_HASH=$(git rev-parse HEAD:ports/theblas)
 
-          # Prepend new version entry to the versions database
-          python3 - "${VERSION}" "${TREE_HASH}" <<'EOF'
+          python3 - "$VERSION" "$TREE_HASH" <<'PY'
           import json, sys
           version, tree = sys.argv[1], sys.argv[2]
           with open("versions/t-/theblas.json") as f:
               data = json.load(f)
-          entries = data.get("versions", [])
-          # Avoid duplicates
-          if not any(e.get("version") == version for e in entries):
-              entries.insert(0, {"version": version, "git-tree": tree})
+          entries = [e for e in data["versions"] if not (e.get("version") == version and e.get("port-version", 0) == 0)]
+          entries.insert(0, {"version": version, "git-tree": tree, "port-version": 0})
           data["versions"] = entries
           with open("versions/t-/theblas.json", "w") as f:
               json.dump(data, f, indent=2)
               f.write("\n")
-          EOF
 
-          # Update baseline
-          python3 - "${VERSION}" <<'EOF'
-          import json, sys
-          version = sys.argv[1]
           with open("versions/baseline.json") as f:
               data = json.load(f)
           data["default"]["theblas"] = {"baseline": version, "port-version": 0}
           with open("versions/baseline.json", "w") as f:
               json.dump(data, f, indent=2)
               f.write("\n")
-          EOF
+          PY
+          git add versions/t-/theblas.json versions/baseline.json
+          git diff --cached --quiet || git commit -m "chore(vcpkg): register $TAG"
+          git push origin "HEAD:refs/heads/$BRANCH"
 
-      - name: Commit updated files
-        if: steps.release_check.outputs.exists == 'false'
+      - name: Open port update PR
+        if: steps.port_check.outputs.skip == 'false'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md ports/ versions/
-          git diff --cached --quiet || git commit -m "chore(release): update changelog and vcpkg port for ${{ steps.version.outputs.tag }} [skip ci]"
-          git push
+          gh pr create --base master --head "$BRANCH" \
+            --title "chore(vcpkg): update theblas to $TAG" \
+            --body "Updates the port archive checksum, version database, and baseline for $TAG. PRs opened with GITHUB_TOKEN do not trigger CI workflows on themselves; a maintainer must arrange validation before merging."
