@@ -126,6 +126,23 @@ jobs:
               echo "branch_exists=true" >> "$GITHUB_OUTPUT"
             else
               echo "branch_exists=false" >> "$GITHUB_OUTPUT"
+              python3 - <<'PY'
+          import json
+          import os
+
+          def version_tuple(version):
+              return tuple(map(int, version.split(".")))
+
+          with open("ports/theblas/vcpkg.json") as manifest:
+              port_version = json.load(manifest)["version"]
+          with open("versions/baseline.json") as baseline:
+              baseline_version = json.load(baseline)["default"]["theblas"]["baseline"]
+          target = version_tuple(os.environ["VERSION"])
+          if any(version_tuple(v) > target for v in (port_version, baseline_version)):
+              print("A newer port version is already on master; skipping the older update.")
+              with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+                  output.write("skip=true\n")
+          PY
             fi
           fi
 

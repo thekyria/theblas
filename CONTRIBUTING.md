@@ -138,6 +138,7 @@ If the port update fails, rerun failed jobs in GitHub Actions. Rerunning the who
 workflow also works: an existing release skips only release creation. Existing port
 PRs (including closed ones) are left untouched. If the branch was pushed but PR
 creation failed, a rerun opens the PR without rewriting the branch.
+An older release's update is skipped if a newer port version is already on `master`.
 
 ### Required Repository Settings
 
