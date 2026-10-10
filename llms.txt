@@ -1,13 +1,13 @@
 # theblas
 
-> theblas is a minimal C++17 library implementing all Netlib BLAS Level 1 routines for real and complex vectors (swap, copy, axpy, scal, dot, nrm2, asum, iamax, rot, rotg, rotm, rotmg) in s/d/c/z precision variants. It ships with a CMake build system, cross-compilation toolchains, vcpkg and Conan 2.x packaging, comprehensive static analysis, and automated GitHub Releases with a GitHub Pages documentation site.
+> theblas is a minimal educational C++17 library implementing Netlib BLAS Levels 1, 2, and 3 for real and complex types in all applicable s/d/c/z precision variants. It covers vector operations, matrix-vector operations, and matrix-matrix families (gemm, symm, hemm, syrk, herk, syr2k, her2k, trmm, trsm). It ships with a CMake build system, cross-compilation toolchains, vcpkg and Conan 2.x packaging, comprehensive static analysis, and automated GitHub Releases with a GitHub Pages documentation site.
 
-The library honours BLAS-style stride parameters (`incx`, `incy`), negative strides, and 1-based index returns. Mixed-precision scaling variants (`csscal`, `zdscal`) and conjugated dot products (`cdotc`, `zdotc`) are included. The project serves as a compact, well-tested reference implementation in idiomatic C++17.
+The library honours BLAS-style stride parameters (`incx`, `incy`), negative strides, column-major matrix storage, and 1-based index returns. Mixed-precision scaling variants (`csscal`, `zdscal`) and conjugated dot products (`cdotc`, `zdotc`) are included. Internal indexing uses `std::ptrdiff_t`, and Level 2/3 argument errors use a replaceable process-global handler (silent by default). The project serves as a compact, well-tested reference implementation in idiomatic C++17, not an optimized vendor BLAS.
 
 ## Documentation
 
 - [README](README.md): Project overview, implemented routines, build instructions, CMake options, presets, cross-compilation, static analysis, pre-commit, vcpkg and Conan integration, and Doxygen generation
-- [docs/math-reference.md](docs/math-reference.md): Mathematical definitions for every Level 1 BLAS operation — notation, formulas, and parameter conventions in Diátaxis Reference format
+- [docs/math-reference.md](docs/math-reference.md): Mathematical definitions for Level 1, 2, and 3 BLAS operations — notation, formulas, and parameter conventions in Diátaxis Reference format
 - [CHANGELOG](CHANGELOG.md): Version history following Keep a Changelog format
 - [CONTRIBUTING](CONTRIBUTING.md): Guidelines for contributing, code style, and pull request process
 - [Code of Conduct](CODE_OF_CONDUCT.md): Community guidelines for respectful participation
@@ -16,21 +16,25 @@ The library honours BLAS-style stride parameters (`incx`, `incy`), negative stri
 
 ## Source Code
 
-- [include/theblas/theblas.h](include/theblas/theblas.h): Complete public C++ API — all Level 1 and Level 2 BLAS declarations with Doxygen comments and parameter descriptions
+- [include/theblas/theblas.h](include/theblas/theblas.h): Complete public C++ API — Level 1, 2, and 3 BLAS declarations with Doxygen comments and parameter descriptions
 - [src/level1.cpp](src/level1.cpp): Level 1 BLAS implementations, including vector operations, reductions, indexes, and rotations
 - [src/level2_dense.cpp](src/level2_dense.cpp): Dense Level 2 matrix-vector and rank-update implementations
 - [src/level2_banded.cpp](src/level2_banded.cpp): Banded Level 2 matrix-vector and triangular implementations
 - [src/level2_packed.cpp](src/level2_packed.cpp): Packed Level 2 matrix-vector, triangular, and rank-update implementations
+- [src/level3.cpp](src/level3.cpp): Level 3 matrix-matrix multiplication, rank updates, and triangular solves
 - [src/theblas_detail.hpp](src/theblas_detail.hpp): Private shared indexing, option-validation, and conjugation helpers
 - [tests/test_main.cpp](tests/test_main.cpp): Single CTest executable runner
 - [tests/test_level1.cpp](tests/test_level1.cpp): Level 1 unit tests using `assert` and `almost_equal` helpers
 - [tests/test_level2_core.cpp](tests/test_level2_core.cpp): Representative Level 2 operation tests
 - [tests/test_level2_variants.cpp](tests/test_level2_variants.cpp): Level 2 precision, edge-case, and coverage-variant tests
+- [tests/test_level3.cpp](tests/test_level3.cpp): Level 3 precision, flags, edge-case, and argument-validation tests
 
 ## Examples
 
 - [examples/vector_ops.cpp](examples/vector_ops.cpp): Demonstrates `snrm2`, `sscal`, `saxpy`, `sdot`, `isamax` with annotated output
 - [examples/complex_ops.cpp](examples/complex_ops.cpp): Demonstrates `dznrm2`, `zdscal`, `zaxpy`, `zdotc` with annotated output
+- [examples/matrix_vector_ops.cpp](examples/matrix_vector_ops.cpp): Demonstrates Level 2 matrix-vector operations
+- [examples/matrix_matrix_ops.cpp](examples/matrix_matrix_ops.cpp): Demonstrates Level 3 `sgemm` with raw column-major arrays
 - [examples/benchmark.cpp](examples/benchmark.cpp): Timing benchmark for core routines
 
 ## Build and Configuration
@@ -38,7 +42,7 @@ The library honours BLAS-style stride parameters (`incx`, `incy`), negative stri
 - [CMakeLists.txt](CMakeLists.txt): Root CMake build — library target, install rules, options (`THEBLAS_ENABLE_IPO`, `THEBLAS_ENABLE_RELEASE_HARDENING`, `THEBLAS_ENABLE_SANITIZERS`, `THEBLAS_ENABLE_STRICT_WARNINGS`, `THEBLAS_WARNINGS_AS_ERRORS`), `CMAKE_EXPORT_COMPILE_COMMANDS ON`
 - [CMakePresets.json](CMakePresets.json): Configure/build/test presets for `gcc-debug`, `gcc-release`, `gcc-debug-sanitized`, `clang-debug`, `clang-debug-sanitized`, `clang-release`, `msvc-release`, `arm-linux-debug`, `arm-linux-release`, `arm-none-eabi-debug`, `arm-none-eabi-release`
 - [tests/CMakeLists.txt](tests/CMakeLists.txt): CTest integration for the test suite
-- [examples/CMakeLists.txt](examples/CMakeLists.txt): Example targets (`example_vector_ops`, `example_complex_ops`, `example_benchmark`)
+- [examples/CMakeLists.txt](examples/CMakeLists.txt): Example targets (`example_vector_ops`, `example_complex_ops`, `example_matrix_vector_ops`, `example_matrix_matrix_ops`, `example_benchmark`)
 - [Makefile](Makefile): Convenience wrapper for `build`, `test`, `install`, `docs`, `clean` with `BUILD_DIR` and `CONFIG` variables
 
 ## Toolchains

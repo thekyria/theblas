@@ -57,6 +57,7 @@ jobs:
           ${{github.workspace}}/tests/test_level2_variants.cpp \
           ${{github.workspace}}/tests/test_level3.cpp \
           ${{github.workspace}}/examples/vector_ops.cpp \
+          ${{github.workspace}}/examples/matrix_matrix_ops.cpp \
           ${{github.workspace}}/examples/complex_ops.cpp
 
     - name: Build
