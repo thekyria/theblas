@@ -10,7 +10,7 @@ namespace theblas {
 
 /**
  * @file theblas.h
- * @brief Public C++17 API for a minimal Level-1 and Level-2 BLAS-like library.
+ * @brief Public C++17 API for a minimal Level-1, Level-2, and Level-3 BLAS-like library.
  *
  * Naming follows classic BLAS conventions:
  * - s*: single-precision real (`float`)
@@ -43,7 +43,7 @@ namespace theblas {
 using error_handler_t = void (*)(const char *routine, int param);
 
 /**
- * @brief Set the process-global argument error handler used by Level-2 routines.
+ * @brief Set the process-global argument error handler used by Level-2 and Level-3 routines.
  *
  * Passing `nullptr` restores the default silent handler. Changing the handler is not
  * thread-safe while other threads may call theblas routines concurrently.
@@ -1151,6 +1151,280 @@ void chpr2(char uplo, int n, std::complex<float> alpha, const std::complex<float
 /** @copydoc chpr2 */
 void zhpr2(char uplo, int n, std::complex<double> alpha, const std::complex<double> *x, int incx,
            const std::complex<double> *y, int incy, std::complex<double> *ap);
+
+/** @} */
+
+/** @defgroup level3_ops Level-3 Matrix-Matrix Operations
+ *  @brief BLAS-like matrix-matrix operations using column-major storage.
+ *
+ *  Matrix element \f$a(i,j)\f$ is stored at offset \f$i+j\cdot lda\f$.
+ *  Leading dimensions must be at least the number of stored rows (and at least one).
+ *  `trans` accepts 'N', 'T', or 'C' for matrix multiply and triangular operations;
+ *  symmetric rank updates accept 'N' or 'T', while Hermitian rank updates accept 'N'
+ *  or 'C'. `uplo` accepts 'U' or 'L'; `diag` accepts 'U' or 'N'; `side` accepts 'L'
+ *  or 'R'. Rank updates modify only the triangle selected by `uplo`. Invalid arguments
+ *  are reported to the configured error handler using Netlib parameter numbering.
+ *
+ *  A zero row or column dimension is a quick return. Rank-k routines with `k == 0`
+ *  apply `beta` to the selected output triangle. Triangular matrix operations honor
+ *  the unit-diagonal flag without reading the stored diagonal.
+ *  @{
+ */
+
+/**
+ * @brief General matrix multiply: C ← alpha·op(A)·op(B) + beta·C.
+ * @param transa Operation applied to A.
+ * @param transb Operation applied to B.
+ * @param m Rows of op(A) and C.
+ * @param n Columns of op(B) and C.
+ * @param k Columns of op(A) and rows of op(B).
+ * @param alpha Product multiplier.
+ * @param a A matrix in column-major storage.
+ * @param lda Leading dimension of A.
+ * @param b B matrix in column-major storage.
+ * @param ldb Leading dimension of B.
+ * @param beta Existing C multiplier.
+ * @param c Input/output matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void sgemm(char transa, char transb, int m, int n, int k, float alpha, const float *a, int lda,
+           const float *b, int ldb, float beta, float *c, int ldc);
+/** @copydoc sgemm */
+void dgemm(char transa, char transb, int m, int n, int k, double alpha, const double *a, int lda,
+           const double *b, int ldb, double beta, double *c, int ldc);
+/** @copydoc sgemm */
+void cgemm(char transa, char transb, int m, int n, int k, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+           std::complex<float> beta, std::complex<float> *c, int ldc);
+/** @copydoc sgemm */
+void zgemm(char transa, char transb, int m, int n, int k, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+           std::complex<double> beta, std::complex<double> *c, int ldc);
+
+/**
+ * @brief Symmetric matrix multiply: C ← alpha·A·B + beta·C or C ← alpha·B·A + beta·C.
+ * @param side 'L' for A·B, 'R' for B·A.
+ * @param uplo Stored triangle of the symmetric matrix A.
+ * @param m Rows of B and C.
+ * @param n Columns of B and C.
+ * @param alpha Product multiplier.
+ * @param a Symmetric matrix A.
+ * @param lda Leading dimension of A.
+ * @param b Input matrix B.
+ * @param ldb Leading dimension of B.
+ * @param beta Existing C multiplier.
+ * @param c Input/output matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void ssymm(char side, char uplo, int m, int n, float alpha, const float *a, int lda, const float *b,
+           int ldb, float beta, float *c, int ldc);
+/** @copydoc ssymm */
+void dsymm(char side, char uplo, int m, int n, double alpha, const double *a, int lda,
+           const double *b, int ldb, double beta, double *c, int ldc);
+/** @copydoc ssymm */
+void csymm(char side, char uplo, int m, int n, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+           std::complex<float> beta, std::complex<float> *c, int ldc);
+/** @copydoc ssymm */
+void zsymm(char side, char uplo, int m, int n, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+           std::complex<double> beta, std::complex<double> *c, int ldc);
+/**
+ * @brief Hermitian matrix multiply: C ← alpha·A·B + beta·C or C ← alpha·B·A + beta·C.
+ * @param side 'L' for A·B, 'R' for B·A.
+ * @param uplo Stored triangle of the Hermitian matrix A.
+ * @param m Rows of B and C.
+ * @param n Columns of B and C.
+ * @param alpha Product multiplier.
+ * @param a Hermitian matrix A.
+ * @param lda Leading dimension of A.
+ * @param b Input matrix B.
+ * @param ldb Leading dimension of B.
+ * @param beta Existing C multiplier.
+ * @param c Input/output matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void chemm(char side, char uplo, int m, int n, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+           std::complex<float> beta, std::complex<float> *c, int ldc);
+/** @copydoc chemm */
+void zhemm(char side, char uplo, int m, int n, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+           std::complex<double> beta, std::complex<double> *c, int ldc);
+
+/**
+ * @brief Symmetric rank-k update: C ← alpha·op(A)·op(A)ᵀ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A ('N' or 'T').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Product multiplier.
+ * @param a Input matrix A.
+ * @param lda Leading dimension of A.
+ * @param beta Existing C multiplier.
+ * @param c Input/output symmetric matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void ssyrk(char uplo, char trans, int n, int k, float alpha, const float *a, int lda, float beta,
+           float *c, int ldc);
+/** @copydoc ssyrk */
+void dsyrk(char uplo, char trans, int n, int k, double alpha, const double *a, int lda, double beta,
+           double *c, int ldc);
+/**
+ * @brief Complex symmetric rank-k update: C ← alpha·op(A)·op(A)ᵀ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A ('N' or 'T').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Complex product multiplier.
+ * @param a Input matrix A.
+ * @param lda Leading dimension of A.
+ * @param beta Complex existing C multiplier.
+ * @param c Input/output symmetric matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void csyrk(char uplo, char trans, int n, int k, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, std::complex<float> beta, std::complex<float> *c,
+           int ldc);
+/** @copydoc csyrk */
+void zsyrk(char uplo, char trans, int n, int k, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, std::complex<double> beta,
+           std::complex<double> *c, int ldc);
+/**
+ * @brief Hermitian rank-k update: C ← alpha·op(A)·op(A)ᴴ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A ('N' or 'C').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Real product multiplier.
+ * @param a Input matrix A.
+ * @param lda Leading dimension of A.
+ * @param beta Real existing C multiplier.
+ * @param c Input/output Hermitian matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void cherk(char uplo, char trans, int n, int k, float alpha, const std::complex<float> *a, int lda,
+           float beta, std::complex<float> *c, int ldc);
+/** @copydoc cherk */
+void zherk(char uplo, char trans, int n, int k, double alpha, const std::complex<double> *a,
+           int lda, double beta, std::complex<double> *c, int ldc);
+
+/**
+ * @brief Symmetric rank-2k update: C ← alpha·op(A)·op(B)ᵀ + alpha·op(B)·op(A)ᵀ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A and B ('N' or 'T').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Product multiplier.
+ * @param a First input matrix.
+ * @param lda Leading dimension of A.
+ * @param b Second input matrix.
+ * @param ldb Leading dimension of B.
+ * @param beta Existing C multiplier.
+ * @param c Input/output symmetric matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void ssyr2k(char uplo, char trans, int n, int k, float alpha, const float *a, int lda,
+            const float *b, int ldb, float beta, float *c, int ldc);
+/** @copydoc ssyr2k */
+void dsyr2k(char uplo, char trans, int n, int k, double alpha, const double *a, int lda,
+            const double *b, int ldb, double beta, double *c, int ldc);
+/**
+ * @brief Complex symmetric rank-2k update: C ← alpha·op(A)·op(B)ᵀ + alpha·op(B)·op(A)ᵀ + beta·C.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A and B ('N' or 'T').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Complex product multiplier.
+ * @param a First input matrix.
+ * @param lda Leading dimension of A.
+ * @param b Second input matrix.
+ * @param ldb Leading dimension of B.
+ * @param beta Complex existing C multiplier.
+ * @param c Input/output symmetric matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void csyr2k(char uplo, char trans, int n, int k, std::complex<float> alpha,
+            const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+            std::complex<float> beta, std::complex<float> *c, int ldc);
+/** @copydoc csyr2k */
+void zsyr2k(char uplo, char trans, int n, int k, std::complex<double> alpha,
+            const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+            std::complex<double> beta, std::complex<double> *c, int ldc);
+/**
+ * @brief Hermitian rank-2k update with complex alpha and real beta.
+ * @param uplo Triangle of C to update.
+ * @param trans Operation applied to A and B ('N' or 'C').
+ * @param n Order of C.
+ * @param k Rank of the update.
+ * @param alpha Complex product multiplier.
+ * @param a First input matrix.
+ * @param lda Leading dimension of A.
+ * @param b Second input matrix.
+ * @param ldb Leading dimension of B.
+ * @param beta Real existing C multiplier.
+ * @param c Input/output Hermitian matrix C.
+ * @param ldc Leading dimension of C.
+ */
+void cher2k(char uplo, char trans, int n, int k, std::complex<float> alpha,
+            const std::complex<float> *a, int lda, const std::complex<float> *b, int ldb,
+            float beta, std::complex<float> *c, int ldc);
+/** @copydoc cher2k */
+void zher2k(char uplo, char trans, int n, int k, std::complex<double> alpha,
+            const std::complex<double> *a, int lda, const std::complex<double> *b, int ldb,
+            double beta, std::complex<double> *c, int ldc);
+
+/**
+ * @brief Triangular matrix multiply: B ← alpha·op(A)·B or B ← alpha·B·op(A).
+ * @param side 'L' for op(A)·B, 'R' for B·op(A).
+ * @param uplo Stored triangle of A.
+ * @param trans Operation applied to A.
+ * @param diag 'U' for unit diagonal, 'N' for non-unit diagonal.
+ * @param m Rows of B.
+ * @param n Columns of B.
+ * @param alpha Scalar multiplier.
+ * @param a Triangular matrix A.
+ * @param lda Leading dimension of A.
+ * @param b Input/output matrix B.
+ * @param ldb Leading dimension of B.
+ */
+void strmm(char side, char uplo, char trans, char diag, int m, int n, float alpha, const float *a,
+           int lda, float *b, int ldb);
+/** @copydoc strmm */
+void dtrmm(char side, char uplo, char trans, char diag, int m, int n, double alpha, const double *a,
+           int lda, double *b, int ldb);
+/** @copydoc strmm */
+void ctrmm(char side, char uplo, char trans, char diag, int m, int n, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, std::complex<float> *b, int ldb);
+/** @copydoc strmm */
+void ztrmm(char side, char uplo, char trans, char diag, int m, int n, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, std::complex<double> *b, int ldb);
+
+/**
+ * @brief Triangular solve: op(A)·X = alpha·B or X·op(A) = alpha·B; X overwrites B.
+ * @param side 'L' solves op(A)·X = alpha·B; 'R' solves X·op(A) = alpha·B.
+ * @param uplo Stored triangle of A.
+ * @param trans Operation applied to A.
+ * @param diag 'U' for unit diagonal, 'N' for non-unit diagonal.
+ * @param m Rows of B.
+ * @param n Columns of B.
+ * @param alpha Right-hand-side multiplier.
+ * @param a Triangular matrix A.
+ * @param lda Leading dimension of A.
+ * @param b On entry, the right-hand side; on exit, the solution.
+ * @param ldb Leading dimension of B.
+ */
+void strsm(char side, char uplo, char trans, char diag, int m, int n, float alpha, const float *a,
+           int lda, float *b, int ldb);
+/** @copydoc strsm */
+void dtrsm(char side, char uplo, char trans, char diag, int m, int n, double alpha, const double *a,
+           int lda, double *b, int ldb);
+/** @copydoc strsm */
+void ctrsm(char side, char uplo, char trans, char diag, int m, int n, std::complex<float> alpha,
+           const std::complex<float> *a, int lda, std::complex<float> *b, int ldb);
+/** @copydoc strsm */
+void ztrsm(char side, char uplo, char trans, char diag, int m, int n, std::complex<double> alpha,
+           const std::complex<double> *a, int lda, std::complex<double> *b, int ldb);
 
 /** @} */
 

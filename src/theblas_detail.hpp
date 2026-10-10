@@ -56,6 +56,11 @@ inline bool valid_uplo(char value) {
     return upper == 'U' || upper == 'L';
 }
 
+inline bool valid_side(char value) {
+    const char upper = to_upper(value);
+    return upper == 'L' || upper == 'R';
+}
+
 inline bool valid_diag(char value) {
     const char upper = to_upper(value);
     return upper == 'U' || upper == 'N';

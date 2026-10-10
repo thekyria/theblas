@@ -40,7 +40,8 @@ add_library(
   src/level1.cpp
   src/level2_dense.cpp
   src/level2_banded.cpp
-  src/level2_packed.cpp)
+  src/level2_packed.cpp
+  src/level3.cpp)
 
 add_library(theblas::theblas ALIAS theblas)
 
