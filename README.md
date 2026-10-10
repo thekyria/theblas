@@ -647,3 +647,11 @@ Documentation is built and published to [GitHub Pages](https://thekyria.github.i
 doxygen Doxyfile
 # open docs/doxygen/html/index.html
 ```
+
+## Maintainer Releases
+
+Merge a PR that bumps the CMake project version and updates `CHANGELOG.md`, then
+push an annotated `vX.Y.Z` tag on that merged commit. CI creates the GitHub Release
+and opens a separate vcpkg port update PR; it does not push changes to `master`.
+See [Maintainer Releases](CONTRIBUTING.md#maintainer-releases) for preparation,
+reruns, and required repository settings.

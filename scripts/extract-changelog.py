@@ -1,23 +1,30 @@
 #!/usr/bin/env python3
-"""Print the body of the ## [Unreleased] section from CHANGELOG.md.
+"""Print a versioned section from the committed CHANGELOG.md.
 
-Output is used by semantic-release as the GitHub Release notes.
-Exits silently with no output if the section is empty.
+Usage: extract-changelog.py <VERSION>
+
+Fails if the requested release section is missing or empty.
 """
 import re
 import sys
+
+if len(sys.argv) != 2 or not re.fullmatch(r"\d+\.\d+\.\d+", sys.argv[1]):
+    sys.exit("Usage: extract-changelog.py <VERSION> (X.Y.Z)")
+
+version = sys.argv[1]
 
 with open("CHANGELOG.md", encoding="utf-8") as f:
     content = f.read()
 
 m = re.search(
-    r"^## \[Unreleased\]\s*\n(.*?)(?=^## \[|\Z)",
+    rf"^## \[{re.escape(version)}\][^\n]*\n(.*?)(?=^## \[|^\[[^\]]+\]:|\Z)",
     content,
     re.MULTILINE | re.DOTALL,
 )
 if not m:
-    sys.exit(0)
+    sys.exit(f"No changelog section for {version}")
 
 notes = m.group(1).strip()
-if notes:
-    print(notes)
+if not notes:
+    sys.exit(f"Empty changelog section for {version}")
+print(notes)
