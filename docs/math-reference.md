@@ -1,6 +1,6 @@
 # Mathematical Reference
 
-This page defines the mathematical operation performed by each Level-1 BLAS
+This page defines the mathematical operation performed by each Level-1, Level-2, and Level-3 BLAS
 routine in **theblas**. Notation is introduced first, followed by one section
 per operation family.
 
@@ -528,3 +528,138 @@ where $A$ is symmetric.
 $$A \leftarrow \alpha\,x\,y^T + \alpha\,y\,x^T + A$$
 
 where $A$ is symmetric, stored in packed format.
+
+---
+
+# Level 3 — Matrix-Matrix Operations
+
+Level 3 operates on matrices stored in column-major order. With zero-based
+indices, element $(i,j)$ is at offset $i+j\cdot ld$, where the leading dimension
+$ld$ is the stored column stride, at least the number of stored rows and at least
+one. Padding is allowed.
+
+$\operatorname{op}(A)$ means $A$, $A^T$, or $A^H$ (conjugate transpose) for
+`trans = 'N'`, `'T'`, or `'C'`. Symmetric rank updates accept only `'N'`/`'T'`;
+Hermitian rank updates accept only `'N'`/`'C'`.
+`side = 'L'`/`'R'` places the structured matrix on the left/right.
+`uplo = 'U'`/`'L'` selects the stored upper/lower triangle.
+For triangular routines, `diag = 'U'` assumes a unit diagonal without reading it;
+`'N'` uses the stored diagonal.
+
+All families provide `s`/`d`/`c`/`z` variants except the Hermitian families,
+which provide only `c`/`z`. Invalid arguments are reported through
+`theblas::set_error_handler` using Netlib routine names and 1-based parameter
+numbers; the default handler is silent. These are educational implementations,
+not optimized vendor kernels.
+
+## gemm — General Matrix-Matrix Multiplication
+
+**Routines:** `sgemm`, `dgemm`, `cgemm`, `zgemm`
+
+$$C \leftarrow \alpha\,\operatorname{op}(A)\operatorname{op}(B) + \beta\,C$$
+
+$\operatorname{op}(A)$ is $m \times k$, $\operatorname{op}(B)$ is $k \times n$,
+and $C$ is $m \times n$. Leading dimensions describe the stored matrices,
+before any transpose is applied.
+
+---
+
+## symm / hemm — Symmetric / Hermitian Matrix-Matrix Multiplication
+
+**Routines:** `ssymm`, `dsymm`, `csymm`, `zsymm`; `chemm`, `zhemm`
+
+$$C \leftarrow
+\begin{cases}
+\alpha\,A B + \beta\,C & \text{if side = 'L'} \\
+\alpha\,B A + \beta\,C & \text{if side = 'R'}
+\end{cases}$$
+
+$B$ and $C$ are $m \times n$. $A$ is $m \times m$ for left-side operations,
+or $n \times n$ for right-side operations. Only the selected triangle of $A$
+is read. `symm` uses $A^T=A$, including for complex symmetric matrices;
+`hemm` uses $A^H=A$ and ignores imaginary diagonal components.
+
+---
+
+## syrk / herk — Symmetric / Hermitian Rank-k Update
+
+**Routines:** `ssyrk`, `dsyrk`, `csyrk`, `zsyrk`; `cherk`, `zherk`
+
+For `syrk`:
+
+$$C \leftarrow
+\begin{cases}
+\alpha\,A A^T + \beta\,C & \text{if trans = 'N'} \\
+\alpha\,A^T A + \beta\,C & \text{if trans = 'T'}
+\end{cases}$$
+
+For `herk`:
+
+$$C \leftarrow
+\begin{cases}
+\alpha\,A A^H + \beta\,C & \text{if trans = 'N'} \\
+\alpha\,A^H A + \beta\,C & \text{if trans = 'C'}
+\end{cases}$$
+
+$C$ is $n \times n$; $A$ is $n \times k$ for `'N'`, otherwise $k \times n$.
+Only the selected triangle of $C$ is updated. `herk` takes real $\alpha$
+and $\beta$ and makes the updated diagonal real.
+
+---
+
+## syr2k / her2k — Symmetric / Hermitian Rank-2k Update
+
+**Routines:** `ssyr2k`, `dsyr2k`, `csyr2k`, `zsyr2k`; `cher2k`, `zher2k`
+
+For `syr2k`:
+
+$$C \leftarrow
+\begin{cases}
+\alpha\,A B^T + \alpha\,B A^T + \beta\,C & \text{if trans = 'N'} \\
+\alpha\,A^T B + \alpha\,B^T A + \beta\,C & \text{if trans = 'T'}
+\end{cases}$$
+
+For `her2k`:
+
+$$C \leftarrow
+\begin{cases}
+\alpha\,A B^H + \bar{\alpha}\,B A^H + \beta\,C & \text{if trans = 'N'} \\
+\alpha\,A^H B + \bar{\alpha}\,B^H A + \beta\,C & \text{if trans = 'C'}
+\end{cases}$$
+
+$A$ and $B$ are $n \times k$ for `'N'`, otherwise $k \times n$.
+$C$ is $n \times n$, and only its selected triangle is updated.
+`her2k` takes complex $\alpha$ and real $\beta$ and makes the updated diagonal real.
+When $k=0$, rank-k and rank-2k routines still scale the selected triangle by $\beta$.
+
+---
+
+## trmm — Triangular Matrix-Matrix Multiplication
+
+**Routines:** `strmm`, `dtrmm`, `ctrmm`, `ztrmm`
+
+$$B \leftarrow
+\begin{cases}
+\alpha\,\operatorname{op}(A) B & \text{if side = 'L'} \\
+\alpha\,B\operatorname{op}(A) & \text{if side = 'R'}
+\end{cases}$$
+
+$B$ is $m \times n$ and is overwritten in place. The triangular matrix $A$ is
+$m \times m$ for `'L'`, or $n \times n$ for `'R'`.
+
+---
+
+## trsm — Triangular Solve with Multiple Right-Hand Sides
+
+**Routines:** `strsm`, `dtrsm`, `ctrsm`, `ztrsm`
+
+$$
+\begin{cases}
+\operatorname{op}(A) X = \alpha\,B & \text{if side = 'L'} \\
+X\operatorname{op}(A) = \alpha\,B & \text{if side = 'R'}
+\end{cases}
+$$
+
+The solution $X$ overwrites the $m \times n$ matrix $B$. The triangular matrix
+$A$ has the same dimensions as in `trmm`. A non-unit diagonal must be nonzero;
+the routine does not check for singularity.

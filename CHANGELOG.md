@@ -16,15 +16,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- Replaceable Level-2 argument handler via `theblas::set_error_handler`, with Netlib-style
+- Complete Level-3 BLAS support: `gemm`, `symm`, `hemm`, `syrk`, `herk`, `syr2k`,
+  `her2k`, `trmm`, and `trsm`, with all applicable `s`/`d`/`c`/`z` variants.
+- Level-3 mathematical reference and a raw-array, column-major `sgemm` example
+  (`examples/matrix_matrix_ops.cpp`).
+- Replaceable Level-2 and Level-3 argument handler via `theblas::set_error_handler`, with Netlib-style
   routine names and 1-based parameter numbers while keeping the default behavior silent.
 - Optional `THEBLAS_TEST_AGAINST_NETLIB` CMake target and Linux CI job for comparing theblas
-  Level-1/Level-2 routines against Reference-LAPACK CBLAS.
+  Level-1/Level-2/Level-3 routines against Reference-LAPACK CBLAS.
 
 ### Changed
 
 - Level-1 and Level-2 internal indexing now uses `std::ptrdiff_t` helpers for matrix, banded,
   packed, and negative-stride offsets to avoid signed `int` overflow in large layouts.
+- Level-2 routines validate flags, dimensions, leading dimensions, and strides before
+  quick returns, reporting the first invalid argument through the error handler.
+  Negative dimensions and insufficient leading dimensions are now reported rather
+  than silently accepted; zero-sized valid calls remain no-ops.
 
 ## [0.2.0] - 2026-08-16
 

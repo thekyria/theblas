@@ -44,7 +44,7 @@ ctest --test-dir build
 Good contributions include:
 
 - Bug fixes
-- New Level 1 BLAS routine implementations
+- BLAS implementation improvements and extensions
 - Cross-platform portability improvements
 - Tests and documentation improvements
 

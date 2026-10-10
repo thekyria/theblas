@@ -1157,6 +1157,12 @@ void zhpr2(char uplo, int n, std::complex<double> alpha, const std::complex<doub
 /** @defgroup level3_ops Level-3 Matrix-Matrix Operations
  *  @brief BLAS-like matrix-matrix operations using column-major storage.
  *
+ *  Includes general (`gemm`), symmetric (`symm`), and Hermitian (`hemm`) matrix
+ *  multiplication, symmetric/Hermitian rank-k and rank-2k updates (`syrk`, `herk`,
+ *  `syr2k`, `her2k`), triangular multiplication (`trmm`), and triangular solves
+ *  with multiple right-hand sides (`trsm`). All applicable real and complex
+ *  single- and double-precision variants are provided.
+ *
  *  Matrix element \f$a(i,j)\f$ is stored at offset \f$i+j\cdot lda\f$.
  *  Leading dimensions must be at least the number of stored rows (and at least one).
  *  `trans` accepts 'N', 'T', or 'C' for matrix multiply and triangular operations;

@@ -11,7 +11,9 @@
 [![CMake](https://img.shields.io/badge/CMake-3.15%2B-blue.svg)](https://cmake.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A minimal, header-clean C++17 library implementing all [Netlib BLAS Level 1](https://netlib.org/blas/#_level_1) and [Level 2](https://netlib.org/blas/#_level_2) routines plus selected Level 3 matrix-matrix routines for real and complex types — including rotations, matrix-vector operations, and triangular solves — with full BLAS stride semantics, a CMake build system, vcpkg and Conan 2.x packaging, and automated documentation publishing.
+A minimal, header-clean C++17 library implementing [Netlib BLAS Level 1](https://netlib.org/blas/#_level_1), [Level 2](https://netlib.org/blas/#_level_2), and [Level 3](https://netlib.org/blas/#_level_3) routines for real and complex types — including rotations, matrix-vector and matrix-matrix operations, and triangular solves — with full BLAS stride semantics, a CMake build system, vcpkg and Conan 2.x packaging, and automated documentation publishing.
+
+theblas is a minimal educational BLAS library focused on correctness and clarity, not an optimized vendor implementation. For performance-critical workloads, use an optimized BLAS such as OpenBLAS or Intel MKL.
 
 **[Documentation site](https://thekyria.github.io/theblas/)** — API reference and mathematical reference.
 
@@ -19,13 +21,13 @@ A minimal, header-clean C++17 library implementing all [Netlib BLAS Level 1](htt
 
 - Complete Level 1 BLAS coverage: `swap`, `copy`, `axpy`, `scal`, `dot`, `nrm2`, `asum`, `iamax`, `rot`, `rotg`, `rotm`, `rotmg`
 - Complete Level 2 BLAS coverage: `gemv`, `gbmv`, `hemv`, `hbmv`, `hpmv`, `symv`, `sbmv`, `spmv`, `trmv`, `tbmv`, `tpmv`, `trsv`, `tbsv`, `tpsv`, `ger`/`geru`/`gerc`, `her`, `hpr`, `her2`, `hpr2`, `syr`, `spr`, `syr2`, `spr2`
-- Selected Level 3 BLAS coverage: `gemm`, `symm`/`hemm`, `syrk`/`herk`, `syr2k`/`her2k`, `trmm`, `trsm`
+- Complete Level 3 BLAS coverage: `gemm`, `symm`/`hemm`, `syrk`/`herk`, `syr2k`/`her2k`, `trmm`, `trsm`
 - All four precision variants: `s` (float), `d` (double), `c` (complex float), `z` (complex double)
 - BLAS-compatible stride parameters (`incx`, `incy`), negative strides, and 1-based `iamax` index returns
 - Overflow-safe internal indexing for large `lda`/stride products without changing the public BLAS-style `int` API
 - Conjugated (`cdotc`/`zdotc`) and unconjugated (`cdotu`/`zdotu`) complex dot products
 - Mixed-precision real-scalar scaling for complex vectors (`csscal`, `zdscal`)
-- Optional process-global Level-2 argument handler via `theblas::set_error_handler(...)` (default: silent no-op)
+- Optional process-global Level-2 and Level-3 argument handler via `theblas::set_error_handler(...)` (default: silent no-op)
 - Single header, no dependencies beyond the C++17 standard library
 - Cross-platform: GCC, Clang, MSVC; native and cross-compiled ARM Linux / Cortex-M targets
 - vcpkg git registry and Conan 2.x recipe included
@@ -47,6 +49,26 @@ float n = theblas::snrm2(3, x, 1);  // √(1+4+9) ≈ 3.742
 
 // 1-based index of the largest element
 int k = theblas::isamax(3, x, 1);   // 3  (x[2] = 3.0)
+```
+
+### Matrix-matrix multiplication (Level 3)
+
+Matrices use column-major storage: each column is contiguous, and element
+`(i, j)` is at `i + j * ld` for zero-based indices. The leading dimension
+`ld` is the stored column stride (the row count for these unpadded arrays).
+
+```cpp
+#include "theblas/theblas.h"
+
+// A (2x3) = [[1, 2, 3], [4, 5, 6]]
+// B (3x2) = [[7, 8], [9, 10], [11, 12]]
+float a[] = {1, 4, 2, 5, 3, 6};
+float b[] = {7, 9, 11, 8, 10, 12};
+float c[4] = {};
+
+// C = A * B: 'N' means no transpose, alpha = 1, beta = 0.
+theblas::sgemm('N', 'N', 2, 2, 3, 1.0F, a, 2, b, 3, 0.0F, c, 2);
+// C = [[58, 64], [139, 154]], stored as {58, 139, 64, 154}.
 ```
 
 For Level-2 and Level-3 calls you can optionally install a Netlib-style argument handler:
@@ -212,6 +234,7 @@ The `examples/` folder contains standalone programs you can build and run:
 | [`examples/vector_ops.cpp`](examples/vector_ops.cpp) | `snrm2`, `sscal`, `saxpy`, `sdot`, `isamax` |
 | [`examples/complex_ops.cpp`](examples/complex_ops.cpp) | `dznrm2`, `zdscal`, `zaxpy`, `zdotc` |
 | [`examples/matrix_vector_ops.cpp`](examples/matrix_vector_ops.cpp) | `sgemv`, `dsymv`, `strmv`, `strsv`, `sger` |
+| [`examples/matrix_matrix_ops.cpp`](examples/matrix_matrix_ops.cpp) | `sgemm` with raw column-major arrays |
 | [`examples/benchmark.cpp`](examples/benchmark.cpp) | All real and complex routines, memory bandwidth |
 
 Examples are built automatically. To disable them:
