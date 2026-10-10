@@ -25,25 +25,30 @@ template <typename T, typename Gemm> void test_gemm(Gemm gemm) {
     const std::array<T, 4> identity = {T(1), T(0), T(0), T(1)};
     std::array<T, 4> c{};
     gemm('N', 'N', 2, 2, 2, T(1), a.data(), 2, identity.data(), 2, T(0), c.data(), 2);
-    for (std::size_t i = 0; i < c.size(); ++i)
+    for (std::size_t i = 0; i < c.size(); ++i) {
         assert(almost_equal(c[i], a[i]));
+    }
 
     c.fill(T(7));
     gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(1), c.data(), 2);
-    for (const T value : c)
+    for (const T value : c) {
         assert(almost_equal(value, T(7)));
+    }
     gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(1), nullptr, 2);
     gemm('N', 'N', 2, 2, 0, T(1), nullptr, 2, nullptr, 1, T(1), nullptr, 2);
     gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(0), c.data(), 2);
-    for (const T value : c)
+    for (const T value : c) {
         assert(almost_equal(value, T(0)));
+    }
     gemm('N', 'N', 2, 2, 0, T(1), nullptr, 2, nullptr, 1, T(0), c.data(), 2);
-    for (const T value : c)
+    for (const T value : c) {
         assert(almost_equal(value, T(0)));
+    }
     c.fill(T(3));
     gemm('N', 'N', 2, 2, 2, T(0), nullptr, 2, nullptr, 2, T(2), c.data(), 2);
-    for (const T value : c)
+    for (const T value : c) {
         assert(almost_equal(value, T(6)));
+    }
     gemm('N', 'N', 0, 2, 1, T(1), nullptr, 1, nullptr, 1, T(0), nullptr, 1);
     gemm('N', 'N', 2, 0, 1, T(1), nullptr, 2, nullptr, 1, T(0), nullptr, 2);
 
@@ -52,8 +57,9 @@ template <typename T, typename Gemm> void test_gemm(Gemm gemm) {
     gemm('T', 'N', 3, 2, 2, T(1), rectangular.data(), 2, identity.data(), 2, T(0),
          transposed_product.data(), 3);
     const std::array<T, 6> expected_transpose = {T(1), T(3), T(5), T(2), T(4), T(6)};
-    for (std::size_t i = 0; i < transposed_product.size(); ++i)
+    for (std::size_t i = 0; i < transposed_product.size(); ++i) {
         assert(almost_equal(transposed_product[i], expected_transpose[i]));
+    }
 }
 
 template <typename T, typename Symm> void test_symm(Symm symm) {
@@ -69,8 +75,9 @@ template <typename T, typename Symm> void test_symm(Symm symm) {
 
     c.fill(T(4));
     symm('L', 'U', 2, 2, T(0), nullptr, 2, nullptr, 2, T(2), c.data(), 2);
-    for (const T value : c)
+    for (const T value : c) {
         assert(almost_equal(value, T(8)));
+    }
     const std::array<T, 4> lower = {T(2), T(1), T(0), T(3)};
     symm('R', 'L', 2, 2, T(1), lower.data(), 2, identity.data(), 2, T(0), c.data(), 2);
     assert(almost_equal(c[0], T(2)));
@@ -93,8 +100,9 @@ template <typename T, typename Syrk> void test_syrk(Syrk syrk) {
     syrk('L', 'N', 2, 2, T(0), nullptr, 2, T(1), nullptr, 2);
     syrk('L', 'N', 2, 0, T(1), nullptr, 2, T(1), nullptr, 2);
     syrk('L', 'N', 2, 0, T(1), nullptr, 2, T(1), c.data(), 2);
-    for (const T value : c)
+    for (const T value : c) {
         assert(almost_equal(value, T(4)));
+    }
     syrk('L', 'N', 2, 0, T(1), nullptr, 2, T(0), c.data(), 2);
     assert(almost_equal(c[0], T(0)));
     assert(almost_equal(c[1], T(0)));
@@ -132,8 +140,9 @@ template <typename T, typename Trmm> void test_trmm(Trmm trmm) {
     assert(almost_equal(b[2], T(1)));
     assert(almost_equal(b[3], T(3)));
     trmm('L', 'U', 'N', 'N', 2, 2, T(0), nullptr, 2, b.data(), 2);
-    for (const T value : b)
+    for (const T value : b) {
         assert(almost_equal(value, T(0)));
+    }
     trmm('L', 'U', 'N', 'N', 0, 1, T(1), nullptr, 1, nullptr, 1);
     trmm('L', 'U', 'N', 'N', 1, 0, T(1), nullptr, 1, nullptr, 1);
     b = {T(1), T(0), T(0), T(1)};
@@ -156,8 +165,9 @@ template <typename T, typename Trsm> void test_trsm(Trsm trsm) {
 
     b.fill(T(3));
     trsm('L', 'U', 'N', 'N', 2, 2, T(0), nullptr, 2, b.data(), 2);
-    for (const T value : b)
+    for (const T value : b) {
         assert(almost_equal(value, T(0)));
+    }
 
     b = {T(1), T(2), T(0), T(0)};
     trsm('L', 'L', 'N', 'U', 2, 1, T(1), lower.data(), 2, b.data(), 2);
@@ -259,6 +269,7 @@ template <typename T> void test_real_routines() {
     });
 }
 
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 template <typename T> void test_complex_routines() {
     using R = typename T::value_type;
     test_gemm<T>([](char ta, char tb, int m, int n, int k, T alpha, const T *a, int lda, const T *b,

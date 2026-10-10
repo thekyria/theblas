@@ -6,6 +6,9 @@
 #include <complex>
 #include <vector>
 
+// BLAS kernels preserve the standard ordering of flags, dimensions, and strides.
+// NOLINTBEGIN(bugprone-easily-swappable-parameters)
+
 namespace theblas {
 
 using detail::conj_val;
@@ -72,22 +75,30 @@ template <typename T> void scale_matrix(int m, int n, T beta, T *c, int ldc) {
 }
 
 int gemm_info(char ta, char tb, int m, int n, int k, int lda, int ldb, int ldc) {
-    if (!valid_trans(ta))
+    if (!valid_trans(ta)) {
         return 1;
-    if (!valid_trans(tb))
+    }
+    if (!valid_trans(tb)) {
         return 2;
-    if (m < 0)
+    }
+    if (m < 0) {
         return 3;
-    if (n < 0)
+    }
+    if (n < 0) {
         return 4;
-    if (k < 0)
+    }
+    if (k < 0) {
         return 5;
-    if (lda < std::max(1, to_upper(ta) == 'N' ? m : k))
+    }
+    if (lda < std::max(1, to_upper(ta) == 'N' ? m : k)) {
         return 8;
-    if (ldb < std::max(1, to_upper(tb) == 'N' ? k : n))
+    }
+    if (ldb < std::max(1, to_upper(tb) == 'N' ? k : n)) {
         return 10;
-    if (ldc < std::max(1, m))
+    }
+    if (ldc < std::max(1, m)) {
         return 13;
+    }
     return 0;
 }
 
@@ -99,11 +110,13 @@ void gemm_impl(const char *routine, char transa, char transb, int m, int n, int 
         report_error(routine, info);
         return;
     }
-    if (m == 0 || n == 0)
+    if (m == 0 || n == 0) {
         return;
+    }
     if (alpha == T(0) || k == 0) {
-        if (beta == T(1))
+        if (beta == T(1)) {
             return;
+        }
         scale_matrix(m, n, beta, c, ldc);
         return;
     }
@@ -120,21 +133,28 @@ void gemm_impl(const char *routine, char transa, char transb, int m, int n, int 
 }
 
 int side_matrix_info(char side, char uplo, int m, int n, int lda, int ldb, int ldc) {
-    if (!valid_side(side))
+    if (!valid_side(side)) {
         return 1;
-    if (!valid_uplo(uplo))
+    }
+    if (!valid_uplo(uplo)) {
         return 2;
-    if (m < 0)
+    }
+    if (m < 0) {
         return 3;
-    if (n < 0)
+    }
+    if (n < 0) {
         return 4;
+    }
     const int order = to_upper(side) == 'L' ? m : n;
-    if (lda < std::max(1, order))
+    if (lda < std::max(1, order)) {
         return 7;
-    if (ldb < std::max(1, m))
+    }
+    if (ldb < std::max(1, m)) {
         return 9;
-    if (ldc < std::max(1, m))
+    }
+    if (ldc < std::max(1, m)) {
         return 12;
+    }
     return 0;
 }
 
@@ -146,11 +166,13 @@ void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha,
         report_error(routine, info);
         return;
     }
-    if (m == 0 || n == 0)
+    if (m == 0 || n == 0) {
         return;
+    }
     if (alpha == T(0)) {
-        if (beta == T(1))
+        if (beta == T(1)) {
             return;
+        }
         scale_matrix(m, n, beta, c, ldc);
         return;
     }
@@ -174,6 +196,7 @@ void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha,
 }
 
 template <typename T, typename Scalar, bool Hermitian>
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar alpha, const T *a,
                int lda, Scalar beta, T *c, int ldc) {
     if (!valid_uplo(uplo)) {
@@ -201,10 +224,12 @@ void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar 
         report_error(routine, 10);
         return;
     }
-    if (n == 0)
+    if (n == 0) {
         return;
-    if ((alpha == Scalar(0) || k == 0) && beta == Scalar(1))
+    }
+    if ((alpha == Scalar(0) || k == 0) && beta == Scalar(1)) {
         return;
+    }
     for (int j = 0; j < n; ++j) {
         const int ibegin = to_upper(uplo) == 'U' ? 0 : j;
         const int iend = to_upper(uplo) == 'U' ? j + 1 : n;
@@ -225,14 +250,16 @@ void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar 
             value = static_cast<T>(alpha) * sum +
                     (beta == Scalar(0) ? T(0) : static_cast<T>(beta) * value);
             if constexpr (Hermitian) {
-                if (i == j)
+                if (i == j) {
                     value = real_diagonal(value);
+                }
             }
         }
     }
 }
 
 template <typename T, typename ScalarAlpha, typename ScalarBeta, bool Hermitian>
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, ScalarAlpha alpha,
                 const T *a, int lda, const T *b, int ldb, ScalarBeta beta, T *c, int ldc) {
     if (!valid_uplo(uplo)) {
@@ -265,10 +292,12 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
         report_error(routine, 12);
         return;
     }
-    if (n == 0)
+    if (n == 0) {
         return;
-    if ((alpha == ScalarAlpha(0) || k == 0) && beta == ScalarBeta(1))
+    }
+    if ((alpha == ScalarAlpha(0) || k == 0) && beta == ScalarBeta(1)) {
         return;
+    }
     for (int j = 0; j < n; ++j) {
         const int ibegin = to_upper(uplo) == 'U' ? 0 : j;
         const int iend = to_upper(uplo) == 'U' ? j + 1 : n;
@@ -297,8 +326,9 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
                         (beta == ScalarBeta(0) ? T(0) : static_cast<T>(beta) * value);
             }
             if constexpr (Hermitian) {
-                if (i == j)
+                if (i == j) {
                     value = real_diagonal(value);
+                }
             }
         }
     }
@@ -308,8 +338,9 @@ template <typename T>
 T triangular_value(const T *a, int lda, char uplo, char trans, char diag, int row, int col) {
     const char ul = to_upper(uplo);
     const char tr = to_upper(trans);
-    if (row == col && to_upper(diag) == 'U')
+    if (row == col && to_upper(diag) == 'U') {
         return T(1);
+    }
     const int source_row = tr == 'N' ? row : col;
     const int source_col = tr == 'N' ? col : row;
     if ((ul == 'U' && source_row > source_col) || (ul == 'L' && source_row < source_col)) {
@@ -320,27 +351,36 @@ T triangular_value(const T *a, int lda, char uplo, char trans, char diag, int ro
 }
 
 int triangular_info(char side, char uplo, char trans, char diag, int m, int n, int lda, int ldb) {
-    if (!valid_side(side))
+    if (!valid_side(side)) {
         return 1;
-    if (!valid_uplo(uplo))
+    }
+    if (!valid_uplo(uplo)) {
         return 2;
-    if (!valid_trans(trans))
+    }
+    if (!valid_trans(trans)) {
         return 3;
-    if (!valid_diag(diag))
+    }
+    if (!valid_diag(diag)) {
         return 4;
-    if (m < 0)
+    }
+    if (m < 0) {
         return 5;
-    if (n < 0)
+    }
+    if (n < 0) {
         return 6;
+    }
     const int order = to_upper(side) == 'L' ? m : n;
-    if (lda < std::max(1, order))
+    if (lda < std::max(1, order)) {
         return 9;
-    if (ldb < std::max(1, m))
+    }
+    if (ldb < std::max(1, m)) {
         return 11;
+    }
     return 0;
 }
 
 template <typename T>
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void trmm_impl(const char *routine, char side, char uplo, char trans, char diag, int m, int n,
                T alpha, const T *a, int lda, T *b, int ldb) {
     const int info = triangular_info(side, uplo, trans, diag, m, n, lda, ldb);
@@ -348,12 +388,14 @@ void trmm_impl(const char *routine, char side, char uplo, char trans, char diag,
         report_error(routine, info);
         return;
     }
-    if (m == 0 || n == 0)
+    if (m == 0 || n == 0) {
         return;
+    }
     if (alpha == T(0)) {
         for (int j = 0; j < n; ++j) {
-            for (int i = 0; i < m; ++i)
+            for (int i = 0; i < m; ++i) {
                 b[idx(i, j, ldb)] = T(0);
+            }
         }
         return;
     }
@@ -381,6 +423,7 @@ void trmm_impl(const char *routine, char side, char uplo, char trans, char diag,
 }
 
 template <typename T>
+// NOLINTNEXTLINE(readability-function-cognitive-complexity)
 void trsm_impl(const char *routine, char side, char uplo, char trans, char diag, int m, int n,
                T alpha, const T *a, int lda, T *b, int ldb) {
     const int info = triangular_info(side, uplo, trans, diag, m, n, lda, ldb);
@@ -388,12 +431,14 @@ void trsm_impl(const char *routine, char side, char uplo, char trans, char diag,
         report_error(routine, info);
         return;
     }
-    if (m == 0 || n == 0)
+    if (m == 0 || n == 0) {
         return;
+    }
     if (alpha == T(0)) {
         for (int j = 0; j < n; ++j) {
-            for (int i = 0; i < m; ++i)
+            for (int i = 0; i < m; ++i) {
                 b[idx(i, j, ldb)] = T(0);
+            }
         }
         return;
     }
@@ -405,8 +450,9 @@ void trsm_impl(const char *routine, char side, char uplo, char trans, char diag,
         auto value_at = [&](int i) -> T & {
             return left ? b[idx(i, rhs, ldb)] : b[idx(rhs, i, ldb)];
         };
-        for (int i = 0; i < order; ++i)
+        for (int i = 0; i < order; ++i) {
             value_at(i) *= alpha;
+        }
         for (int step = 0; step < order; ++step) {
             const int i = backward ? order - 1 - step : step;
             T value = value_at(i);
@@ -433,10 +479,12 @@ void trsm_impl(const char *routine, char side, char uplo, char trans, char diag,
 
 } // namespace
 
+// Macro arguments used as parameter types cannot be parenthesized.
+// NOLINTBEGIN(bugprone-macro-parentheses)
 #define THEBLAS_GEMM(NAME, ROUTINE, TYPE)                                                          \
-    void NAME(char ta, char tb, int m, int n, int k, TYPE alpha, const TYPE *a, int lda,           \
+    void NAME(char transa, char transb, int m, int n, int k, TYPE alpha, const TYPE *a, int lda,   \
               const TYPE *b, int ldb, TYPE beta, TYPE *c, int ldc) {                               \
-        gemm_impl(ROUTINE, ta, tb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);                  \
+        gemm_impl(ROUTINE, transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);          \
     }
 #define THEBLAS_SYMM(NAME, ROUTINE, TYPE, HERM)                                                    \
     void NAME(char side, char uplo, int m, int n, TYPE alpha, const TYPE *a, int lda,              \
@@ -464,6 +512,7 @@ void trsm_impl(const char *routine, char side, char uplo, char trans, char diag,
               const TYPE *a, int lda, TYPE *b, int ldb) {                                          \
         trsm_impl(ROUTINE, side, uplo, trans, diag, m, n, alpha, a, lda, b, ldb);                  \
     }
+// NOLINTEND(bugprone-macro-parentheses)
 
 THEBLAS_GEMM(sgemm, "SGEMM", float)
 THEBLAS_GEMM(dgemm, "DGEMM", double)
@@ -506,3 +555,4 @@ THEBLAS_TRSM(ztrsm, "ZTRSM", std::complex<double>)
 #undef THEBLAS_TRSM
 
 } // namespace theblas
+// NOLINTEND(bugprone-easily-swappable-parameters)
