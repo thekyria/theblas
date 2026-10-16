@@ -1,6 +1,6 @@
 {
   "name": "theblas",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A minimal educational C++17 BLAS library",
   "homepage": "https://github.com/thekyria/theblas",
   "license": "MIT",
