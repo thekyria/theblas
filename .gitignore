@@ -23,6 +23,9 @@ callgrind.out.*
 # macOS
 .DS_Store
 
+# Python
+__pycache__/
+
 # Editor
 *~
 *.swp

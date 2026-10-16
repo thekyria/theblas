@@ -33,6 +33,11 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   quick returns, reporting the first invalid argument through the error handler.
   Negative dimensions and insufficient leading dimensions are now reported rather
   than silently accepted; zero-sized valid calls remain no-ops.
+- Releases are now prepared in a pull request with `scripts/prepare-release.py`
+  (which also bumps `Doxyfile` and `conanfile.py`); the Release workflow only tags
+  the merge commit and creates the GitHub Release, and no longer pushes to `master`.
+  The vcpkg port is updated afterwards with `scripts/update-vcpkg-port.py`.
+  SBOM release assets are uploaded from a separate job, so SBOM generation runs read-only.
 
 ## [0.2.0] - 2026-08-16
 

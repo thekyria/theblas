@@ -1,10 +1,19 @@
 name: Release
 
+# Releases are prepared in a pull request: running
+# `python3 scripts/prepare-release.py <VERSION>` bumps the version and moves
+# the [Unreleased] changelog entries into a [VERSION] section. Once that is on
+# master, this workflow tags the commit and creates the GitHub Release. It never
+# pushes to master, so it works under branch protection.
+
 on:
   push:
     branches: ["master"]
     paths:
       - "CMakeLists.txt"
+      - "CHANGELOG.md"
+      - ".github/workflows/release.yml"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -15,14 +24,12 @@ concurrency:
 
 jobs:
   release:
-    name: Create Release on Version Bump
+    name: Create Release
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
 
       - name: Extract version from CMakeLists.txt
         id: version
@@ -35,90 +42,41 @@ jobs:
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
 
-      - name: Check if release already exists
-        id: release_check
+      # Release when the project version has no tag yet and the changelog has a
+      # section for it. An existing tag means the version is already released.
+      - name: Check whether this version needs a release
+        id: check
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
-          if gh release view "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Release ${{ steps.version.outputs.tag }} already exists; skipping."
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG}" >/dev/null; then
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "${TAG} already exists; nothing to release."
+          elif ! grep -qF "## [${VERSION}]" CHANGELOG.md; then
+            echo "release=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::CHANGELOG.md has no [${VERSION}] section; run scripts/prepare-release.py ${VERSION} in a pull request to release ${TAG}."
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "release=true" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Extract release notes and update files
-        if: steps.release_check.outputs.exists == 'false'
-        run: python3 scripts/extract-changelog.py > /tmp/release-notes.md
-
-      - name: Update CHANGELOG.md and CMakeLists.txt
-        if: steps.release_check.outputs.exists == 'false'
-        run: python3 scripts/prepare-release.py ${{ steps.version.outputs.version }}
+      - name: Extract release notes
+        if: steps.check.outputs.release == 'true'
+        run: python3 scripts/extract-changelog.py "${{ steps.version.outputs.version }}" > "${RUNNER_TEMP}/release-notes.md"
 
       - name: Create GitHub Release
-        if: steps.release_check.outputs.exists == 'false'
-        id: create_release
+        if: steps.check.outputs.release == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            --title "theblas ${{ steps.version.outputs.tag }}" \
-            --notes-file /tmp/release-notes.md \
-            --target master
-
-      - name: Update vcpkg port files
-        if: steps.release_check.outputs.exists == 'false'
-        run: |
-          VERSION="${{ steps.version.outputs.version }}"
-          TAG="${{ steps.version.outputs.tag }}"
-          TARBALL_URL="https://github.com/${{ github.repository }}/archive/refs/tags/${TAG}.tar.gz"
-
-          curl -sL "${TARBALL_URL}" -o /tmp/theblas-${VERSION}.tar.gz
-          SHA512=$(sha512sum /tmp/theblas-${VERSION}.tar.gz | awk '{print $1}')
-
-          # Update SHA512 in portfile.cmake
-          sed -i "s|SHA512 [0-9a-f]*|SHA512 ${SHA512}|" ports/theblas/portfile.cmake
-
-          # Update version in ports/theblas/vcpkg.json
-          sed -i "s|\"version\": \".*\"|\"version\": \"${VERSION}\"|" ports/theblas/vcpkg.json
-
-          # Stage port changes to compute tree hash
-          git add ports/theblas/
-          TREE_HASH=$(git write-tree --prefix=ports/theblas/)
-
-          # Prepend new version entry to the versions database
-          python3 - "${VERSION}" "${TREE_HASH}" <<'EOF'
-          import json, sys
-          version, tree = sys.argv[1], sys.argv[2]
-          with open("versions/t-/theblas.json") as f:
-              data = json.load(f)
-          entries = data.get("versions", [])
-          # Avoid duplicates
-          if not any(e.get("version") == version for e in entries):
-              entries.insert(0, {"version": version, "git-tree": tree})
-          data["versions"] = entries
-          with open("versions/t-/theblas.json", "w") as f:
-              json.dump(data, f, indent=2)
-              f.write("\n")
-          EOF
-
-          # Update baseline
-          python3 - "${VERSION}" <<'EOF'
-          import json, sys
-          version = sys.argv[1]
-          with open("versions/baseline.json") as f:
-              data = json.load(f)
-          data["default"]["theblas"] = {"baseline": version, "port-version": 0}
-          with open("versions/baseline.json", "w") as f:
-              json.dump(data, f, indent=2)
-              f.write("\n")
-          EOF
-
-      - name: Commit updated files
-        if: steps.release_check.outputs.exists == 'false'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add CHANGELOG.md ports/ versions/
-          git diff --cached --quiet || git commit -m "chore(release): update changelog and vcpkg port for ${{ steps.version.outputs.tag }} [skip ci]"
-          git push
+          gh release create "${TAG}" \
+            --title "theblas ${TAG}" \
+            --notes-file "${RUNNER_TEMP}/release-notes.md" \
+            --target "${GITHUB_SHA}"
+          {
+            echo "Released ${TAG}."
+            echo
+            echo "Next, update the vcpkg port in a pull request:"
+            echo "\`python3 scripts/update-vcpkg-port.py ${{ steps.version.outputs.version }}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

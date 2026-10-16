@@ -7,6 +7,7 @@
 [![Coverage %](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/thekyria/8e1037ada9fe1e598aefebfe56b920ca/raw/theblas-coverage.json)](https://github.com/thekyria/theblas/actions/workflows/coverage.yml)
 [![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=thekyria_theblas&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=thekyria_theblas)
 [![CodeQL](https://github.com/thekyria/theblas/actions/workflows/codeql.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/codeql.yml)
+[![Release](https://img.shields.io/github/v/release/thekyria/theblas)](https://github.com/thekyria/theblas/releases/latest)
 [![C++17](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
 [![CMake](https://img.shields.io/badge/CMake-3.15%2B-blue.svg)](https://cmake.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
