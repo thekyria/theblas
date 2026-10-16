@@ -14,6 +14,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-16
+
 ### Added
 
 - Complete Level-3 BLAS support: `gemm`, `symm`, `hemm`, `syrk`, `herk`, `syr2k`,
@@ -95,6 +97,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Pre-commit hooks (clang-format, cmake-format, codespell, conventional commit)
 - CI via GitHub Actions
 
-[Unreleased]: https://github.com/thekyria/theblas/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/thekyria/theblas/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/thekyria/theblas/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/thekyria/theblas/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/thekyria/theblas/releases/tag/v0.1.0
