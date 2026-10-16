@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Update CHANGELOG.md and CMakeLists.txt for a new release.
+"""Update CHANGELOG.md, CMakeLists.txt, Doxyfile, and conanfile.py for a new release.
 
 Usage: prepare-release.py <VERSION>
 
-Called by semantic-release during the 'prepare' lifecycle step.
+Run in the release pull request; see CONTRIBUTING.md, "Releasing".
 """
 import re
 import subprocess
@@ -41,6 +41,50 @@ def update_cmake(version: str) -> None:
         )
 
     with open("CMakeLists.txt", "w", encoding="utf-8") as f:
+        f.write(updated)
+
+
+def update_doxyfile(version: str) -> None:
+    """Keep the Doxygen PROJECT_NUMBER in sync with the release version."""
+    with open("Doxyfile", encoding="utf-8") as f:
+        content = f.read()
+
+    updated, n = re.subn(
+        r'^(PROJECT_NUMBER\s*=\s*)"?[^"\n]*"?',
+        rf'\g<1>"{version}"',
+        content,
+        count=1,
+        flags=re.MULTILINE,
+    )
+    if n == 0:
+        print(
+            "WARNING: PROJECT_NUMBER not updated in Doxyfile — pattern did not match",
+            file=sys.stderr,
+        )
+
+    with open("Doxyfile", "w", encoding="utf-8") as f:
+        f.write(updated)
+
+
+def update_conanfile(version: str) -> None:
+    """Keep the Conan recipe version in sync with the release version."""
+    with open("conanfile.py", encoding="utf-8") as f:
+        content = f.read()
+
+    updated, n = re.subn(
+        r'^(\s*version\s*=\s*)"[^"\n]*"',
+        rf'\g<1>"{version}"',
+        content,
+        count=1,
+        flags=re.MULTILINE,
+    )
+    if n == 0:
+        print(
+            "WARNING: version not updated in conanfile.py — pattern did not match",
+            file=sys.stderr,
+        )
+
+    with open("conanfile.py", "w", encoding="utf-8") as f:
         f.write(updated)
 
 
@@ -102,6 +146,8 @@ def main() -> None:
     repo = get_repo()
 
     update_cmake(version)
+    update_doxyfile(version)
+    update_conanfile(version)
     update_changelog(version, release_date, repo)
     print(f"Prepared release {version}")
 
