@@ -6,7 +6,7 @@ vcpkg_from_github(
   REF
   "v${VERSION}"
   SHA512
-  1901ee5fa77563aedb8040a9b4c0c7008745e1035c4a1ec223f13ba17c0560a3cb5049d3a1950f4ccead2ffe00d74ea867e7368548500141040aa95d228e4dc0
+  48b3b3b76a5605b3e137c1829e7575a6bfdac995fb2967e6ca72ca2ddc0e17befede7cc5b9a29852fe43619fa40a7c82478ae0cf56efbe545ecefc0aedb2df15
   HEAD_REF
   master)
 
