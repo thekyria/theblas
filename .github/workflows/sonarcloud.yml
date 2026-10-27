@@ -116,7 +116,7 @@ jobs:
             API_URL="${API_URL}&pullRequest=${PR_NUM}"
           fi
 
-          HTTP_CODE=$(curl -s -u "${SONAR_TOKEN}:" -w '%{http_code}' -o /tmp/sonar-issues.json "$API_URL")
+          HTTP_CODE=$(curl -s -u "${SONAR_TOKEN}:" -w '%{http_code}' -o /tmp/sonar-issues.json "$API_URL")  # gitleaks:allow (env var reference)
           if [ "$HTTP_CODE" -lt 200 ] || [ "$HTTP_CODE" -ge 300 ]; then
             echo "::error::SonarCloud API returned HTTP ${HTTP_CODE}"
             cat /tmp/sonar-issues.json
