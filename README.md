@@ -1,6 +1,7 @@
 # theblas
 
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/12538/badge)](https://www.bestpractices.dev/projects/12538)
+[![OpenSSF Baseline](https://www.bestpractices.dev/projects/12538/baseline)](https://www.bestpractices.dev/projects/12538)
 [![Build](https://github.com/thekyria/theblas/actions/workflows/build.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/build.yml)
 [![MSVC](https://github.com/thekyria/theblas/actions/workflows/msvc.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/msvc.yml)
 [![Coverage](https://github.com/thekyria/theblas/actions/workflows/coverage.yml/badge.svg)](https://github.com/thekyria/theblas/actions/workflows/coverage.yml)
@@ -265,6 +266,11 @@ Ninja is recommended when using CMake presets. No runtime dependencies beyond th
 | Fortran compiler (e.g. `gfortran`) | — | Tests only, to build Reference-LAPACK | — |
 
 The library itself has no third-party dependencies.
+
+### Subprojects
+
+theblas has no subprojects or additional repositories. The vcpkg port (`ports/`, `versions/`)
+and the Conan recipe (`conanfile.py`, `test_package/`) live in this repository.
 
 ### Optional tools
 

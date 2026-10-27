@@ -19,6 +19,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - README lists the project's dependencies, including the test-only Reference-LAPACK.
 - A Binary Artifacts CI workflow and a `no-binary-files` pre-commit hook reject tracked
   binary files.
+- OpenSSF Baseline badge in the README.
+
+### Changed
+
+- README states that the project has no subprojects.
+- `SECURITY.md` lists 0.3.x as the supported version.
 
 ### Fixed
 
