@@ -223,7 +223,9 @@ if(THEBLAS_TEST_AGAINST_NETLIB)
 
   FetchContent_Declare(
     reference_lapack
-    URL https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.12.1.tar.gz)
+    URL https://github.com/Reference-LAPACK/lapack/archive/refs/tags/v3.12.1.tar.gz
+    URL_HASH
+      SHA256=2ca6407a001a474d4d4d35f3a61550156050c48016d949f0da0529c0aa052422)
   FetchContent_MakeAvailable(reference_lapack)
 
   set(THEBLAS_NETLIB_CBLAS_TARGET cblas CACHE INTERNAL "Reference CBLAS target"

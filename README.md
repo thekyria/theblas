@@ -310,7 +310,7 @@ pre-commit install
 pre-commit install --hook-type commit-msg
 ```
 
-Hooks include clang-format, clang-tidy, cmake-format, codespell, markdownlint, and conventional-commit validation. See [.pre-commit-config.yaml](.pre-commit-config.yaml) for the full list.
+Hooks include clang-format, clang-tidy, cmake-format, codespell, markdownlint, gitleaks secret scanning, a binary-file check, and conventional-commit validation. See [.pre-commit-config.yaml](.pre-commit-config.yaml) for the full list.
 
 ## Static Analysis
 
