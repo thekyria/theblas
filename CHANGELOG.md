@@ -20,11 +20,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - A Binary Artifacts CI workflow and a `no-binary-files` pre-commit hook reject tracked
   binary files.
 - OpenSSF Baseline badge in the README.
+- A `gitleaks` pre-commit hook scans staged changes for secrets.
 
 ### Changed
 
 - README states that the project has no subprojects.
 - `SECURITY.md` lists 0.3.x as the supported version.
+- The Reference-LAPACK download used by the Netlib comparison tests is pinned by SHA256.
 
 ### Fixed
 
