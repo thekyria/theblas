@@ -14,6 +14,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+
+- README lists the project's dependencies, including the test-only Reference-LAPACK.
+- A Binary Artifacts CI workflow and a `no-binary-files` pre-commit hook reject tracked
+  binary files.
+
 ### Fixed
 
 - Releases now get their SPDX and CycloneDX SBOMs attached: the Release workflow uploads

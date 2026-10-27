@@ -256,6 +256,16 @@ cmake -S . -B build -DTHEBLAS_BUILD_EXAMPLES=OFF
 
 Ninja is recommended when using CMake presets. No runtime dependencies beyond the standard library.
 
+### Dependencies
+
+| Dependency | Version | Scope | Declared in |
+| --- | --- | --- | --- |
+| C++ standard library | C++17 | Runtime | — |
+| [Reference-LAPACK](https://github.com/Reference-LAPACK/lapack) (CBLAS) | 3.12.1 | Tests only, when `THEBLAS_TEST_AGAINST_NETLIB=ON` | `CMakeLists.txt` (`FetchContent`) |
+| Fortran compiler (e.g. `gfortran`) | — | Tests only, to build Reference-LAPACK | — |
+
+The library itself has no third-party dependencies.
+
 ### Optional tools
 
 | Tool | Purpose |
