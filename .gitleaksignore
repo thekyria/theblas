@@ -1,0 +1,6 @@
+# Reviewed gitleaks false positives (fingerprints: commit:file:rule:line).
+# sonarcloud.yml passes ${SONAR_TOKEN} to curl -u; it is an env var reference, not a secret.
+e9c28a9022c1289c7cd5aae722841f3bbe081bcf:.github/workflows/sonarcloud.yml:curl-auth-user:118
+270e46536dc8424e0f4062aad61b4030bcdf6090:.github/workflows/sonarcloud.yml:curl-auth-user:116
+# Fake Stripe key used as a "don't hardcode secrets" example.
+9abc30b59c762abe93a09abb601f9b52ecd41c23:.github/instructions/code-review-generic.instructions.md:stripe-access-token:142
