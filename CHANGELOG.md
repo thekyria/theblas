@@ -21,6 +21,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   binary files.
 - OpenSSF Baseline badge in the README.
 - A `gitleaks` pre-commit hook scans staged changes for secrets.
+- A Gitleaks CI workflow scans pushes and pull requests for secrets, plus a weekly
+  full-history scan.
 
 ### Changed
 
