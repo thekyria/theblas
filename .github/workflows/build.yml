@@ -93,6 +93,23 @@ jobs:
     - name: Build and test (wrapper for CMake)
       run: make test
 
+  c-bindings:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+    - name: Configure C bindings
+      run: cmake -S bindings/c -B ${{github.workspace}}/build-c -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build-c --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      run: ctest --test-dir ${{github.workspace}}/build-c --output-on-failure
+
   docs:
     runs-on: ubuntu-latest
 

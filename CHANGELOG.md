@@ -16,6 +16,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- Optional C ABI in `bindings/c/`: a separate CMake project that builds a `theblas_c` shared
+  library covering every routine with `theblas_`-prefixed functions, for C callers and
+  foreign-function interfaces such as Python `ctypes`. The root build is unchanged.
 - README lists the project's dependencies, including the test-only Reference-LAPACK.
 - A Binary Artifacts CI workflow and a `no-binary-files` pre-commit hook reject tracked
   binary files.

@@ -269,8 +269,10 @@ The library itself has no third-party dependencies.
 
 ### Subprojects
 
-theblas has no subprojects or additional repositories. The vcpkg port (`ports/`, `versions/`)
-and the Conan recipe (`conanfile.py`, `test_package/`) live in this repository.
+theblas has one subproject, the optional C ABI in [`bindings/c/`](bindings/c/README.md),
+which is a separate CMake project and is not part of the root build. There are no additional
+repositories. The vcpkg port (`ports/`, `versions/`) and the Conan recipe (`conanfile.py`,
+`test_package/`) live in this repository.
 
 ### Optional tools
 
@@ -655,6 +657,13 @@ cmake -S . -B build
 cmake --build build
 cmake --install build --prefix ./install
 ```
+
+## Use from C or other languages
+
+An optional C ABI (`theblas_c`, with `theblas_`-prefixed functions) lives in
+[`bindings/c/`](bindings/c/README.md) as a separate CMake project. It is a shared library for
+C callers and foreign-function interfaces such as Python `ctypes`; the root build does not
+include it.
 
 ## API Documentation
 
