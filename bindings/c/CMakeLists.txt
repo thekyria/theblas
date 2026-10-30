@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
-project(
-  theblas_c
-  VERSION 0.3.0
-  LANGUAGES C CXX)
+# No VERSION here: theblas_c is versioned with theblas, whose release script
+# only updates the root CMakeLists.txt.
+project(theblas_c LANGUAGES C CXX)
 
 # Standalone C ABI shim over theblas. It is not part of the root build.
 #
