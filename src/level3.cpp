@@ -127,7 +127,7 @@ void gemm_impl(const char *routine, char transa, char transb, int m, int n, int 
                 sum += op_value(a, lda, transa, i, l) * op_value(b, ldb, transb, l, j);
             }
             auto &value = c[idx(i, j, ldc)];
-            value = alpha * sum + (beta == T(0) ? T(0) : beta * value);
+            value = (alpha * sum) + (beta == T(0) ? T(0) : beta * value);
         }
     }
 }
@@ -190,7 +190,7 @@ void symm_impl(const char *routine, char side, char uplo, int m, int n, T alpha,
                 }
             }
             auto &value = c[idx(i, j, ldc)];
-            value = alpha * sum + (beta == T(0) ? T(0) : beta * value);
+            value = (alpha * sum) + (beta == T(0) ? T(0) : beta * value);
         }
     }
 }
@@ -247,7 +247,7 @@ void syrk_impl(const char *routine, char uplo, char trans, int n, int k, Scalar 
                 }
             }
             auto &value = c[idx(i, j, ldc)];
-            value = static_cast<T>(alpha) * sum +
+            value = (static_cast<T>(alpha) * sum) +
                     (beta == Scalar(0) ? T(0) : static_cast<T>(beta) * value);
             if constexpr (Hermitian) {
                 if (i == j) {
@@ -311,10 +311,10 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
                     const T bj = op_value(b, ldb, trans, j, l);
                     if constexpr (Hermitian) {
                         const T complex_alpha = static_cast<T>(alpha);
-                        sum += complex_alpha * ai * conj_val(bj) +
-                               conj_val(complex_alpha) * bi * conj_val(aj);
+                        sum += (complex_alpha * ai * conj_val(bj)) +
+                               (conj_val(complex_alpha) * bi * conj_val(aj));
                     } else {
-                        sum += ai * bj + bi * aj;
+                        sum += (ai * bj) + (bi * aj);
                     }
                 }
             }
@@ -322,7 +322,7 @@ void syr2k_impl(const char *routine, char uplo, char trans, int n, int k, Scalar
             if constexpr (Hermitian) {
                 value = sum + (beta == ScalarBeta(0) ? T(0) : static_cast<T>(beta) * value);
             } else {
-                value = static_cast<T>(alpha) * sum +
+                value = (static_cast<T>(alpha) * sum) +
                         (beta == ScalarBeta(0) ? T(0) : static_cast<T>(beta) * value);
             }
             if constexpr (Hermitian) {
